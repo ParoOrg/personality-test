@@ -1,10 +1,10 @@
 <template>
 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <HelloWorld/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/Main.vue'
 
 import '@/assets/tailwind.css';
 export default {

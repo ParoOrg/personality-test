@@ -1,40 +1,76 @@
 <template>
   <div>
-    <span>{{ `${question} (${index+1}/40)`}}</span>
+    <span class="font-bold">{{ `${question} (${index + 1}/40)` }}</span>
     <div class="lg:flex">
       <button
-      @click="()=>callback(1, index)"
+        @click="
+          () => {
+            callback(1, index);
+            selection = 1;
+          }
+        "
         class="w-1/6 transition p-3 border-custom-1 border-2 rounded-lg text-black w-full lg:inline my-4"
+        :class="selection == 1 ? 'selection-custom-' + selection : ''"
       >
         Highly disagree
       </button>
       <button
-      @click="()=>callback(2, index)"
+        @click="
+          () => {
+            callback(2, index);
+            selection = 2;
+          }
+        "
         class="w-1/6 transition p-3 border-custom-2 border-2 rounded-lg text-black w-full lg:inline my-4"
+        :class="selection == 2 ? 'selection-custom-' + selection : ''"
       >
         Moderately disagree
       </button>
       <button
-      @click="()=>callback(3, index)"
+        @click="
+          () => {
+            callback(3, index);
+            selection = 3;
+          }
+        "
         class="w-1/6 transition p-3 border-custom-3 border-2 rounded-lg text-black w-full lg:inline my-4"
+        :class="selection == 3 ? 'selection-custom-' + selection : ''"
       >
         Slightly disagree
       </button>
       <button
-      @click="()=>callback(4, index)"
+        @click="
+          () => {
+            callback(4, index);
+            selection = 4;
+          }
+        "
         class="w-1/6 transition p-3 border-custom-4 border-2 rounded-lg text-black w-full lg:inline my-4"
+        :class="selection == 4 ? 'selection-custom-' + selection : ''"
       >
         Slightly agree
       </button>
       <button
-      @click="()=>callback(5, index)"
+        @click="
+          () => {
+            callback(5, index);
+            selection = 5;
+          }
+        "
         class="w-1/6 transition p-3 border-custom-5 border-2 rounded-lg text-black w-full lg:inline my-4"
+        :class="selection == 5 ? 'selection-custom-' + selection : ''"
       >
         Moderately agree
       </button>
       <button
-      @click="()=>callback(6, index)"
+        @click="
+          () => {
+            callback(6, index);
+            selection = 6;
+          }
+        "
         class="w-1/6 transition p-3 border-custom-6 border-2 rounded-lg text-black w-full lg:inline my-4"
+        :class="selection == 6 ? 'selection-custom-' + selection : ''"
       >
         Highly agree
       </button>
@@ -62,21 +98,34 @@ export default {
       type: String,
       default: "",
     },
-    callback: () => {},
+    callback: { type: Function },
     index: {
       type: Number,
-      default: 0
+      default: 0,
+    },
+    answer: {
+      type: Number,
     },
   },
   data() {
     return {
       checkValue: -1,
+      // selection: this.answer || 0,
     };
+  },
+  computed: {
+    selection() {
+      console.log("answer: ", this.answer)
+      return this.answer;
+    },
   },
   methods: {
     test() {
       console.log(this.checkValue);
     },
+  },
+  mounted() {
+    console.log("selection", this.selection);
   },
 };
 </script>
@@ -86,8 +135,16 @@ export default {
   border-color: #2ffe66;
   color: #2ffe66;
 }
+.selection-custom-6 {
+  border-color: #2ffe66;
+  color: #2ffe66;
+}
 
 .border-custom-5:hover {
+  border-color: #55d85c;
+  color: #55d85c;
+}
+.selection-custom-5 {
   border-color: #55d85c;
   color: #55d85c;
 }
@@ -96,8 +153,16 @@ export default {
   border-color: #7cae4f;
   color: #7cae4f;
 }
+.selection-custom-4 {
+  border-color: #7cae4f;
+  color: #7cae4f;
+}
 
 .border-custom-3:hover {
+  border-color: #a98142;
+  color: #a98142;
+}
+.selection-custom-3 {
   border-color: #a98142;
   color: #a98142;
 }
@@ -106,8 +171,16 @@ export default {
   border-color: #df4b33;
   color: #df4b33;
 }
+.selection-custom-2 {
+  border-color: #df4b33;
+  color: #df4b33;
+}
 
 .border-custom-1:hover {
+  border-color: #ff2a29;
+  color: #ff2a29;
+}
+.selection-custom-1 {
   border-color: #ff2a29;
   color: #ff2a29;
 }
@@ -116,7 +189,7 @@ export default {
   transition: 0.5s;
 }
 
-.transition:focus{
-  outline: none
+.transition:focus {
+  outline: none;
 }
 </style>

@@ -99,11 +99,36 @@
       v-else
     >
       <question
-        :index="index"
-        :question="testQuestions[index].text"
+        v-for="(val, i) in testQuestions.slice(index, index + step)"
+        :index="i + index"
+        :question="testQuestions[i + index].text"
+        :answer="answers[i + index]"
+        :key="i"
         :callback="(val, index) => answer(index, val)"
       ></question>
+      <div class="w-full flex items-center justify-between p-5">
+        <button
+          type="submit"
+          @click="decrement"
+          class="md:w-32 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
+        >
+          Back
+        </button>
+        <div v-if="!verified" class="text-red-600">
+          You need to finish answering all the questions first!
+        </div>
+        <button
+          type="submit"
+          @click="
+            () => (index == testQuestions.length - step ? send() : increment())
+          "
+          class="md:w-32 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
+        >
+          {{ index == testQuestions.length - step ? "Submit" : "Next" }}
+        </button>
+      </div>
     </div>
+
     <div
       v-if="result"
       class="absolute border-2 z-50 bg-white rounded-lg border-gray-400 w-10/12 h-10/12 m-1/2 position-custom"
@@ -115,7 +140,12 @@
         {{ result }}
       </div>
       <button
-        @click="() => {(result = 0); index=0}"
+        @click="
+          () => {
+            result = 0;
+            index = 0;
+          }
+        "
         class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline text-black lg:inline my-4"
       >
         Close
@@ -143,13 +173,15 @@ export default {
       checkName: true,
       checkGender: true,
       submitted: false,
-      answers: [],
+      verified: true,
+      answers: [].fill(0, 0, questions.length),
       o: 0,
       c: 0,
       e: 0,
       a: 0,
       n: 0,
       index: 0,
+      step: 5,
     };
   },
   components: {
@@ -164,14 +196,11 @@ export default {
       }
     },
     answer(index, val) {
-      this.index = Math.min(this.index + 1, questions.length - 1);
       this.answers[index] = val;
-      console.log(this);
-      // this.$modal.show('my-first-modal')
-      if (index == questions.length - 1) {
-        this.calculateOcean();
-        this.sendReport();
-      }
+    },
+    send() {
+      this.calculateOcean();
+      this.sendReport();
     },
     calculatePart(letter) {
       let count = 0;
@@ -214,6 +243,27 @@ export default {
 
       this.result = data;
     },
+    decrement() {
+      this.index = Math.max(this.index - this.step, 0);
+    },
+    increment() {
+      if (
+        !this.answers
+          .slice(this.index, this.index + this.step)
+          .reduce((s, x) => s + x, 0)
+      ) {
+        this.verified = false;
+        return;
+      }
+      this.verified = true;
+      this.index = Math.min(
+        this.index + this.step,
+        this.testQuestions.length - this.step
+      );
+    },
+  },
+  mounted() {
+    this.console = console;
   },
 };
 </script>

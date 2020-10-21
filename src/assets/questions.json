@@ -1,0 +1,202 @@
+[
+  {
+    "fields": ["e"],
+    "coeff": [1],
+    "text": "I take charge and try to lead others "
+  },
+  {
+    "fields": ["e"],
+    "coeff": [1],
+    "text": "I am a cheerful person and I always radiate joy to people around me "
+  },
+  {
+    "fields": ["e"],
+    "coeff": [1],
+    "text": "I am an adrenaline junkie and I want to try all kind of thrilling activities at least once "
+  },
+  {
+    "fields": ["e"],
+    "coeff": [1],
+    "text": "I enjoy making new friends and feel comfortable around people "
+  },
+  {
+    "fields": ["e"],
+    "coeff": [-1],
+    "text": "I don't like to draw attention to myself"
+  },
+  {
+    "fields": ["e"],
+    "coeff": [-1],
+    "text": "I like to take things seriously and don't like it when people joke around about everything "
+  },
+  {
+    "fields": ["e"],
+    "coeff": [-1],
+    "text": "I value my safety and wouldn't engage in crazy and dangerous activities (car racing, bungee jumping, sky diving, etc) "
+  },
+  {
+    "fields": ["e"],
+    "coeff": [-1],
+    "text": "I don't open up about my feelings or problems with people easily and prefer to have time alone"
+  },
+  {
+    "fields": ["o"],
+    "coeff": [1],
+    "text": "I spend time reflecting on things and tend to daydream so often"
+  },
+  {
+    "fields": ["o"],
+    "coeff": [1],
+    "text": "I like variety and trying new things (taste new food, learn a new language, earn a new skill, etc)"
+  },
+  {
+    "fields": ["0"],
+    "coeff": [0],
+    "text": "I love reading complex and challenging material"
+  },
+  {
+    "fields": ["o"],
+    "coeff": [1],
+    "text": "I believe that laws, societal norms and traditions should be adapted to the evolution of the modern world"
+  },
+  {
+    "fields": ["o"],
+    "coeff": [-1],
+    "text": "I focus on the here and now and would rely on my experience rather than my imagination"
+  },
+  {
+    "fields": ["o"],
+    "coeff": [-1],
+    "text": "I am a creature of habit and like having a routine"
+  },
+  {
+    "fields": ["o"],
+    "coeff": [-1],
+    "text": "I avoid philosophical and abstract discussions"
+  },
+  {
+    "fields": ["o"],
+    "coeff": [-1],
+    "text": "I believe that new generations have drifted apart from their roots and traditions under the name of \"freedom\" "
+  },
+  {
+    "fields": ["a"],
+    "coeff": [-1],
+    "text": "I don't easily trust people and believe everyone has hidden motives"
+  },
+  {
+    "fields": ["a"],
+    "coeff": [-1],
+    "text": "People say I have a sharp tongue (You tell the truth even when it hurts)"
+  },
+  {
+    "fields": ["a"],
+    "coeff": [-1],
+    "text": "I don't allocate much time for others, I think everyone should be able to deal with their problems alone"
+  },
+  {
+    "fields": ["a"],
+    "coeff": [-1],
+    "text": "Believe deep inside that I'm better than others"
+  },
+  {
+    "fields": ["a"],
+    "coeff": [-1],
+    "text": "I have a difficulty relating to others' feelings"
+  },
+  {
+    "fields": ["a"],
+    "coeff": [1],
+    "text": "I am convinced all humans are inherently good (there's a good side in everyone)"
+  },
+  {
+    "fields": ["a"],
+    "coeff": [1],
+    "text": "I avoid getting into controversial topics or conversations that could cause disagreement between me and others"
+  },
+  {
+    "fields": ["a"],
+    "coeff": [1],
+    "text": "I am concerned about others and feel it's my responsibility to help them "
+  },
+  {
+    "fields": ["a"],
+    "coeff": [1],
+    "text": "I don't talk a lot about my achievements or successes in front of others"
+  },
+  {
+    "fields": ["a"],
+    "coeff": [1],
+    "text": "I sympathize a lot with people that are worse-off than me and often feel sad when I see people suffering"
+  },
+  {
+    "fields": ["c"],
+    "coeff": [1],
+    "text": "I try to avoid making mistakes as much as I can, and like to always have a backup plan"
+  },
+  {
+    "fields": ["c"],
+    "coeff": [1],
+    "text": "I plunge into tasks with all of my heart and tend to do more of what's expected from me "
+  },
+  {
+    "fields": ["c"],
+    "coeff": [1],
+    "text": "I like order, I make plans and To-Do-Lists and always stick to them"
+  },
+  {
+    "fields": ["c"],
+    "coeff": [-1],
+    "text": "I live by the motto of \"You Only Live Once\" and get myself going with the flow"
+  },
+  {
+    "fields": ["c"],
+    "coeff": [-1],
+    "text": "I need a push to get started in a task and always get things done on last-minute"
+  },
+  {
+    "fields": ["c"],
+    "coeff": [-1],
+    "text": "I leave my belongings around and don't mind staying in a messy place. "
+  },
+  {
+    "fields": ["n"],
+    "coeff": [-1],
+    "text": "I worry about things and fear that they might go wrong "
+  },
+  {
+    "fields": ["o", "n"],
+    "coeff": [1, -1],
+    "text": "I tend to overreact to situations (exple: lose my temper, stress about trivial matters, etc)"
+  },
+  {
+    "fields": ["n"],
+    "coeff": [-1],
+    "text": "I have frequent mood swings"
+  },
+  {
+    "fields": ["n"],
+    "coeff": [-1],
+    "text": "I tend to feel awkward or intimdated in unfamiliar situations or with unfamiliar people "
+  },
+  {
+    "fields": ["n"],
+    "coeff": [1],
+    "text": "I don't think I have big problems to worry about in my life, things are rather going well for me"
+  },
+  {
+    "fields": ["n"],
+    "coeff": [1],
+    "text": "I'm not easily annoyed and even if I am, I usually calm down very quickly"
+  },
+  {
+    "fields": ["n"],
+    "coeff": [1],
+    "text": "I have a lot of happy thoughts and am pleased about myself in general"
+  },
+  {
+    "fields": ["n"],
+    "coeff": [1],
+    "text": "I don't have a problem with being on stage or delivering a public speech in a large group of people "
+  }
+]

@@ -96,6 +96,7 @@
     <div
       :class="result ? 'blur' : ''"
       class="bg-gray-100 rounded-lg p-5"
+      ref="main"
       v-else
     >
       <question
@@ -174,7 +175,7 @@ export default {
       checkGender: true,
       submitted: false,
       verified: true,
-      answers: [].fill(0, 0, questions.length),
+      answers: new Array(questions.length).fill(0, 0, questions.length),
       o: 0,
       c: 0,
       e: 0,
@@ -241,6 +242,7 @@ export default {
         })
       ).text();
 
+      window.scrollTo(0,0)
       this.result = data;
     },
     decrement() {
@@ -250,11 +252,12 @@ export default {
       if (
         !this.answers
           .slice(this.index, this.index + this.step)
-          .reduce((s, x) => s + x, 0)
+          .reduce((s, x) => s && x, true)
       ) {
         this.verified = false;
         return;
       }
+      window.scrollTo(0,0)
       this.verified = true;
       this.index = Math.min(
         this.index + this.step,

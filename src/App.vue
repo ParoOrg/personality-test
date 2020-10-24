@@ -1,5 +1,6 @@
 <template>
 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <HelloWorld/>
 </template>
 
@@ -22,6 +23,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  font-family: 'Montserrat', sans-serif;
   margin-top: 60px;
 }
 </style>

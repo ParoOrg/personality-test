@@ -12,7 +12,7 @@
         class="w-1/6 transition p-3 border-custom-1 border-2 rounded-lg text-black w-full lg:inline my-4"
         :class="selection == 1 ? 'selection-custom-' + selection : ''"
       >
-        Highly disagree
+        {{$t('hDisagree')}}
       </button>
       <button
         @click="
@@ -24,7 +24,7 @@
         class="w-1/6 transition p-3 border-custom-2 border-2 rounded-lg text-black w-full lg:inline my-4"
         :class="selection == 2 ? 'selection-custom-' + selection : ''"
       >
-        Moderately disagree
+        {{$t('mDisagree')}}
       </button>
       <button
         @click="
@@ -36,7 +36,7 @@
         class="w-1/6 transition p-3 border-custom-3 border-2 rounded-lg text-black w-full lg:inline my-4"
         :class="selection == 3 ? 'selection-custom-' + selection : ''"
       >
-        Slightly disagree
+        {{$t('sDisagree')}}
       </button>
       <button
         @click="
@@ -48,7 +48,7 @@
         class="w-1/6 transition p-3 border-custom-4 border-2 rounded-lg text-black w-full lg:inline my-4"
         :class="selection == 4 ? 'selection-custom-' + selection : ''"
       >
-        Slightly agree
+        {{$t('sAgree')}}
       </button>
       <button
         @click="
@@ -60,7 +60,7 @@
         class="w-1/6 transition p-3 border-custom-5 border-2 rounded-lg text-black w-full lg:inline my-4"
         :class="selection == 5 ? 'selection-custom-' + selection : ''"
       >
-        Moderately agree
+        {{$t('mAgree')}}
       </button>
       <button
         @click="
@@ -72,7 +72,7 @@
         class="w-1/6 transition p-3 border-custom-6 border-2 rounded-lg text-black w-full lg:inline my-4"
         :class="selection == 6 ? 'selection-custom-' + selection : ''"
       >
-        Highly agree
+        {{$t('hAgree')}}
       </button>
     </div>
 

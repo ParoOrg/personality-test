@@ -2,7 +2,7 @@
   <div
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
   >
-    <h1 class="text-3xl">Personality Test</h1>
+    <h1 class="text-3xl">{{ $t("personalityTest") }}</h1>
     <form
       @submit="
         (e) => {
@@ -18,7 +18,7 @@
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             for="grid-first-name"
           >
-            Full Name
+            {{ $t("fullName") }}
           </label>
           <input
             @change="
@@ -31,13 +31,13 @@
             type="text"
             v-model="name"
             :class="!checkName ? 'border-red-500' : ''"
-            placeholder="Full name"
+            :placeholder="$t('fullName')"
           />
           <p
             class="text-red-500 text-xs italic"
             :class="checkName ? 'hidden' : 'block'"
           >
-            Please fill out this field.
+            {{ $t("incomplete") }}
           </p>
         </div>
 
@@ -46,7 +46,7 @@
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             for="grid-state"
           >
-            Gender
+            {{ $t("gender") }}
           </label>
           <div class="relative">
             <select
@@ -55,18 +55,22 @@
               id="grid-state"
               v-model="gender"
             >
-              <option value="-1" selected="true" disabled="true" hidden="true"
-                >Select gender</option
+              <option
+                value="-1"
+                selected="true"
+                disabled="true"
+                hidden="true"
+                >{{ $t("selectGender") }}</option
               >
-              <option value="0">Male</option>
-              <option value="1">Female</option>
-              <option value="2">Other</option>
+              <option value="0">{{ $t("male") }}</option>
+              <option value="1">{{ $t("female") }}</option>
+              <option value="2">{{ $t("other") }}</option>
             </select>
             <p
               class="text-red-500 text-xs italic"
               :class="checkGender ? 'hidden' : 'block'"
             >
-              Please fill out this field.
+              {{ $t("incomplete") }}
             </p>
             <div
               class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -89,20 +93,23 @@
           @click="check"
           class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
         >
-          Submit
+          {{ $t("submit") }}
         </button>
       </div>
+      <p class="text-red-500 text-xs italic">
+        {{ error }}
+      </p>
     </form>
     <div
       :class="result ? 'blur' : ''"
       class="bg-gray-100 rounded-lg p-5"
       ref="main"
-      v-else
+      v-else-if="submitted"
     >
       <question
         v-for="(val, i) in testQuestions.slice(index, index + step)"
         :index="i + index"
-        :question="testQuestions[i + index].text"
+        :question="testQuestions[i + index].text[$i18n.locale]"
         :answer="answers[i + index]"
         :key="i"
         :callback="(val, index) => answer(index, val)"
@@ -113,10 +120,10 @@
           @click="decrement"
           class="md:w-32 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
         >
-          Back
+          {{ $t("back") }}
         </button>
         <div v-if="!verified" class="text-red-600">
-          You need to finish answering all the questions first!
+          {{ $t("incompleteError") }}
         </div>
         <button
           type="submit"
@@ -125,7 +132,7 @@
           "
           class="md:w-32 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
         >
-          {{ index == testQuestions.length - step ? "Submit" : "Next" }}
+          {{ index == testQuestions.length - step ? $t("submit") : $t("next") }}
         </button>
       </div>
     </div>
@@ -149,7 +156,7 @@
         "
         class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline text-black lg:inline my-4"
       >
-        Close
+        {{ $t("close") }}
       </button>
     </div>
   </div>
@@ -159,12 +166,14 @@
 import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question";
+import { db } from "../firebaseDB";
 
 export default {
   name: "HelloWorld",
   data() {
     return {
-      name: "",
+      name: db.app.auth().currentUser?.displayName || "",
+      photoUrl: db.app.auth().currentUser?.photoURL || "",
       gender: -1,
       result: "",
       testQuestions: questions
@@ -180,16 +189,24 @@ export default {
       c: 0,
       e: 0,
       a: 0,
+      error: "",
       n: 0,
       index: 0,
       step: 5,
+      user: null,
     };
   },
   components: {
     Question,
   },
   methods: {
-    check() {
+    async check() {
+      console.log(this.user)
+      if (this.user != null) {
+        this.error = this.$t("personalityTaken");
+        return;
+      }
+      // user = user[Object.keys(user)[0]];
       this.checkName = this.name && true;
       this.checkGender = this.gender >= 0;
       if (this.checkName && this.gender >= 0) {
@@ -241,8 +258,18 @@ export default {
           }),
         })
       ).text();
-
-      window.scrollTo(0,0)
+      await db.app.auth().currentUser.updateProfile({
+        photoUrl: "https://example.com/jane-q-user/profile.jpg",
+      });
+      await db.app
+        .database()
+        .ref("userAnswers")
+        .push({
+          email: db.app.auth().currentUser.email,
+          answers: this.answers,
+          ocean: [this.o, this.c, this.e, this.a, this.n],
+        });
+      window.scrollTo(0, 0);
       this.result = data;
     },
     decrement() {
@@ -257,7 +284,7 @@ export default {
         this.verified = false;
         return;
       }
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0);
       this.verified = true;
       this.index = Math.min(
         this.index + this.step,
@@ -265,13 +292,19 @@ export default {
       );
     },
   },
-  mounted() {
+  async mounted() {
+    if (!db.app.auth().currentUser) this.$router.push({ name: "login" });
+    await db.app
+        .database()
+        .ref("userAnswers")
+        .orderByChild("email")
+        .equalTo(db.app.auth().currentUser.email)
+        .on("value", (v) => (this.user = v.toJSON()));
     this.console = console;
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

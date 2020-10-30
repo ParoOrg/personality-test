@@ -267,6 +267,7 @@ export default {
         .push({
           email: db.app.auth().currentUser.email,
           answers: this.answers,
+          lang: this.$i18n.locale,
           ocean: [this.o, this.c, this.e, this.a, this.n],
         });
       window.scrollTo(0, 0);

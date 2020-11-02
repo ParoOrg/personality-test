@@ -8,7 +8,7 @@
       "
       class="w-full h-full relative lg:h-auto lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
     >
-    <lang-gear class="absolute custom-position"></lang-gear>
+      <lang-gear class="absolute custom-position"></lang-gear>
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full flex items-start flex-col px-3 mb-6 md:mb-0">
           <label
@@ -72,10 +72,20 @@
           >
             {{ $t("login") }}
           </button>
+          <button
+            type="submit"
+            @click="signUp"
+            class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+          >
+            {{ $t("signUp") }}
+          </button>
         </div>
       </div>
       <p class="text-red-500 text-xs italic">
         {{ error }}
+      </p>
+      <p class="text-green-500 text-xs italic">
+        {{ success }}
       </p>
     </form>
   </div>
@@ -83,11 +93,11 @@
 
 <script>
 import { db } from "../firebaseDB";
-import LangGear from "./LangGear"
+import LangGear from "./LangGear";
 
 export default {
   components: {
-    LangGear
+    LangGear,
   },
   data() {
     return {
@@ -97,6 +107,7 @@ export default {
       email: "",
       password: "",
       error: "",
+      success: "",
       name: "",
       signup: false,
       // eslint-disable-next-line no-useless-escape
@@ -104,23 +115,37 @@ export default {
     };
   },
   methods: {
-    check() {
-      console.log();
+    async login() {
+      if (!this.checkEmail && !this.checkPassword) return;
+      await db.app.auth().signInWithEmailAndPassword(this.email, this.password);
+      if (db.app.auth().currentUser.emailVerified)
+        this.$router.push({ name: "home" });
+      else {
+        this.error = this.$t("emailVerify");
+        db.app.auth().signOut();
+      }
     },
-    login() {
+    async signUp() {
+      const auth = db.app.auth();
+      console.log(this.checkEmail, this.checkPassword);
       if (!this.checkEmail && !this.checkPassword) return;
       db.app
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => this.$router.push({ name: "home" }))
-        .catch(() => (this.error = this.$t("loginError")));
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(async () => {
+          this.success = this.$t("signupSuccess");
+          await auth.signInWithEmailAndPassword(this.email, this.password);
+          await auth.currentUser.sendEmailVerification();
+          await auth.signOut();
+        })
+        .catch(() => (this.error = this.$t("signupError")));
     },
   },
 };
 </script>
 
 <style>
-.custom-position{
+.custom-position {
   top: 5px;
   right: 5px;
 }

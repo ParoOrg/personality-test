@@ -201,7 +201,6 @@ export default {
   },
   methods: {
     async check() {
-      console.log(this.user)
       if (this.user != null) {
         this.error = this.$t("personalityTaken");
         return;
@@ -254,6 +253,7 @@ export default {
             a: this.a,
             n: this.n,
             name: this.name,
+            lang: this.$i18n.locale,
             gender: +this.gender,
           }),
         })

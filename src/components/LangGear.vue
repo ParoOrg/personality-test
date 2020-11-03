@@ -1,17 +1,26 @@
 <template>
-  <div class="">
+  <div class="flex">
     <img
-      :src="'/flag_'+$i18n.locale+'.svg'"
-      class="h-auto w-10 cursor-pointer"
-      @click="() => (enable = !enable)"
+      :src="'/flag_en.svg'"
+      class="w-auto h-4 mx-1 cursor-pointer"
+      @click="()=>$i18n.locale = 'en'"
       alt=""
       srcset=""
     />
-    <select v-if="enable" v-model="$i18n.locale" class="bg-gray-100 absolute position-custom2 rounded-lg p-3 border-2 text-lg border-gray-600" @change="changeLang" name="" id="">
-      <option value="en">English</option>
-      <option value="fr">Français</option>
-      <option value="ar">العربية</option>
-    </select>
+    <img
+      :src="'/flag_fr.svg'"
+      class="w-auto h-4 mx-1 cursor-pointer"
+      @click="()=>$i18n.locale = 'fr'"
+      alt=""
+      srcset=""
+    />
+    <img
+      :src="'/flag_ar.svg'"
+      class="w-auto h-4 mx-1 cursor-pointer"
+      @click="()=>$i18n.locale = 'ar'"
+      alt=""
+      srcset=""
+    />
   </div>
 </template>
 

@@ -11,9 +11,10 @@
         }
       "
       v-if="!submitted"
-      class="w-full lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
+      class="w-full relative lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
     >
       <div class="flex flex-wrap justify-center -mx-3 mb-6">
+      <lang-gear class="absolute custom-position"></lang-gear>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -167,6 +168,7 @@
 import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question";
+import LangGear from "./LangGear"
 import { db } from "../firebaseDB";
 
 export default {
@@ -199,6 +201,7 @@ export default {
   },
   components: {
     Question,
+    LangGear
   },
   methods: {
     async check() {

@@ -263,7 +263,7 @@ export default {
       });
       await db.app
         .database()
-        .ref("userAnswers")
+        .ref("userAnswers/"+db.app.auth().currentUser.email)
         .push({
           email: db.app.auth().currentUser.email,
           answers: this.answers,
@@ -294,14 +294,14 @@ export default {
     },
   },
   async mounted() {
+    console.log(db.app.auth().currentUser);
     if (!db.app.auth().currentUser) this.$router.push({ name: "login" });
     await db.app
-        .database()
-        .ref("userAnswers")
-        .orderByChild("email")
-        .equalTo(db.app.auth().currentUser.email)
-        .on("value", (v) => (this.user = v.toJSON()));
-    this.console = console;
+      .database()
+      .ref("userAnswers")
+      .orderByChild("email")
+      .equalTo(db.app.auth().currentUser.email)
+      .on("value", (v) => (this.user = v.toJSON()));
   },
 };
 </script>

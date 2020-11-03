@@ -92,7 +92,7 @@
             {{ $t("validateCity") }}
           </p>
         </div>
-        <div class="lg:w-1/2 w-full flex items-start flex-col px-3 mb-6 md:mb-0">
+        <div class="w-full flex items-start flex-col px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 font-bold mb-2"
             for="grid-first-name"

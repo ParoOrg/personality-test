@@ -15,7 +15,7 @@
     >
       <div class="flex flex-wrap justify-center -mx-3 mb-6">
         <lang-gear class="absolute custom-position"></lang-gear>
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div class="w-full px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             for="grid-first-name"
@@ -43,7 +43,7 @@
           </p>
         </div>
 
-        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <div class="w-full px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             for="grid-state"
@@ -285,7 +285,6 @@ export default {
         });
       window.scrollTo(0, 0);
       this.result = data;
-      console.log(this.result);
     },
     decrement() {
       if(this.index==0)
@@ -311,7 +310,6 @@ export default {
     },
   },
   async mounted() {
-    console.log(db.app.auth().currentUser);
     if (!db.app.auth().currentUser) this.$router.push({ name: "login" });
     await db.app
       .database()

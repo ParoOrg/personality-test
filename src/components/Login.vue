@@ -1,5 +1,6 @@
 <template>
-  <div class="flex justify-center h-screen items-center">
+  <div class="flex justify-center flex-col h-screen items-center">
+    <h1 class="text-3xl custom">LOVESTER</h1>
     <form
       @submit="
         (e) => {
@@ -324,5 +325,9 @@ export default {
 .custom-position {
   top: 5px;
   right: 5px;
+}
+
+.custom{
+  color: #F64740
 }
 </style>

@@ -92,7 +92,7 @@
             {{ $t("validateCity") }}
           </p>
         </div>
-        <div class="w-1/2 flex items-start flex-col px-3 mb-6 md:mb-0">
+        <div class="lg:w-1/2 w-full flex items-start flex-col px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 font-bold mb-2"
             for="grid-first-name"
@@ -119,7 +119,7 @@
             {{ $t("validateBirthday") }}
           </p>
         </div>
-        <div class="w-1/2 flex items-start flex-col px-3 mb-6 md:mb-0 relative">
+        <div class="lg:w-1/2 w-full flex items-start flex-col px-3 mb-6 md:mb-0 relative">
           <label
             class="block uppercase tracking-wide text-gray-700 font-bold mb-2"
             for="grid-first-name"

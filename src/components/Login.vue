@@ -119,46 +119,6 @@
             {{ $t("validateBirthday") }}
           </p>
         </div>
-        <div class="lg:w-1/2 w-full flex items-start flex-col px-3 mb-6 md:mb-0 relative">
-          <label
-            class="block uppercase tracking-wide text-gray-700 font-bold mb-2"
-            for="grid-first-name"
-          >
-            {{ $t("gender") }}
-          </label>
-          <select
-            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            :class="!checkGender ? 'border-red-500' : ''"
-            id="grid-state"
-            v-model="gender"
-          >
-            <option value="-1" selected="true" disabled="true" hidden="true">{{
-              $t("selectGender")
-            }}</option>
-            <option value="0">{{ $t("male") }}</option>
-            <option value="1">{{ $t("female") }}</option>
-            <option value="2">{{ $t("other") }}</option>
-          </select>
-          <p
-            class="text-red-500 text-xs italic"
-            :class="checkGender ? 'hidden' : 'block'"
-          >
-            {{ $t("incomplete") }}
-          </p>
-          <div
-            class="pointer-events-none absolute mt-5 mr-5 form-select inset-y-0 right-0 flex items-center px-2 text-gray-700"
-          >
-            <svg
-              class="fill-current h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-              />
-            </svg>
-          </div>
-        </div>
         <div class="flex w-full justify-evenly">
           <!-- <button
             type="submit"
@@ -265,8 +225,7 @@ export default {
         !this.checkEmail ||
         !this.checkCountry ||
         !this.checkCity ||
-        !this.checkBirthday ||
-        !this.checkGender
+        !this.checkBirthday
       )
         return;
       const auth = db.app.auth();
@@ -300,6 +259,12 @@ export default {
               city: this.city,
               birthday: this.birthday,
             });
+          this.name = "";
+          this.gender = -1;
+          this.country = "";
+          this.email = "";
+          this.city = "";
+          this.birthday = null;
           this.success = true;
           this.loading = false;
         })

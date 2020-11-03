@@ -2,6 +2,7 @@
   <div
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
   >
+    <h1 class="text-3xl">LOVESTER</h1>
     <h1 class="text-3xl">{{ $t("personalityTest") }}</h1>
     <form
       @submit="

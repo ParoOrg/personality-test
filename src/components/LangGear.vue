@@ -1,8 +1,8 @@
 <template>
   <div class="">
     <img
-      src="/gear.svg"
-      class="h-5 w-5 cursor-pointer"
+      :src="'/flag_'+$i18n.locale+'.svg'"
+      class="h-auto w-10 cursor-pointer"
       @click="() => (enable = !enable)"
       alt=""
       srcset=""

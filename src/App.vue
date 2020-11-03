@@ -9,8 +9,13 @@
 </template>
 
 <style>
+@font-face {
+    font-family: "Museo Sans Rounded";
+    src: url("/font.otf") format("opentype");
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Museo Sans Rounded, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

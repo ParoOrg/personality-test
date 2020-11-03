@@ -280,6 +280,18 @@ export default {
       )
         return;
       const auth = db.app.auth();
+      // let x = null;
+      // await db.app
+      //   .database()
+      //   .ref("userData")
+      //   .orderByChild("email")
+      //   .equalTo(this.email)
+      //   .on("value", (v) => (x = v.toJSON()));
+      // console.log(x);
+      // if (x != null) {
+      //   this.error = this.$t("signupError");
+      //   return;
+      // }
       await auth
         .sendSignInLinkToEmail(this.email, {
           url: "https://lovesterorg.github.io/personality-test/#/login",
@@ -287,18 +299,7 @@ export default {
         })
         .then(async () => {
           window.localStorage.setItem("emailForSignIn", this.email);
-          let x = null;
-          await db.app
-            .database()
-            .ref("userData")
-            .orderByChild("email")
-            .equalTo(this.email)
-            .on("value", (v) => (x = v.toJSON()));
-          console.log(x);
-          if (x != null) {
-            this.error = this.$t("signupError");
-            return;
-          }
+
           await db.app
             .database()
             .ref("userData")
@@ -327,7 +328,8 @@ export default {
   right: 5px;
 }
 
-.custom{
-  color: #F64740
+.custom {
+  color: #f64740;
+  margin-top: 60px;
 }
 </style>

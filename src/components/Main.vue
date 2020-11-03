@@ -14,7 +14,7 @@
       class="w-full relative lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
     >
       <div class="flex flex-wrap justify-center -mx-3 mb-6">
-      <lang-gear class="absolute custom-position"></lang-gear>
+        <lang-gear class="absolute custom-position"></lang-gear>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -140,11 +140,11 @@
     </div>
 
     <div
-      v-if="result"
+      v-if="result.length>0"
       class="absolute border-2 z-50 bg-white rounded-lg border-gray-400 w-10/12 h-10/12 m-1/2 position-custom"
     >
       <div class="w-full py-5 text-lg font-bold border-b-2 border-gray-400">
-        Your test results
+        {{$t("yourResults")}}
       </div>
       <div class="w-full p-5">
         {{ result }}
@@ -168,7 +168,7 @@
 import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question";
-import LangGear from "./LangGear"
+import LangGear from "./LangGear";
 import { db } from "../firebaseDB";
 
 export default {
@@ -201,14 +201,15 @@ export default {
   },
   components: {
     Question,
-    LangGear
+    LangGear,
   },
   methods: {
     async check() {
-      if (this.user != null) {
-        this.error = this.$t("personalityTaken");
-        return;
-      }
+      // this.sendReport()
+      // if (this.user != null) {
+      //   this.error = this.$t("personalityTaken");
+      //   return;
+      // }
       // user = user[Object.keys(user)[0]];
       this.checkName = this.name && true;
       this.checkGender = this.gender >= 0;
@@ -259,6 +260,14 @@ export default {
             name: this.name,
             lang: this.$i18n.locale,
             gender: +this.gender,
+            // o: -29.166666666666668,
+            // c: 44.44444444444444,
+            // e: -12.5,
+            // a: -23.333333333333332,
+            // n: -12.5,
+            // name: "qsdq",
+            // lang: "en",
+            // gender: 0,
           }),
         })
       ).text();
@@ -267,7 +276,7 @@ export default {
       });
       await db.app
         .database()
-        .ref("userAnswers/"+db.app.auth().currentUser.email)
+        .ref("userAnswers")
         .push({
           email: db.app.auth().currentUser.email,
           answers: this.answers,
@@ -276,6 +285,7 @@ export default {
         });
       window.scrollTo(0, 0);
       this.result = data;
+      console.log(this.result);
     },
     decrement() {
       this.index = Math.max(this.index - this.step, 0);
@@ -332,7 +342,8 @@ a {
 .position-custom {
   top: 2rem;
 }
-.custom{
-  color: #F64740
+.custom {
+  color: #f64740;
+  margin-top: 60px;
 }
 </style>

@@ -38,33 +38,6 @@
             {{ $t("validateEmail") }}
           </p>
         </div>
-        <div class="w-full flex items-start flex-col px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 font-bold mb-2"
-            for="grid-first-name"
-          >
-            {{ $t("name") }}
-          </label>
-          <input
-            @change="
-              (e) => {
-                checkName = name && true;
-              }
-            "
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="grid-first-name"
-            type="text"
-            v-model="name"
-            :class="!checkName ? 'border-red-500' : ''"
-            :placeholder="$t('name')"
-          />
-          <p
-            class="text-red-500 text-xs italic"
-            :class="checkName ? 'hidden' : 'block'"
-          >
-            {{ $t("validateName") }}
-          </p>
-        </div>
         <div class="w-1/2 flex items-start flex-col px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 font-bold mb-2"
@@ -195,6 +168,7 @@
             {{ $t("login") }}
           </button> -->
           <button
+            :disabled="loading || success"
             type="submit"
             @click="signUp"
             class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
@@ -206,10 +180,26 @@
       <p class="text-red-500 text-xs italic">
         {{ error }}
       </p>
-      <p class="text-green-500 text-xs italic">
-        {{ success }}
-      </p>
     </form>
+    <div
+      v-if="success"
+      class="absolute text-green-500 border-2 z-50 bg-white rounded-lg border-gray-400 h-10/12 m-1/2 position-custom"
+    >
+      <div class="w-full p-5">
+        {{ $t("signupSuccess") }}
+      </div>
+      <button
+        @click="
+          () => {
+            result = false;
+            success = false;
+          }
+        "
+        class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline lg:inline my-4"
+      >
+        {{ $t("close") }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -229,16 +219,17 @@ export default {
       checkCountry: true,
       checkCity: true,
       checkGender: true,
+      loading: false,
       checkBirthday: true,
       email: "",
+      result: false,
       gender: -1,
       country: "",
       city: "",
       password: "",
       error: "",
-      success: "",
+      success: false,
       birthday: null,
-      name: "",
       signup: false,
       // eslint-disable-next-line no-useless-escape
       re: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -263,16 +254,15 @@ export default {
   },
   methods: {
     async signUp() {
-      this.checkName = this.name && true;
       this.checkGender = this.gender !== -1;
       this.checkCountry = this.country && true;
       this.checkCity = this.city && true;
       this.checkBirthday = this.birthday;
+      this.loading = true;
       this.checkEmail =
         this.email && this.re.test(String(this.email).toLowerCase());
       if (
         !this.checkEmail ||
-        !this.checkGender ||
         !this.checkCountry ||
         !this.checkCity ||
         !this.checkBirthday ||
@@ -305,13 +295,13 @@ export default {
             .ref("userData")
             .push({
               email: this.email,
-              name: this.name,
               gender: this.gender,
               country: this.country,
               city: this.city,
               birthday: this.birthday,
             });
-          this.success = this.$t("signupSuccess");
+          this.success = true;
+          this.loading = false;
         })
         .catch((e) => {
           console.log(e);

@@ -288,6 +288,9 @@ export default {
       console.log(this.result);
     },
     decrement() {
+      if(this.index==0)
+        this.submitted = false;
+
       this.index = Math.max(this.index - this.step, 0);
     },
     increment() {

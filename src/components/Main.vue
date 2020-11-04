@@ -140,11 +140,11 @@
     </div>
 
     <div
-      v-if="result.length>0"
+      v-if="result.length > 0"
       class="absolute border-2 z-50 bg-white rounded-lg border-gray-400 w-10/12 h-10/12 m-1/2 position-custom"
     >
       <div class="w-full py-5 text-lg font-bold border-b-2 border-gray-400">
-        {{$t("yourResults")}}
+        {{ $t("yourResults") }}
       </div>
       <div class="w-full p-5">
         {{ result }}
@@ -195,6 +195,7 @@ export default {
       error: "",
       n: 0,
       index: 0,
+      transporter: null,
       step: 5,
       user: null,
     };
@@ -211,6 +212,7 @@ export default {
       //   return;
       // }
       // user = user[Object.keys(user)[0]];
+      
       this.checkName = this.name && true;
       this.checkGender = this.gender >= 0;
       if (this.checkName && this.gender >= 0) {
@@ -271,6 +273,35 @@ export default {
           }),
         })
       ).text();
+
+      // await fetch("https://api.mailjet.com/v3.1/send", {
+      //   headers: {
+      //     Authorization:
+      //       "Basic 8c8cf6d6b4abee8a12863d8265e8757a:98d63c7d35a0c7003af7b268f758fec3",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     Messages: [
+      //       {
+      //         From: {
+      //           Email: "report@lovester.net",
+      //           Name: "Personality Report by Lovester",
+      //         },
+      //         To: [
+      //           {
+      //             Email: db.app.auth().currentUser.email,
+      //             Name: this.name,
+      //           },
+      //         ],
+      //         Subject: this.$t('personalitySubject'),
+      //         TextPart: data,
+      //         CustomID: "AppGettingStartedTest",
+      //       },
+      //     ],
+      //   }),
+      //   method: "POST",
+      // });
+
       await db.app.auth().currentUser.updateProfile({
         photoUrl: "https://example.com/jane-q-user/profile.jpg",
       });
@@ -287,8 +318,7 @@ export default {
       this.result = data;
     },
     decrement() {
-      if(this.index==0)
-        this.submitted = false;
+      if (this.index == 0) this.submitted = false;
 
       this.index = Math.max(this.index - this.step, 0);
     },
@@ -311,6 +341,7 @@ export default {
   },
   async mounted() {
     if (!db.app.auth().currentUser) this.$router.push({ name: "login" });
+
     await db.app
       .database()
       .ref("userAnswers")

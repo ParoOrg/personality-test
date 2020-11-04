@@ -21,6 +21,10 @@ const i18n = createI18n({
       country: "Country",
       city: "City",
       gender: "Gender",
+      day:'Day',
+      month: 'Month',
+      year: 'Year',
+      personalitySubject: "Your personality test results",
       validateEmail: "Please enter a valid email",
       validateName: "Please enter a valid name",
       validateCountry: "Please enter a valid country",
@@ -63,6 +67,10 @@ const i18n = createI18n({
       country: "Pays",
       city: "Ville",
       gender: "Genre",
+      day:'Jour',
+      month: 'Mois',
+      year: 'Année',
+      personalitySubject: "Les résultats de votre test de personnalité",
       validateEmail: "Veuillez saisir un e-mail valide",
       validateName: "Veuillez saisir un nom valide",
       validateCountry: "Veuillez saisir un pays valide",
@@ -105,6 +113,10 @@ const i18n = createI18n({
       country: "البلد",
       city: "المدينة",
       gender: "الجنس",
+      day:'يوم',
+      month: 'شهر',
+      year: 'سنة',
+      personalitySubject: "نتائج اختبار شخصيتك",
       validateEmail: "يرجى إدخال البريد الإلكتروني الصحيح",
       validateName: "يرجى إدخال البريد الإلكتروني الصحيح",
       validateCountry: "يرجى إدخال البريد الإلكتروني الصحيح",
@@ -145,6 +157,6 @@ const i18n = createI18n({
 
 const app = createApp(App)
   .use(router)
-  .use(i18n);
+  .use(i18n)
 
 app.mount("#app");

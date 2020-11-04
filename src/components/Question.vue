@@ -115,17 +115,14 @@ export default {
   },
   computed: {
     selection() {
-      console.log("answer: ", this.answer)
       return this.answer;
     },
   },
   methods: {
     test() {
-      console.log(this.checkValue);
     },
   },
   mounted() {
-    console.log("selection", this.selection);
   },
 };
 </script>

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex justify-center flex-col h-screen items-center">
+  <div
+    :class="load ? 'blur' : ''"
+    class="flex justify-center flex-col h-screen items-center"
+  >
     <h1 class="text-3xl custom">LOVESTER</h1>
     <form
       @submit="
@@ -7,7 +10,7 @@
           e.preventDefault();
         }
       "
-      class="w-full h-full relative lg:h-auto lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
+      class="w-full relative lg:h-auto lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
     >
       <lang-gear class="absolute custom-position"></lang-gear>
       <div class="flex flex-wrap -mx-3 mb-6">
@@ -99,19 +102,40 @@
           >
             {{ $t("birthday") }}
           </label>
-          <input
-            @change="
-              (e) => {
-                checkBirthday = birthday && true;
-              }
-            "
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="grid-first-name"
-            type="date"
-            v-model="birthday"
-            :class="!checkBirthday ? 'border-red-500' : ''"
-            :placeholder="$t('birthday')"
-          />
+          <div class="flex justify-center w-full md:flex-no-wrap flex-wrap">
+            <select
+              class="w-full md:w-1/3 my-1 appearance-none overflow-visible mx-1 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              @change="() => checkDate()"
+              v-model="day"
+            >
+              <option value="-1" selected disabled hidden>{{
+                $t("day")
+              }}</option>
+              <option v-for="i in 31" :value="i" :key="i">{{ i }}</option>
+            </select>
+            <select
+              class="w-full md:w-1/3 my-1 appearance-none overflow-visible mx-1 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              @change="() => checkDate()"
+              v-model="month"
+            >
+              <option value="-1" selected disabled hidden>{{
+                $t("month")
+              }}</option>
+              <option v-for="i in 12" :value="i" :key="i">{{ i }}</option>
+            </select>
+            <select
+              class="w-full md:w-1/3 my-1 appearance-none overflow-visible mx-1 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              @change="() => checkDate()"
+              v-model="year"
+            >
+              <option value="-1" selected disabled hidden>{{
+                $t("year")
+              }}</option>
+              <option v-for="i in 100" :value="i + 1920" :key="i + 1920">{{
+                i + 1920
+              }}</option>
+            </select>
+          </div>
           <p
             class="text-red-500 text-xs italic"
             :class="checkBirthday ? 'hidden' : 'block'"
@@ -130,7 +154,7 @@
           <button
             :disabled="loading || success"
             type="submit"
-            @click="signUp"
+            @click="() => signUp()"
             class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
           >
             {{ $t("signUp") }}
@@ -161,15 +185,18 @@
       </button>
     </div>
   </div>
+  <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
 </template>
 
 <script>
 import { db } from "../firebaseDB";
 import LangGear from "./LangGear";
+import MoonLoader from "vue-spinner/src/MoonLoader";
 
 export default {
   components: {
     LangGear,
+    MoonLoader,
   },
   data() {
     return {
@@ -182,6 +209,9 @@ export default {
       loading: false,
       checkBirthday: true,
       email: "",
+      day: -1,
+      month: -1,
+      year: -1,
       result: false,
       gender: -1,
       country: "",
@@ -189,6 +219,7 @@ export default {
       password: "",
       error: "",
       success: false,
+      load: false,
       birthday: null,
       signup: false,
       // eslint-disable-next-line no-useless-escape
@@ -196,28 +227,58 @@ export default {
     };
   },
   mounted() {
-    console.log(db.app.auth().currentUser);
+    this.load = true;
+    db.app.auth().languageCode = this.$i18n.locale;
     if (db.app.auth().isSignInWithEmailLink(window.location.href)) {
       var email = window.localStorage.getItem("emailForSignIn");
       if (!email) return;
       db.app
         .auth()
         .signInWithEmailLink(email, window.location.href)
-        .then((result) => {
-          console.log(result);
+        .then(() => {
           window.localStorage.removeItem("emailForSignIn");
-          console.log(db.app.auth().currentUser);
+          this.load = false;
           this.$router.push({ name: "home" });
         })
-        .catch(function() {});
+        .catch(function() {
+          this.load = false;
+        });
     }
+    setTimeout(() => (this.load = false), 500);
   },
   methods: {
+    checkDate() {
+      let maxDays = 31;
+      switch (this.month) {
+        case 2:
+          maxDays =
+            (this.year % 4 == 0 && this.year % 100) || this.year % 400 == 0
+              ? 29
+              : 28;
+          break;
+        case 9:
+        case 4:
+        case 6:
+        case 11:
+          maxDays = 30;
+          break;
+        default:
+          break;
+      }
+      console.log(maxDays);
+      if (this.day > maxDays) return false;
+      return true;
+    },
     async signUp() {
+      console.log("date: ", this.checkDate());
       this.checkGender = this.gender !== -1;
       this.checkCountry = this.country && true;
       this.checkCity = this.city && true;
-      this.checkBirthday = this.birthday;
+      this.checkBirthday =
+        this.checkDate() &&
+        this.day !== -1 &&
+        this.month !== -1 &&
+        this.year !== -1;
       this.loading = true;
       this.checkEmail =
         this.email && this.re.test(String(this.email).toLowerCase());
@@ -226,8 +287,10 @@ export default {
         !this.checkCountry ||
         !this.checkCity ||
         !this.checkBirthday
-      )
+      ) {
+        this.loading = false;
         return;
+      }
       const auth = db.app.auth();
       // let x = null;
       // await db.app
@@ -257,7 +320,7 @@ export default {
               gender: this.gender,
               country: this.country,
               city: this.city,
-              birthday: this.birthday,
+              birthday: this.day + "/" + this.month + "/" + this.year,
             });
           this.name = "";
           this.gender = -1;
@@ -286,5 +349,16 @@ export default {
 .custom {
   color: #f64740;
   margin-top: 60px;
+}
+
+.blur {
+  filter: opacity(0);
+  transition: 0.5s;
+}
+.position-loader {
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
 }
 </style>

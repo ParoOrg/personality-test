@@ -226,7 +226,7 @@ export default {
       re: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     };
   },
-  mounted() {
+  async mounted() {
     this.load = true;
     db.app.auth().languageCode = this.$i18n.locale;
     setTimeout(() => (this.load = false), 2000);
@@ -304,6 +304,7 @@ export default {
       //   this.error = this.$t("signupError");
       //   return;
       // }
+    db.app.auth().languageCode = this.$i18n.locale;
       await auth
         .sendSignInLinkToEmail(this.email, {
           url: "https://lovesterorg.github.io/personality-test/#/login",

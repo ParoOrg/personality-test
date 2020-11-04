@@ -277,7 +277,7 @@ export default {
       this.checkBirthday =
         this.checkDate() &&
         this.day !== -1 &&
-        this.month !== -1 &&
+        this.month !== -1  &&
         this.year !== -1;
       this.loading = true;
       this.checkEmail =
@@ -327,6 +327,9 @@ export default {
           this.country = "";
           this.email = "";
           this.city = "";
+          this.day = -1;
+          this.month = -1;
+          this.year = -1;
           this.birthday = null;
           this.success = true;
           this.loading = false;

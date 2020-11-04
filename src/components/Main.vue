@@ -262,14 +262,6 @@ export default {
             name: this.name,
             lang: this.$i18n.locale,
             gender: +this.gender,
-            // o: -29.166666666666668,
-            // c: 44.44444444444444,
-            // e: -12.5,
-            // a: -23.333333333333332,
-            // n: -12.5,
-            // name: "qsdq",
-            // lang: "en",
-            // gender: 0,
           }),
         })
       ).text();

@@ -10,7 +10,7 @@
           }
         "
         class="w-1/6 transition p-3 border-custom-1 border-2 rounded-lg text-black w-full lg:inline my-4"
-        :class="selection == 1 ? 'selection-custom-' + selection : ''"
+        :class="selection == 1 ? 'selection-custom-6': ''"
       >
         {{$t('hDisagree')}}
       </button>
@@ -22,7 +22,7 @@
           }
         "
         class="w-1/6 transition p-3 border-custom-2 border-2 rounded-lg text-black w-full lg:inline my-4"
-        :class="selection == 2 ? 'selection-custom-' + selection : ''"
+        :class="selection == 2 ? 'selection-custom-6': ''"
       >
         {{$t('mDisagree')}}
       </button>
@@ -34,7 +34,7 @@
           }
         "
         class="w-1/6 transition p-3 border-custom-3 border-2 rounded-lg text-black w-full lg:inline my-4"
-        :class="selection == 3 ? 'selection-custom-' + selection : ''"
+        :class="selection == 3 ? 'selection-custom-6': ''"
       >
         {{$t('sDisagree')}}
       </button>
@@ -46,7 +46,7 @@
           }
         "
         class="w-1/6 transition p-3 border-custom-4 border-2 rounded-lg text-black w-full lg:inline my-4"
-        :class="selection == 4 ? 'selection-custom-' + selection : ''"
+        :class="selection == 4 ? 'selection-custom-6': ''"
       >
         {{$t('sAgree')}}
       </button>
@@ -58,7 +58,7 @@
           }
         "
         class="w-1/6 transition p-3 border-custom-5 border-2 rounded-lg text-black w-full lg:inline my-4"
-        :class="selection == 5 ? 'selection-custom-' + selection : ''"
+        :class="selection == 5 ? 'selection-custom-6': ''"
       >
         {{$t('mAgree')}}
       </button>
@@ -70,7 +70,7 @@
           }
         "
         class="w-1/6 transition p-3 border-custom-6 border-2 rounded-lg text-black w-full lg:inline my-4"
-        :class="selection == 6 ? 'selection-custom-' + selection : ''"
+        :class="selection == 6 ? 'selection-custom-6': ''"
       >
         {{$t('hAgree')}}
       </button>
@@ -138,8 +138,8 @@ export default {
 }
 
 .border-custom-5:hover {
-  border-color: #55d85c;
-  color: #55d85c;
+  border-color: #2ffe66;
+  color: #2ffe66;
 }
 .selection-custom-5 {
   border-color: #55d85c;
@@ -147,8 +147,8 @@ export default {
 }
 
 .border-custom-4:hover {
-  border-color: #7cae4f;
-  color: #7cae4f;
+  border-color: #2ffe66;
+  color: #2ffe66;
 }
 .selection-custom-4 {
   border-color: #7cae4f;
@@ -156,8 +156,8 @@ export default {
 }
 
 .border-custom-3:hover {
-  border-color: #a98142;
-  color: #a98142;
+  border-color: #2ffe66;
+  color: #2ffe66;
 }
 .selection-custom-3 {
   border-color: #a98142;
@@ -165,8 +165,8 @@ export default {
 }
 
 .border-custom-2:hover {
-  border-color: #df4b33;
-  color: #df4b33;
+  border-color: #2ffe66;
+  color: #2ffe66;
 }
 .selection-custom-2 {
   border-color: #df4b33;
@@ -174,8 +174,8 @@ export default {
 }
 
 .border-custom-1:hover {
-  border-color: #ff2a29;
-  color: #ff2a29;
+  border-color: #2ffe66;
+  color: #2ffe66;
 }
 .selection-custom-1 {
   border-color: #ff2a29;

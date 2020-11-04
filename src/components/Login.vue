@@ -229,7 +229,7 @@ export default {
   mounted() {
     this.load = true;
     db.app.auth().languageCode = this.$i18n.locale;
-    setTimeout(() => (this.load = false), 1000);
+    setTimeout(() => (this.load = false), 2000);
     if (db.app.auth().isSignInWithEmailLink(window.location.href)) {
       var email = window.localStorage.getItem("emailForSignIn");
       if (!email) return;

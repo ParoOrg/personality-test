@@ -131,8 +131,8 @@
               <option value="-1" selected disabled hidden>{{
                 $t("year")
               }}</option>
-              <option v-for="i in 100" :value="i + 1920" :key="i + 1920">{{
-                i + 1920
+              <option v-for="i in 70" :value="i + 1949" :key="i + 1949">{{
+                i + 1949
               }}</option>
             </select>
           </div>

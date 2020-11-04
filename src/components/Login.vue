@@ -229,6 +229,7 @@ export default {
   mounted() {
     this.load = true;
     db.app.auth().languageCode = this.$i18n.locale;
+    setTimeout(() => (this.load = false), 1000);
     if (db.app.auth().isSignInWithEmailLink(window.location.href)) {
       var email = window.localStorage.getItem("emailForSignIn");
       if (!email) return;
@@ -237,14 +238,13 @@ export default {
         .signInWithEmailLink(email, window.location.href)
         .then(() => {
           window.localStorage.removeItem("emailForSignIn");
-          this.load = false;
+    setTimeout(() => (this.load = false), 500);
           this.$router.push({ name: "home" });
         })
         .catch(function() {
-          this.load = false;
+    setTimeout(() => (this.load = false), 500);
         });
     }
-    setTimeout(() => (this.load = false), 500);
   },
   methods: {
     checkDate() {

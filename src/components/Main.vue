@@ -270,18 +270,21 @@ export default {
           }),
         })
       ).text();
-
-      await fetch("http://ec2-3-88-192-213.compute-1.amazonaws.com", {
-        body: JSON.stringify({
-          email: db.app.auth().currentUser.email,
-          name: this.name,
-          subject: this.$t("personalitySubject"),
-          body: `<div><h1 style="text-align: center;">${this.$t("reportTitle")}</h1>
+      const x = false;
+      if (x)
+        await fetch("https://lovester.net/send_email.php", {
+          body: JSON.stringify({
+            email: db.app.auth().currentUser.email,
+            name: this.name,
+            subject: this.$t("personalitySubject"),
+            body: `<div><h1 style="text-align: center;">${this.$t(
+              "reportTitle"
+            )}</h1>
                   <div style="border: 1px solid gray; border-radius: 5px;padding: 20px">${data}</div>
                 </div>`,
-        }),
-        method: "POST",
-      });
+          }),
+          method: "POST",
+        }).catch(() => {});
 
       await db.app.auth().currentUser.updateProfile({
         photoUrl: "https://example.com/jane-q-user/profile.jpg",

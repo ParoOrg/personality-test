@@ -103,7 +103,7 @@
       </p>
     </form>
     <div
-      :class="result ? 'blur' : ''"
+      :class="result || load ? 'blur' : ''"
       class="bg-gray-100 rounded-lg p-5"
       ref="main"
       v-else-if="submitted"
@@ -161,6 +161,7 @@
         {{ $t("close") }}
       </button>
     </div>
+    <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
   </div>
 </template>
 
@@ -170,6 +171,7 @@ import questions from "@/assets/questions.json";
 import Question from "./Question";
 import LangGear from "./LangGear";
 import { db } from "../firebaseDB";
+import MoonLoader from "vue-spinner/src/MoonLoader";
 
 export default {
   name: "HelloWorld",
@@ -187,6 +189,7 @@ export default {
       checkGender: true,
       submitted: false,
       verified: true,
+      load: false,
       answers: new Array(questions.length).fill(0, 0, questions.length),
       o: 0,
       c: 0,
@@ -202,6 +205,7 @@ export default {
   },
   components: {
     Question,
+    MoonLoader,
     LangGear,
   },
   methods: {
@@ -212,7 +216,7 @@ export default {
       //   return;
       // }
       // user = user[Object.keys(user)[0]];
-      
+
       this.checkName = this.name && true;
       this.checkGender = this.gender >= 0;
       if (this.checkName && this.gender >= 0) {
@@ -249,6 +253,7 @@ export default {
       this.n = this.calculatePart("n");
     },
     async sendReport() {
+      this.load = true;
       const data = await (
         await fetch("https://report-gen-api.herokuapp.com/generate_report", {
           method: "POST",
@@ -266,33 +271,17 @@ export default {
         })
       ).text();
 
-      // await fetch("https://api.mailjet.com/v3.1/send", {
-      //   headers: {
-      //     Authorization:
-      //       "Basic 8c8cf6d6b4abee8a12863d8265e8757a:98d63c7d35a0c7003af7b268f758fec3",
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     Messages: [
-      //       {
-      //         From: {
-      //           Email: "report@lovester.net",
-      //           Name: "Personality Report by Lovester",
-      //         },
-      //         To: [
-      //           {
-      //             Email: db.app.auth().currentUser.email,
-      //             Name: this.name,
-      //           },
-      //         ],
-      //         Subject: this.$t('personalitySubject'),
-      //         TextPart: data,
-      //         CustomID: "AppGettingStartedTest",
-      //       },
-      //     ],
-      //   }),
-      //   method: "POST",
-      // });
+      await fetch("http://ec2-3-88-192-213.compute-1.amazonaws.com", {
+        body: JSON.stringify({
+          email: db.app.auth().currentUser.email,
+          name: this.name,
+          subject: this.$t("personalitySubject"),
+          body: `<div><h1 style="text-align: center;">${this.$t("reportTitle")}</h1>
+                  <div style="border: 1px solid gray; border-radius: 5px;padding: 20px">${data}</div>
+                </div>`,
+        }),
+        method: "POST",
+      });
 
       await db.app.auth().currentUser.updateProfile({
         photoUrl: "https://example.com/jane-q-user/profile.jpg",
@@ -308,6 +297,7 @@ export default {
         });
       window.scrollTo(0, 0);
       this.result = data;
+      this.load = false;
     },
     decrement() {
       if (this.index == 0) this.submitted = false;

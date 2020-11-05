@@ -229,7 +229,7 @@ export default {
   async mounted() {
     this.load = true;
     db.app.auth().languageCode = this.$i18n.locale;
-    setTimeout(() => (this.load = false), 2000);
+    setTimeout(() => (this.load = false), 3000);
     if (db.app.auth().isSignInWithEmailLink(window.location.href)) {
       var email = window.localStorage.getItem("emailForSignIn");
       if (!email) return;
@@ -238,12 +238,14 @@ export default {
         .signInWithEmailLink(email, window.location.href)
         .then(() => {
           window.localStorage.removeItem("emailForSignIn");
-    setTimeout(() => (this.load = false), 500);
+          setTimeout(() => (this.load = false), 500);
           this.$router.push({ name: "home" });
         })
-        .catch(function() {
-    setTimeout(() => (this.load = false), 500);
+        .catch(() => {
+          setTimeout(() => (this.load = false), 500);
         });
+    } else {
+      setTimeout(() => (this.load = false), 500);
     }
   },
   methods: {
@@ -265,19 +267,17 @@ export default {
         default:
           break;
       }
-      console.log(maxDays);
       if (this.day > maxDays) return false;
       return true;
     },
     async signUp() {
-      console.log("date: ", this.checkDate());
       this.checkGender = this.gender !== -1;
       this.checkCountry = this.country && true;
       this.checkCity = this.city && true;
       this.checkBirthday =
         this.checkDate() &&
         this.day !== -1 &&
-        this.month !== -1  &&
+        this.month !== -1 &&
         this.year !== -1;
       this.loading = true;
       this.checkEmail =
@@ -304,7 +304,7 @@ export default {
       //   this.error = this.$t("signupError");
       //   return;
       // }
-    db.app.auth().languageCode = this.$i18n.locale;
+      db.app.auth().languageCode = this.$i18n.locale;
       await auth
         .sendSignInLinkToEmail(this.email, {
           url: "https://lovesterorg.github.io/personality-test/#/login",
@@ -335,8 +335,7 @@ export default {
           this.success = true;
           this.loading = false;
         })
-        .catch((e) => {
-          console.log(e);
+        .catch(() => {
           this.error = this.$t("signupError");
         });
     },

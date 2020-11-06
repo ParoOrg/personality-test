@@ -189,7 +189,6 @@
 </template>
 
 <script>
-import { db } from "../firebaseDB";
 import LangGear from "./LangGear";
 import MoonLoader from "vue-spinner/src/MoonLoader";
 
@@ -228,24 +227,29 @@ export default {
   },
   async mounted() {
     this.load = true;
-    db.app.auth().languageCode = this.$i18n.locale;
-    setTimeout(() => (this.load = false), 3000);
-    if (db.app.auth().isSignInWithEmailLink(window.location.href)) {
-      var email = window.localStorage.getItem("emailForSignIn");
-      if (!email) return;
-      db.app
-        .auth()
-        .signInWithEmailLink(email, window.location.href)
-        .then(() => {
-          window.localStorage.removeItem("emailForSignIn");
-          setTimeout(() => (this.load = false), 500);
+    if (this.$route.query.token && this.$route.query.id) {
+      await fetch(
+        "https://lovester.net/backend/public/api/auth/login?token=" +
+          this.$route.query.token +
+          "&id=" +
+          this.$route.query.id,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            token: this.$route.query.token,
+            id: this.$route.query.id,
+          }),
+        }
+      )
+        .then(async (res) => {
+          const token = (await res.json()).token;
+          localStorage.setItem("token", token);
           this.$router.push({ name: "home" });
+          setTimeout(() => (this.load = false), 300);
         })
-        .catch(() => {
-          setTimeout(() => (this.load = false), 500);
-        });
+        .catch(() => setTimeout(() => (this.load = false), 300));
     } else {
-      setTimeout(() => (this.load = false), 500);
+      setTimeout(() => (this.load = false), 300);
     }
   },
   methods: {
@@ -291,49 +295,28 @@ export default {
         this.loading = false;
         return;
       }
-      const auth = db.app.auth();
-      // let x = null;
-      // await db.app
-      //   .database()
-      //   .ref("userData")
-      //   .orderByChild("email")
-      //   .equalTo(this.email)
-      //   .on("value", (v) => (x = v.toJSON()));
-      // console.log(x);
-      // if (x != null) {
-      //   this.error = this.$t("signupError");
-      //   return;
-      // }
-      db.app.auth().languageCode = this.$i18n.locale;
-      await auth
-        .sendSignInLinkToEmail(this.email, {
-          url: "https://lovesterorg.github.io/personality-test/#/login",
-          handleCodeInApp: true,
-        })
-        .then(async () => {
-          window.localStorage.setItem("emailForSignIn", this.email);
-
-          await db.app
-            .database()
-            .ref("userData")
-            .push({
-              email: this.email,
-              gender: this.gender,
-              country: this.country,
-              city: this.city,
-              birthday: this.day + "/" + this.month + "/" + this.year,
-            });
-          this.name = "";
-          this.gender = -1;
-          this.country = "";
-          this.email = "";
-          this.city = "";
-          this.day = -1;
-          this.month = -1;
-          this.year = -1;
-          this.birthday = null;
-          this.success = true;
-          this.loading = false;
+      await fetch("https://lovester.net/backend/public/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.email,
+          birthday: this.day + "/" + this.month + "/" + this.year,
+          country: this.country,
+          city: this.city,
+          lang: this.$i18n.locale,
+        }),
+      })
+        .then((res) => {
+          if (res.status !== 200) this.error = this.$t("signupError");
+          else {
+            this.success = this.$t("signupSuccess");
+            this.email = "";
+            this.country = "";
+            this.city = "";
+            this.month = -1;
+            this.year = -1;
+            this.day = -1;
+          }
         })
         .catch(() => {
           this.error = this.$t("signupError");

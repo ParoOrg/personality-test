@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
+    :class="load ? 'opacity' : ''"
   >
     <h1 class="text-3xl custom">LOVESTER</h1>
     <h1 class="text-2xl">{{ $t("personalityTest") }}</h1>
@@ -104,7 +105,7 @@
     </form>
     <div
       :class="result || load ? 'blur' : ''"
-      class="bg-gray-100 rounded-lg p-5"
+      class="bg-gray-100 w-custom rounded-lg p-5"
       ref="main"
       v-else-if="submitted"
     >
@@ -116,7 +117,7 @@
         :key="i"
         :callback="(val, index) => answer(index, val)"
       ></question>
-      <div class="w-full flex items-center justify-between p-5">
+      <div class="w-full ltr flex items-center justify-between p-5">
         <button
           type="submit"
           @click="decrement"
@@ -154,6 +155,9 @@
           () => {
             result = 0;
             index = 0;
+
+            localStorage.removeItem('token');
+            $router.push('login');
           }
         "
         class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline text-black lg:inline my-4"
@@ -161,8 +165,8 @@
         {{ $t("close") }}
       </button>
     </div>
-    <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
   </div>
+  <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
 </template>
 
 <script>
@@ -170,15 +174,14 @@ import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question";
 import LangGear from "./LangGear";
-import { db } from "../firebaseDB";
 import MoonLoader from "vue-spinner/src/MoonLoader";
 
 export default {
   name: "HelloWorld",
   data() {
     return {
-      name: db.app.auth().currentUser?.displayName || "",
-      photoUrl: db.app.auth().currentUser?.photoURL || "",
+      name: "",
+      photoUrl: "",
       gender: -1,
       result: "",
       testQuestions: questions
@@ -210,21 +213,28 @@ export default {
   },
   methods: {
     async check() {
-      // this.sendReport()
-      // if (this.user != null) {
-      //   this.error = this.$t("personalityTaken");
-      //   return;
-      // }
-      // user = user[Object.keys(user)[0]];
-
       this.checkName = this.name && true;
       this.checkGender = this.gender >= 0;
       if (this.checkName && this.gender >= 0) {
         this.submitted = true;
       }
     },
-    answer(index, val) {
+    async answer(index, val) {
       this.answers[index] = val;
+      await fetch(
+        "https://lovester.net/backend/public/api/answer?question=" +
+          index +
+          "&value=" +
+          val,
+        {
+          method: "POST",
+          body: JSON.stringify({ question: index, value: val }),
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        }
+      );
     },
     send() {
       this.calculateOcean();
@@ -270,34 +280,40 @@ export default {
           }),
         })
       ).text();
-      const x = false;
-      if (x)
-        await fetch("https://lovester.net/send_email.php", {
-          body: JSON.stringify({
-            email: db.app.auth().currentUser.email,
-            name: this.name,
-            subject: this.$t("personalitySubject"),
-            body: `<div><h1 style="text-align: center;">${this.$t(
-              "reportTitle"
-            )}</h1>
+
+      await fetch("https://lovester.net/backend/public/api/auth/update", {
+        method: "POST",
+        body: JSON.stringify({
+          o: this.o,
+          c: this.c,
+          e: this.e,
+          a: this.a,
+          n: this.n,
+          name: this.name,
+          lang: this.$i18n.locale,
+          gender: +this.gender,
+        }),
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      });
+
+      await fetch("https://lovester.net/backend/public/api/send_report", {
+        body: JSON.stringify({
+          subject: this.$t("personalitySubject"),
+          body: `<div><h1 style="text-align: center;">${this.$t(
+            "reportTitle"
+          )}</h1>
                   <div style="border: 1px solid gray; border-radius: 5px;padding: 20px">${data}</div>
                 </div>`,
-          }),
-          method: "POST",
-        }).catch(() => {});
-
-      await db.app.auth().currentUser.updateProfile({
-        photoUrl: "https://example.com/jane-q-user/profile.jpg",
-      });
-      await db.app
-        .database()
-        .ref("userAnswers")
-        .push({
-          email: db.app.auth().currentUser.email,
-          answers: this.answers,
-          lang: this.$i18n.locale,
-          ocean: [this.o, this.c, this.e, this.a, this.n],
-        });
+        }),
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      }).catch(() => {});
       window.scrollTo(0, 0);
       this.result = data;
       this.load = false;
@@ -325,14 +341,32 @@ export default {
     },
   },
   async mounted() {
-    if (!db.app.auth().currentUser) this.$router.push({ name: "login" });
+    this.localStorage = localStorage;
+    this.load = true;
+    const token = localStorage.getItem("token");
+    if (token !== null) {
+      await fetch("https://lovester.net/backend/public/api/user", {
+        headers: { Authorization: "Bearer " + token },
+      })
+        .then((res) => {
+          if (res.status !== 200) this.$router.push({ name: "login" });
 
-    await db.app
-      .database()
-      .ref("userAnswers")
-      .orderByChild("email")
-      .equalTo(db.app.auth().currentUser.email)
-      .on("value", (v) => (this.user = v.toJSON()));
+          setTimeout(() => {
+            this.load = false;
+          }, 300);
+        })
+        .catch(() => {
+          setTimeout(() => {
+            this.load = false;
+          }, 300);
+          this.$router.push({ name: "login" });
+        });
+    } else {
+      setTimeout(() => {
+        this.load = false;
+      }, 300);
+      this.$router.push({ name: "login" });
+    }
   },
 };
 </script>
@@ -356,11 +390,25 @@ a {
   filter: blur(3px);
   transition: 0.5s;
 }
+
+.ltr {
+  direction: ltr;
+}
+
+.opacity {
+  filter: opacity(0);
+}
 .position-custom {
   top: 2rem;
 }
 .custom {
   color: #f64740;
   margin-top: 60px;
+}
+
+@media (min-width: 1024px) {
+  .w-custom {
+    width: 80vw;
+  }
 }
 </style>

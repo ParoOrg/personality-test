@@ -227,6 +227,12 @@ export default {
   },
   async mounted() {
     this.load = true;
+    const token = localStorage.getItem("token");
+    if (token) {
+      setTimeout(() => (this.load = false), 300);
+      this.$router.push({ name: "home" });
+      return;
+    }
     if (this.$route.query.token && this.$route.query.id) {
       await fetch(
         "https://lovester.net/backend/public/api/auth/login?token=" +
@@ -299,7 +305,7 @@ export default {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: this.email,
+          email: this.email.trim(),
           birthday: this.day + "/" + this.month + "/" + this.year,
           country: this.country,
           city: this.city,

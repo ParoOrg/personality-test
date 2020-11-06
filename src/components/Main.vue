@@ -67,7 +67,6 @@
               >
               <option value="0">{{ $t("male") }}</option>
               <option value="1">{{ $t("female") }}</option>
-              <option value="2">{{ $t("other") }}</option>
             </select>
             <p
               class="text-red-500 text-xs italic"
@@ -324,6 +323,7 @@ export default {
       this.index = Math.max(this.index - this.step, 0);
     },
     increment() {
+      this.verified = false;
       if (
         !this.answers
           .slice(this.index, this.index + this.step)
@@ -349,8 +349,10 @@ export default {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          if (res.status !== 200) this.$router.push({ name: "login" });
-
+          if (res.status !== 200) {
+            localStorage.removeItem("token");
+            this.$router.push({ name: "login" });
+          }
           setTimeout(() => {
             this.load = false;
           }, 300);

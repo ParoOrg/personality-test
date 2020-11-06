@@ -1,12 +1,30 @@
 <template>
   <link
-    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    href="./tailwind.css"
     rel="stylesheet"
   />
   <div :class="$i18n.locale=='ar'?'rtl':''">
-    <router-view />
+    <router-view v-if="loadedData" />
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      loadedData: false,
+    };
+  },
+  mounted() {
+    this.loadedData = true;
+  },
+  methods: {
+    onWindowLoad() {
+      this.loadedData = true;
+      console.log("window load event");
+    },
+  },
+};
+</script>
 
 <style>
 @font-face {

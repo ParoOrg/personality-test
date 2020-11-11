@@ -1,21 +1,21 @@
 <template>
   <div class="flex">
     <img
-      :src="'/flag_en.svg'"
+      :src="enFlag"
       class="w-auto h-4 mx-1 cursor-pointer"
       @click="()=>changeLang('en')"
       alt=""
       srcset=""
     />
     <img
-      :src="'/flag_fr.svg'"
+      :src="frFlag"
       class="w-auto h-4 mx-1 cursor-pointer"
       @click="()=>changeLang('fr')"
       alt=""
       srcset=""
     />
     <img
-      :src="'/flag_ar.svg'"
+      :src="arFlag"
       class="w-auto h-4 mx-1 cursor-pointer"
       @click="()=>changeLang('ar')"
       alt=""
@@ -25,11 +25,18 @@
 </template>
 
 <script>
+import arFlag from "@/assets/flag_ar.svg";
+import frFlag from "@/assets/flag_fr.svg";
+import enFlag from "@/assets/flag_en.svg";
+
 export default {
   data(){
     return {
       lang: '',
       enable: false,
+      arFlag,
+      enFlag,
+      frFlag,
     }
   },
   methods: {

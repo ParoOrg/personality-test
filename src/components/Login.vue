@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="load ? 'blur' : ''"
-    class="flex justify-center flex-col h-screen items-center"
-  >
+  <div v-if="!load" class="flex justify-center flex-col h-screen items-center">
     <h1 class="text-3xl custom">LOVESTER</h1>
     <form
       @submit="
@@ -48,19 +45,23 @@
           >
             {{ $t("country") }}
           </label>
-          <input
+          <select
+            class="w-full appearance-none overflow-visible bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             @change="
               (e) => {
                 checkCountry = country && true;
               }
             "
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="grid-first-name"
-            type="text"
             v-model="country"
             :class="!checkCountry ? 'border-red-500' : ''"
-            :placeholder="$t('country')"
-          />
+          >
+            <option value="" selected disabled hidden>{{
+              $t("country")
+            }}</option>
+            <option v-for="(x, i) in countryList" :value="i" :key="i">{{
+              x
+            }}</option>
+          </select>
           <p
             class="text-red-500 text-xs italic"
             :class="checkCountry ? 'hidden' : 'block'"
@@ -191,6 +192,7 @@
 <script>
 import LangGear from "./LangGear";
 import MoonLoader from "vue-spinner/src/MoonLoader";
+import * as countries from "i18n-iso-countries";
 
 export default {
   components: {
@@ -225,7 +227,13 @@ export default {
       re: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     };
   },
+  computed: {
+    countryList() {
+      return countries.getNames(this.$i18n.locale);
+    },
+  },
   async mounted() {
+    console.log(this.apiUrl + "auth/login?token=");
     this.load = true;
     const token = localStorage.getItem("token");
     if (token) {
@@ -235,7 +243,8 @@ export default {
     }
     if (this.$route.query.token && this.$route.query.id) {
       await fetch(
-        "https://lovester.net/backend/public/api/auth/login?token=" +
+        this.apiUrl +
+          "auth/login?token=" +
           this.$route.query.token +
           "&id=" +
           this.$route.query.id,
@@ -260,6 +269,7 @@ export default {
   },
   methods: {
     checkDate() {
+      console.log(countries.getNames(this.$i18n.locale));
       let maxDays = 31;
       switch (this.month) {
         case 2:
@@ -281,6 +291,7 @@ export default {
       return true;
     },
     async signUp() {
+      this.load = true;
       this.checkGender = this.gender !== -1;
       this.checkCountry = this.country && true;
       this.checkCity = this.city && true;
@@ -299,9 +310,11 @@ export default {
         !this.checkBirthday
       ) {
         this.loading = false;
+        this.load = false;
         return;
       }
-      await fetch("https://lovester.net/backend/public/api/auth/register", {
+
+      await fetch(this.apiUrl + "auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -310,23 +323,27 @@ export default {
           country: this.country,
           city: this.city,
           lang: this.$i18n.locale,
+          test: true,
         }),
       })
         .then((res) => {
           if (res.status !== 200) this.error = this.$t("signupError");
           else {
-            this.success = this.$t("signupSuccess");
-            this.email = "";
-            this.country = "";
-            this.city = "";
-            this.month = -1;
-            this.year = -1;
-            this.day = -1;
+            this.$router.push({ name: "success" });
           }
         })
         .catch(() => {
           this.error = this.$t("signupError");
         });
+      this.email = "";
+      this.country = "";
+      this.city = "";
+      this.month = -1;
+      this.year = -1;
+      this.day = -1;
+      this.loading = false;
+      this.success = false;
+      this.load = false;
     },
   },
 };
@@ -339,7 +356,7 @@ export default {
 }
 
 .custom {
-  color: #f64740;
+  color: #701e5d;
   margin-top: 60px;
 }
 

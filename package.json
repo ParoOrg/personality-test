@@ -9,12 +9,18 @@
     "deploy": "node scripts/gh-pages-deploy.js"
   },
   "dependencies": {
+    "@vitalets/google-translate-api": "^4.0.0",
+    "cities": "^2.0.0",
+    "city-i18n": "0.0.7-alpha.0",
     "core-js": "^3.6.5",
+    "country-region-data": "^1.6.0",
     "firebase": "^7.24.0",
+    "i18n-iso-countries": "^6.2.2",
     "nodemailer": "^6.4.14",
     "tailwindcss": "^1.9.5",
     "v-calendar": "^2.0.2",
     "vue": "^3.0.0",
+    "vue-country-region-select": "^2.0.14",
     "vue-i18n": "^9.0.0-beta.6",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-router": "^4.0.0-0",

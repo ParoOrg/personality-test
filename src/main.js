@@ -2,6 +2,8 @@ import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
 import App from "./App.vue";
 import router from "./router";
+import * as countries from "i18n-iso-countries";
+import vueCountryRegionSelect from "vue-country-region-select";
 
 let locale = localStorage.getItem("lang");
 if (locale === null) {
@@ -20,10 +22,11 @@ const i18n = createI18n({
       country: "Country",
       city: "City",
       gender: "Gender",
-      day:'Day',
-      month: 'Month',
-      year: 'Year',
-      reportTitle: "Thank you for taking the time to finish our personality test. Here's your final report.",
+      day: "Day",
+      month: "Month",
+      year: "Year",
+      reportTitle:
+        "Thank you for taking the time to finish our personality test. Here's your final report.",
       personalitySubject: "Your personality test results",
       validateEmail: "Please enter a valid email",
       validateName: "Please enter a valid name",
@@ -55,9 +58,9 @@ const i18n = createI18n({
       personalityTest: "Personality Test",
       hAgree: "Strongly Agree",
       mAgree: "Agree",
-      sAgree:"Somewhat Agree",
+      sAgree: "Somewhat Agree",
       hDisagree: "Strongly Disagree",
-      mDisagree:"Disagree",
+      mDisagree: "Disagree",
       sDisagree: "Somewhat Disagree",
     },
     fr: {
@@ -67,10 +70,11 @@ const i18n = createI18n({
       country: "Pays",
       city: "Ville",
       gender: "Genre",
-      day:'Jour',
-      month: 'Mois',
-      year: 'Année',
-      reportTitle: "Merci d'avoir pris le temps de terminer notre test de personnalité. Voici votre rapport final.",
+      day: "Jour",
+      month: "Mois",
+      year: "Année",
+      reportTitle:
+        "Merci d'avoir pris le temps de terminer notre test de personnalité. Voici votre rapport final.",
       personalitySubject: "Les résultats de votre test de personnalité",
       validateEmail: "Veuillez saisir un e-mail valide",
       validateName: "Veuillez saisir un nom valide",
@@ -78,7 +82,8 @@ const i18n = createI18n({
       validateCity: "Veuillez saisir une ville valide",
       validateBirthday: "Veuillez saisir une date d'anniversaire valide",
       password: "Mot de passe",
-      validatePassword:"Veuillez saisir un mot de passe valide (au moins 8 caractères)",
+      validatePassword:
+        "Veuillez saisir un mot de passe valide (au moins 8 caractères)",
       fullName: "Nom complet",
       enterName: "Veuillez saisir un nom",
       login: "S'identifier",
@@ -90,7 +95,8 @@ const i18n = createI18n({
       personalityTaken: "Test de personnalité déjà passé",
       close: "Fermer",
       yourResults: "Votre résultat de test",
-      incompleteError:"Vous devez d'abord finir de répondre à toutes les questions!",
+      incompleteError:
+        "Vous devez d'abord finir de répondre à toutes les questions!",
       submit: "Soumettre",
       incomplete: "Veuillez remplir ce champ.",
       male: "Mâle",
@@ -102,9 +108,9 @@ const i18n = createI18n({
       personalityTest: "Test de personnalité",
       hAgree: "Tout à fait d'accord",
       mAgree: "D'accord",
-      sAgree:"Un peu d'accord",
+      sAgree: "Un peu d'accord",
       hDisagree: "Pas du tout d'accord",
-      mDisagree:"Pas d'accord",
+      mDisagree: "Pas d'accord",
       sDisagree: "Un peu pas d'accord",
     },
     ar: {
@@ -114,10 +120,11 @@ const i18n = createI18n({
       country: "البلد",
       city: "المدينة",
       gender: "الجنس",
-      day:'يوم',
-      month: 'شهر',
-      year: 'سنة',
-      reportTitle: "شكرًا لك على الوقت الذي قضيته في إنهاء اختبار الشخصية. هذا هو تقريرك النهائي.",
+      day: "يوم",
+      month: "شهر",
+      year: "سنة",
+      reportTitle:
+        "شكرًا لك على الوقت الذي قضيته في إنهاء اختبار الشخصية. هذا هو تقريرك النهائي.",
       personalitySubject: "نتائج اختبار شخصيتك",
       validateEmail: "يرجى إدخال البريد الإلكتروني الصحيح",
       validateName: "يرجى إدخال البريد الإلكتروني الصحيح",
@@ -149,16 +156,30 @@ const i18n = createI18n({
       personalityTest: "اختبار الشخصية",
       hAgree: "موافق تماما",
       mAgree: "موافق",
-      sAgree:"موافق قليلا",
+      sAgree: "موافق قليلا",
       hDisagree: "غير موافق قطعا",
-      mDisagree:"غير موافق",
+      mDisagree: "غير موافق",
       sDisagree: "غير موافق قليلا",
     },
   },
 });
 
+countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+countries.registerLocale(require("i18n-iso-countries/langs/fr.json"));
+countries.registerLocale(require("i18n-iso-countries/langs/ar.json"));
+
 const app = createApp(App)
   .use(router)
   .use(i18n)
+  .use(vueCountryRegionSelect)
+  .mixin({
+    data() {
+      return {
+        get apiUrl() {
+          return "https://lovester.net/backend/public/api/";
+        },
+      };
+    },
+  });
 
 app.mount("#app");

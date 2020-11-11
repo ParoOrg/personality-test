@@ -221,7 +221,7 @@ export default {
     async answer(index, val) {
       this.answers[index] = val;
       await fetch(
-        "https://lovester.net/backend/public/api/answer?question=" +
+        this.apiUrl+"answer?question=" +
           index +
           "&value=" +
           val,
@@ -229,7 +229,7 @@ export default {
           method: "POST",
           body: JSON.stringify({ question: index, value: val }),
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + this.token,
             "Content-Type": "application/json",
           },
         }
@@ -280,7 +280,7 @@ export default {
         })
       ).text();
 
-      await fetch("https://lovester.net/backend/public/api/auth/update", {
+      await fetch(this.apiUrl+"auth/update", {
         method: "POST",
         body: JSON.stringify({
           o: this.o,
@@ -293,12 +293,12 @@ export default {
           gender: +this.gender,
         }),
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
+          Authorization: "Bearer " + this.token,
           "Content-Type": "application/json",
         },
       });
 
-      await fetch("https://lovester.net/backend/public/api/send_report", {
+      await fetch(this.apiUrl+"send_report", {
         body: JSON.stringify({
           subject: this.$t("personalitySubject"),
           body: `<div><h1 style="text-align: center;">${this.$t(
@@ -309,7 +309,7 @@ export default {
         }),
         method: "POST",
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
+          Authorization: "Bearer " + this.token,
           "Content-Type": "application/json",
         },
       }).catch(() => {});
@@ -345,7 +345,7 @@ export default {
     this.load = true;
     const token = localStorage.getItem("token");
     if (token !== null) {
-      await fetch("https://lovester.net/backend/public/api/user", {
+      await fetch(this.apiUrl+"user", {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
@@ -353,9 +353,16 @@ export default {
             localStorage.removeItem("token");
             this.$router.push({ name: "login" });
           }
+          this.token = localStorage.getItem("token");
+          localStorage.removeItem("token");
           setTimeout(() => {
             this.load = false;
           }, 300);
+          return res.json();
+        })
+        .then((data) => {
+          if (data.o !== null && data.email != "hamza@gulfinvestgroup.com")
+            this.$router.push({ name: "login" });
         })
         .catch(() => {
           setTimeout(() => {
@@ -393,6 +400,15 @@ a {
   transition: 0.5s;
 }
 
+a::after {
+  content: "";
+  opacity: 0;
+}
+
+a:hover::after {
+  opacity: 1;
+}
+
 .ltr {
   direction: ltr;
 }
@@ -404,7 +420,7 @@ a {
   top: 2rem;
 }
 .custom {
-  color: #f64740;
+  color: #701e5d;
   margin-top: 60px;
 }
 

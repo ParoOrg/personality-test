@@ -220,20 +220,14 @@ export default {
     },
     async answer(index, val) {
       this.answers[index] = val;
-      await fetch(
-        this.apiUrl+"answer?question=" +
-          index +
-          "&value=" +
-          val,
-        {
-          method: "POST",
-          body: JSON.stringify({ question: index, value: val }),
-          headers: {
-            Authorization: "Bearer " + this.token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await fetch(this.apiUrl + "answer?question=" + index + "&value=" + val, {
+        method: "POST",
+        body: JSON.stringify({ question: index, value: val }),
+        headers: {
+          Authorization: "Bearer " + this.token,
+          "Content-Type": "application/json",
+        },
+      });
     },
     send() {
       this.calculateOcean();
@@ -280,7 +274,7 @@ export default {
         })
       ).text();
 
-      await fetch(this.apiUrl+"auth/update", {
+      await fetch(this.apiUrl + "auth/update", {
         method: "POST",
         body: JSON.stringify({
           o: this.o,
@@ -298,7 +292,7 @@ export default {
         },
       });
 
-      await fetch(this.apiUrl+"send_report", {
+      await fetch(this.apiUrl + "send_report", {
         body: JSON.stringify({
           subject: this.$t("personalitySubject"),
           body: `<div><h1 style="text-align: center;">${this.$t(
@@ -345,7 +339,7 @@ export default {
     this.load = true;
     const token = localStorage.getItem("token");
     if (token !== null) {
-      await fetch(this.apiUrl+"user", {
+      await fetch(this.apiUrl + "user", {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
@@ -354,15 +348,9 @@ export default {
             this.$router.push({ name: "login" });
           }
           this.token = localStorage.getItem("token");
-          localStorage.removeItem("token");
           setTimeout(() => {
             this.load = false;
           }, 300);
-          return res.json();
-        })
-        .then((data) => {
-          if (data.o !== null && data.email != "hamza@gulfinvestgroup.com")
-            this.$router.push({ name: "login" });
         })
         .catch(() => {
           setTimeout(() => {

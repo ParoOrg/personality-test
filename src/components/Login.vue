@@ -235,7 +235,7 @@ export default {
   async mounted() {
     console.log(this.apiUrl + "auth/login?token=");
     this.load = true;
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (token) {
       setTimeout(() => (this.load = false), 300);
       this.$router.push({ name: "home" });
@@ -258,7 +258,7 @@ export default {
       )
         .then(async (res) => {
           const token = (await res.json()).token;
-          localStorage.setItem("token", token);
+          sessionStorage.setItem("token", token);
           this.$router.push({ name: "home" });
           setTimeout(() => (this.load = false), 300);
         })
@@ -323,7 +323,7 @@ export default {
           country: this.country,
           city: this.city,
           lang: this.$i18n.locale,
-          test: true,
+          // test: true,
         }),
       })
         .then((res) => {

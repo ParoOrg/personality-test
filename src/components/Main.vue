@@ -277,7 +277,7 @@ export default {
             gender: +this.gender,
           }),
         })
-      ).text();
+      ).json();
 
       await fetch(this.apiUrl + "auth/update", {
         method: "POST",
@@ -303,7 +303,7 @@ export default {
           body: `<div><h1 style="text-align: center;">${this.$t(
             "reportTitle"
           )}</h1>
-                  <div style="border: 1px solid gray; border-radius: 5px;padding: 20px">${data}</div>
+                  <div style="border: 1px solid gray; border-radius: 5px;padding: 20px">${data.report}</div>
                 </div>`,
         }),
         method: "POST",
@@ -313,7 +313,7 @@ export default {
         },
       }).catch(() => {});
       window.scrollTo(0, 0);
-      this.result = data;
+      this.result = data.report;
       this.load = false;
     },
     decrement() {

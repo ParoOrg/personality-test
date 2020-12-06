@@ -74,7 +74,7 @@ export default {
       const data = await fetch(this.apiUrl + "code?code=" + this.code, {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + this.token,
+          Authorization: "Bearer " + localStorage.getItem('token'),
           "Content-Type": "application/json",
         },
       }).then((x) => {

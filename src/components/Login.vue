@@ -24,7 +24,7 @@
                 checkEmail = re.test(String(email).toLowerCase());
               }
             "
-            @input="()=>email=email.trim() "
+            @input="() => (email = email.trim())"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             id="grid-first-name"
             type="text"
@@ -157,9 +157,17 @@
             :disabled="loading || success"
             type="submit"
             @click="() => signUp()"
-            class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+            class="md:w-32 mr-1 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
           >
             {{ $t("signUp") }}
+          </button>
+          <button
+            :disabled="loading || success"
+            type="button"
+            @click="() => resendEmail()"
+            class="md:w-32 ml-1 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+          >
+            {{ $t("resendEmail") }}
           </button>
         </div>
       </div>
@@ -234,9 +242,8 @@ export default {
     },
   },
   async mounted() {
-    console.log(this.apiUrl + "auth/login?token=");
     this.load = true;
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     if (token) {
       setTimeout(() => (this.load = false), 300);
       this.$router.push({ name: "home" });
@@ -259,7 +266,7 @@ export default {
       )
         .then(async (res) => {
           const token = (await res.json()).token;
-          sessionStorage.setItem("token", token);
+          localStorage.setItem("token", token);
           this.$router.push({ name: "home" });
           setTimeout(() => (this.load = false), 300);
         })
@@ -269,8 +276,18 @@ export default {
     }
   },
   methods: {
+    async resendEmail() {
+      this.load = true;
+      await fetch(this.apiUrl + "resend?lang="+this.$i18n.locale, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.email.trim(),
+        }),
+      });
+      this.load = false;
+    },
     checkDate() {
-      console.log(countries.getNames(this.$i18n.locale));
       let maxDays = 31;
       switch (this.month) {
         case 2:

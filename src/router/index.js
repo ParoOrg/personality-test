@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Main from "../components/Main.vue";
 import Login from "../components/Login.vue";
 import Popup from "../components/Popup.vue";
+import Compatibility from "../components/Compatibility.vue";
 // import { db } from "../firebaseDB";
 
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: "/success",
     name: "success",
     component: Popup,
+  },
+  {
+    path: "/compatibility",
+    name: "compatibility",
+    component: Compatibility,
   },
 ];
 

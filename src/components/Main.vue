@@ -93,9 +93,16 @@
         <button
           type="submit"
           @click="check"
-          class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+          class="md:w-32 block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
         >
           {{ $t("submit") }}
+        </button>
+        <button
+          type="button"
+          @click="compatibility"
+          class="md:w-32 block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+        >
+          {{ $t("compatibilityReport") }}
         </button>
       </div>
       <p class="text-red-500 text-xs italic">
@@ -154,7 +161,7 @@
           () => {
             result = 0;
             index = 0;
-            sessionStorage.removeItem('token');
+            localStorage.removeItem('token');
             $router.push('login');
           }
         "
@@ -210,17 +217,25 @@ export default {
     LangGear,
   },
   methods: {
+    compatibility() {
+      console.log(this.user.n)
+      if (this.user.n) {
+        window.location.href = './#/compatibility'
+      }
+      this.error = this.$t("noOceanError");
+    },
     async check() {
+      if (this.user.n) return (this.error = this.$t("personalityTaken"));
       this.checkName = this.name && true;
       this.checkGender = this.gender >= 0;
       if (this.checkName && this.gender >= 0) {
         this.submitted = true;
       }
-      sessionStorage.setItem("checkName", this.checkName);
-      sessionStorage.setItem("gender", this.gender);
-      sessionStorage.setItem("name", this.name);
-      sessionStorage.setItem("checkName", this.checkName);
-      sessionStorage.setItem("submitted", this.submitted);
+      localStorage.setItem("checkName", this.checkName);
+      localStorage.setItem("gender", this.gender);
+      localStorage.setItem("name", this.name);
+      localStorage.setItem("checkName", this.checkName);
+      localStorage.setItem("submitted", this.submitted);
     },
     async answer(index, val) {
       this.answers[index] = val;
@@ -232,7 +247,7 @@ export default {
           "Content-Type": "application/json",
         },
       });
-      sessionStorage.setItem("answers", this.answers);
+      localStorage.setItem("answers", this.answers);
     },
     send() {
       this.calculateOcean();
@@ -303,7 +318,9 @@ export default {
           body: `<div><h1 style="text-align: center;">${this.$t(
             "reportTitle"
           )}</h1>
-                  <div style="border: 1px solid gray; border-radius: 5px;padding: 20px">${data.report}</div>
+                  <div style="border: 1px solid gray; border-radius: 5px;padding: 20px">${
+                    data.report
+                  }</div>
                 </div>`,
         }),
         method: "POST",
@@ -319,8 +336,8 @@ export default {
     decrement() {
       if (this.index == 0) this.submitted = false;
       this.index = Math.max(this.index - this.step, 0);
-      sessionStorage.setItem("index", this.index);
-      sessionStorage.setItem("submitted", this.submitted);
+      localStorage.setItem("index", this.index);
+      localStorage.setItem("submitted", this.submitted);
     },
     increment() {
       this.verified = false;
@@ -330,7 +347,7 @@ export default {
           .reduce((s, x) => s && x, true)
       ) {
         this.verified = false;
-        sessionStorage.setItem("verified", this.verified);
+        localStorage.setItem("verified", this.verified);
         return;
       }
       window.scrollTo(0, 0);
@@ -339,54 +356,54 @@ export default {
         this.index + this.step,
         this.testQuestions.length - this.step
       );
-      sessionStorage.setItem("index", this.index);
-      sessionStorage.setItem("verified", this.verified);
+      localStorage.setItem("index", this.index);
+      localStorage.setItem("verified", this.verified);
     },
   },
   async mounted() {
-    this.sessionStorage = sessionStorage
-    this.name = sessionStorage.getItem("name") || this.name;
-    this.gender = sessionStorage.getItem("gender") || this.gender;
-    if (sessionStorage.getItem("checkName"))
-      this.checkName = sessionStorage.getItem("checkName") == "true";
-    if (sessionStorage.getItem("checkGender"))
-      this.checkGender = sessionStorage.getItem("checkGender") == "true";
-    if (sessionStorage.getItem("verified"))
-      this.verified = sessionStorage.getItem("verified") == "true";
-    if (sessionStorage.getItem("submitted"))
-      this.submitted = sessionStorage.getItem("submitted") == "true";
-    if (sessionStorage.getItem("answers")) {
-      this.answers = sessionStorage
+    this.localStorage = localStorage;
+    this.name = localStorage.getItem("name") || this.name;
+    this.gender = localStorage.getItem("gender") || this.gender;
+    if (localStorage.getItem("checkName"))
+      this.checkName = localStorage.getItem("checkName") == "true";
+    if (localStorage.getItem("checkGender"))
+      this.checkGender = localStorage.getItem("checkGender") == "true";
+    if (localStorage.getItem("verified"))
+      this.verified = localStorage.getItem("verified") == "true";
+    if (localStorage.getItem("submitted"))
+      this.submitted = localStorage.getItem("submitted") == "true";
+    if (localStorage.getItem("answers")) {
+      this.answers = localStorage
         .getItem("answers")
         .split(",")
         .map((x) => +x);
     }
-    if (sessionStorage.getItem("questions")) {
-      this.testQuestions = JSON.parse(sessionStorage.getItem("questions"));
-      console.log(this.testQuestions[0].text);
+    if (localStorage.getItem("questions")) {
+      this.testQuestions = JSON.parse(localStorage.getItem("questions"));
     } else
-      sessionStorage.setItem("questions", JSON.stringify(this.testQuestions));
-    this.n = sessionStorage.getItem("n") || this.n;
-    this.index = +sessionStorage.getItem("index") || this.index;
-    this.step = sessionStorage.getItem("step") || this.step;
-    console.log(this.index);
-    if (sessionStorage.getItem("user"))
-      this.user = JSON.parse(sessionStorage.getItem("user"));
+      localStorage.setItem("questions", JSON.stringify(this.testQuestions));
+    this.n = localStorage.getItem("n") || this.n;
+    this.index = +localStorage.getItem("index") || this.index;
+    this.step = localStorage.getItem("step") || this.step;
+    if (localStorage.getItem("user"))
+      this.user = JSON.parse(localStorage.getItem("user"));
     this.load = true;
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
+    let user = this.user;
     if (token !== null) {
-      await fetch(this.apiUrl + "user", {
+      user = await fetch(this.apiUrl + "user", {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
           if (res.status !== 200) {
-            sessionStorage.removeItem("token");
+            localStorage.removeItem("token");
             this.$router.push({ name: "login" });
           }
-          this.token = sessionStorage.getItem("token");
+          this.token = localStorage.getItem("token");
           setTimeout(() => {
             this.load = false;
           }, 300);
+          return res.json();
         })
         .catch(() => {
           setTimeout(() => {
@@ -400,6 +417,8 @@ export default {
       }, 300);
       this.$router.push({ name: "login" });
     }
+    localStorage.setItem("user", JSON.stringify(user));
+    this.user = user;
   },
 };
 </script>

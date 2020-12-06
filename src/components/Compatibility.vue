@@ -72,6 +72,7 @@ export default {
       this.error = "";
       this.load = true;
       const data = await fetch(this.apiUrl + "code?code=" + this.code, {
+        method: "POST",
         headers: {
           Authorization: "Bearer " + this.token,
           "Content-Type": "application/json",

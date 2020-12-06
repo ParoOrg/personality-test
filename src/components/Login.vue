@@ -157,7 +157,7 @@
             :disabled="loading || success"
             type="submit"
             @click="() => signUp()"
-            class="md:w-32 mr-1 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+            class="mr-1 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
           >
             {{ $t("signUp") }}
           </button>
@@ -165,7 +165,7 @@
             :disabled="loading || success"
             type="button"
             @click="() => resendEmail()"
-            class="md:w-32 ml-1 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+            class="ml-1 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
           >
             {{ $t("resendEmail") }}
           </button>

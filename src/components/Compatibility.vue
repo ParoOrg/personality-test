@@ -1,8 +1,10 @@
 <template>
   <div v-if="!load" class="flex justify-center flex-col h-screen items-center">
+    <h1 class="text-3xl custom">LOVESTER</h1>
     <div
       class="w-full relative lg:h-auto lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
     >
+      <lang-gear class="absolute custom-position"></lang-gear>
       <label for="input-code" class="font-bold block m-auto mb-5"
         >{{ $t("enterCode") }}:</label
       >
@@ -44,9 +46,11 @@
 
 <script>
 import MoonLoader from "vue-spinner/src/MoonLoader";
+import LangGear from "./LangGear";
 export default {
   components: {
     MoonLoader,
+    LangGear
   },
   data() {
     return {
@@ -54,6 +58,7 @@ export default {
       load: false,
       report: "",
       error: "",
+      user: {}
     };
   },
   mounted() {
@@ -93,5 +98,13 @@ export default {
 <style>
 .position-custom {
   top: 2rem;
+}
+.custom {
+  color: #701e5d;
+  margin-top: 60px;
+}
+.custom-position {
+  top: 5px;
+  right: 5px;
 }
 </style>

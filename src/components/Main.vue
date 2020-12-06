@@ -93,14 +93,14 @@
         <button
           type="submit"
           @click="check"
-          class="md:w-32 block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+          class="block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
         >
           {{ $t("submit") }}
         </button>
         <button
           type="button"
           @click="compatibility"
-          class="md:w-32 block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+          class="block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
         >
           {{ $t("compatibilityReport") }}
         </button>

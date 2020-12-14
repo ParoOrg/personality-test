@@ -5,116 +5,13 @@
   >
     <h1 class="text-3xl custom">LOVESTER</h1>
     <h1 class="text-2xl">{{ $t("personalityTest") }}</h1>
-    <form
-      @submit="
-        (e) => {
-          e.preventDefault();
-        }
-      "
-      v-if="!submitted"
-      class="w-full relative lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
-    >
-      <div class="flex flex-wrap justify-center -mx-3 mb-6">
-        <lang-gear class="absolute custom-position"></lang-gear>
-        <div class="w-full px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-first-name"
-          >
-            {{ $t("fullName") }}
-          </label>
-          <input
-            @change="
-              (e) => {
-                checkName = name && true;
-              }
-            "
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="grid-first-name"
-            type="text"
-            v-model="name"
-            :class="!checkName ? 'border-red-500' : ''"
-            :placeholder="$t('fullName')"
-          />
-          <p
-            class="text-red-500 text-xs italic"
-            :class="checkName ? 'hidden' : 'block'"
-          >
-            {{ $t("incomplete") }}
-          </p>
-        </div>
 
-        <div class="w-full px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-state"
-          >
-            {{ $t("gender") }}
-          </label>
-          <div class="relative">
-            <select
-              class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              :class="!checkGender ? 'border-red-500' : ''"
-              id="grid-state"
-              v-model="gender"
-            >
-              <option
-                value="-1"
-                selected="true"
-                disabled="true"
-                hidden="true"
-                >{{ $t("selectGender") }}</option
-              >
-              <option value="0">{{ $t("male") }}</option>
-              <option value="1">{{ $t("female") }}</option>
-            </select>
-            <p
-              class="text-red-500 text-xs italic"
-              :class="checkGender ? 'hidden' : 'block'"
-            >
-              {{ $t("incomplete") }}
-            </p>
-            <div
-              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-            >
-              <svg
-                class="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          @click="check"
-          class="block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
-        >
-          {{ $t("submit") }}
-        </button>
-        <button
-          type="button"
-          @click="compatibility"
-          class="block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
-        >
-          {{ $t("compatibilityReport") }}
-        </button>
-      </div>
-      <p class="text-red-500 text-xs italic">
-        {{ error }}
-      </p>
-    </form>
     <div
       :class="result || load ? 'blur' : ''"
       class="bg-gray-100 w-custom rounded-lg p-5"
       ref="main"
-      v-else-if="submitted"
     >
+      <lang-gear class="absolute custom-position"></lang-gear>
       <question
         v-for="(val, i) in testQuestions.slice(index, index + step)"
         :index="i + index"
@@ -161,8 +58,8 @@
           () => {
             result = 0;
             index = 0;
-            localStorage.removeItem('token');
-            $router.push('login');
+            //localStorage.removeItem('token');
+            $router.push({ name: 'compatibility' });
           }
         "
         class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline text-black lg:inline my-4"
@@ -195,7 +92,7 @@ export default {
         .map((a) => a[1]),
       checkName: true,
       checkGender: true,
-      submitted: false,
+      submitted: true,
       verified: true,
       load: false,
       answers: new Array(questions.length).fill(0, 0, questions.length),
@@ -218,9 +115,8 @@ export default {
   },
   methods: {
     compatibility() {
-      console.log(this.user.n)
       if (this.user.n) {
-        window.location.href = './#/compatibility'
+        window.location.href = "./#/compatibility";
       }
       this.error = this.$t("noOceanError");
     },
@@ -287,9 +183,9 @@ export default {
             e: this.e,
             a: this.a,
             n: this.n,
-            name: this.name,
+            name: this.user.name,
             lang: this.$i18n.locale,
-            gender: +this.gender,
+            gender: +this.user.gender,
           }),
         })
       ).json();
@@ -302,9 +198,6 @@ export default {
           e: this.e,
           a: this.a,
           n: this.n,
-          name: this.name,
-          lang: this.$i18n.locale,
-          gender: +this.gender,
         }),
         headers: {
           Authorization: "Bearer " + this.token,
@@ -334,12 +227,14 @@ export default {
       this.load = false;
     },
     decrement() {
+      if (this.result) return;
       if (this.index == 0) this.submitted = false;
       this.index = Math.max(this.index - this.step, 0);
       localStorage.setItem("index", this.index);
       localStorage.setItem("submitted", this.submitted);
     },
     increment() {
+      if (this.result) return;
       this.verified = false;
       if (
         !this.answers
@@ -385,8 +280,6 @@ export default {
     this.n = localStorage.getItem("n") || this.n;
     this.index = +localStorage.getItem("index") || this.index;
     this.step = localStorage.getItem("step") || this.step;
-    if (localStorage.getItem("user"))
-      this.user = JSON.parse(localStorage.getItem("user"));
     this.load = true;
     const token = localStorage.getItem("token");
     let user = this.user;
@@ -397,7 +290,8 @@ export default {
         .then((res) => {
           if (res.status !== 200) {
             localStorage.removeItem("token");
-            this.$router.push({ name: "login" });
+            localStorage.removeItem("user");
+            this.$router.push({ name: "check" });
           }
           this.token = localStorage.getItem("token");
           setTimeout(() => {
@@ -409,16 +303,17 @@ export default {
           setTimeout(() => {
             this.load = false;
           }, 300);
-          this.$router.push({ name: "login" });
+          this.$router.push({ name: "check" });
         });
     } else {
       setTimeout(() => {
         this.load = false;
       }, 300);
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: "check" });
     }
     localStorage.setItem("user", JSON.stringify(user));
     this.user = user;
+    if (user?.n === 0 || user?.n) this.$router.push({ name: "compatibility" });
   },
 };
 </script>

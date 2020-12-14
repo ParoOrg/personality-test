@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: "/personality-test"
-}
+  publicPath: "/",
+};

@@ -20,7 +20,6 @@ export default {
   methods: {
     onWindowLoad() {
       this.loadedData = true;
-      console.log("window load event");
     },
   },
 };

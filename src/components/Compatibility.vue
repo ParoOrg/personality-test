@@ -5,14 +5,13 @@
       class="w-full relative lg:h-auto lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
     >
       <lang-gear class="absolute custom-position"></lang-gear>
-      <label for="input-code" class="font-bold block m-auto mb-5"
-        >{{ $t("enterCode") }}:</label
-      >
-      <p>({{ user.code }})</p>
+      <p class="font-bold">{{ $t("compatibilityDescription") }}</p>
+      <p>{{ $t("yourCode") }}: {{ user.code }}</p>
       <input
         type="text"
         class="block m-auto px-5 mt-5"
         id="input-code"
+        :placeholder="$t('enterCode')"
         v-model="code"
       />
       <button
@@ -50,7 +49,7 @@ import LangGear from "./LangGear";
 export default {
   components: {
     MoonLoader,
-    LangGear
+    LangGear,
   },
   data() {
     return {
@@ -58,30 +57,55 @@ export default {
       load: false,
       report: "",
       error: "",
-      user: {}
+      user: {},
     };
   },
   mounted() {
-    if (localStorage.getItem("user")) {
+    if (localStorage.getItem("user") && localStorage.getItem("token")) {
       this.user = JSON.parse(localStorage.getItem("user"));
-      console.log(this.user);
     } else this.$router.push({ name: "login" });
   },
   methods: {
     async submit() {
       this.error = "";
+      if (this.code == this.user.code)
+        return (this.error = this.$t("sameCode"));
       this.load = true;
       const data = await fetch(this.apiUrl + "code?code=" + this.code, {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + localStorage.getItem('token'),
+          Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "application/json",
         },
       }).then((x) => {
-        if (x.status !== 200) return (this.error = this.$t("invalidCode"));
+        if (x.status !== 200)
+          return (this.error =
+            x.status == 402
+              ? this.$t("invalidCode")
+              : this.$t("compatibilityError"));
         return x.json();
       });
-      if (!this.error) this.report = data.report;
+
+      if (!this.error) {
+        await fetch(this.apiUrl + "send_report", {
+          body: JSON.stringify({
+            subject: this.$t("compatibilityReport"),
+            body: `<div><h1 style="text-align: center;">${this.$t(
+              "compatibilityReport"
+            )}</h1>
+                  <div style="border: 1px solid gray; border-radius: 5px;padding: 20px">${
+                    data.report
+                  }</div>
+                </div>`,
+          }),
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        }).catch(() => {});
+        this.report = data.report;
+      }
       this.load = false;
     },
     async resendCode() {
@@ -98,7 +122,12 @@ export default {
 
 <style>
 .position-custom {
-  top: 2rem;
+  top: 2rem !important;
+  left: 0;
+  right: 0;
+
+  margin-left: auto;
+  margin-right: auto;
 }
 .custom {
   color: #701e5d;

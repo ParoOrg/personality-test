@@ -1,7 +1,11 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Main from "../components/Main.vue";
+import SignUp from "../components/SignUp.vue";
 import Login from "../components/Login.vue";
-import Popup from "../components/Popup.vue";
+import Popup from "../components/Success.vue";
+import Verify from "../components/Verify.vue";
+import Email from "../components/Email.vue";
+import PasswordReset from "../components/PasswordReset.vue";
 import Compatibility from "../components/Compatibility.vue";
 // import { db } from "../firebaseDB";
 
@@ -10,6 +14,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Main,
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: SignUp,
   },
   {
     path: "/login",
@@ -22,10 +31,25 @@ const routes = [
     component: Popup,
   },
   {
+    path: "/password-reset",
+    name: "password-reset",
+    component: PasswordReset,
+  },
+  {
     path: "/compatibility",
     name: "compatibility",
     component: Compatibility,
   },
+  {
+    path: "/check",
+    name: "check",
+    component: Email,
+  },
+  {
+    path: "/verify",
+    name: "verify",
+    component: Verify,
+  }
 ];
 
 const router = createRouter({

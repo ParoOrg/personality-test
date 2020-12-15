@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    @variants responsive {
+      .bg-main {
+        background-image: url("./background_web.png");
+        background-size: 100% 100% !important;
+      }
+      .bg-main-mobile {
+        background-image: url("./background_mobile.png");
+      }
+    }
+  }

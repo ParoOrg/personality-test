@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import Welcome from "../components/Welcome.vue"
 import Main from "../components/Main.vue";
 import SignUp from "../components/SignUp.vue";
 import Login from "../components/Login.vue";
@@ -12,6 +13,11 @@ import Compatibility from "../components/Compatibility.vue";
 const routes = [
   {
     path: "/",
+    name: "landing",
+    component: Welcome,
+  },
+  {
+    path: "/home",
     name: "home",
     component: Main,
   },

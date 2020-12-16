@@ -10,21 +10,21 @@
           class="w-1/2 h-1/2 xs:w-1/3 xs:h-1/3 sm:w-1/4 sm:h-1/4 xl:w-1/5 xl:h-1/5 mx-auto"
         />
         <div class="text-white">
-          <p class="text-2xl md:text-3xl font-museoSansRounded-500">
+          <p class="text-2xl md:text-3xl tracking-widest">
             {{$t("welcome_page.welcome_to")}}
           </p>
           <p
-            class="text-5xl md:text-6xl font-museoSansRounded-900 tracking-wider"
+            class="text-5xl font-bold md:text-6xl tracking-wider"
           >
             LOVESTER
           </p>
           <p
-            class="text-lg md:text-xl font-museoSansRounded-100 tracking-wide mt-3"
+            class="text-md font-museoSansRounded-100 md:text-lg tracking-widest text-gray-100 mt-3"
           >
             {{$t("welcome_page.this_is_made_exclusively_to")}}
           </p>
           <p
-            class="text-3xl font-museoSansRounded-900 uppercase text-gradient bg-gradient-to-r from-pink-600 to-white"
+            class="text-3xl font-bold uppercase text-gradient bg-gradient-to-r from-pink-600 to-white"
           >
             Manel
           </p>

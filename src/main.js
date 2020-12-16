@@ -8,9 +8,17 @@ import Vue2TouchEvents from 'vue2-touch-events'
 import vSelect from "vue-select";
 
 let locale = localStorage.getItem("lang");
+const userLang = navigator.language || navigator.userLanguage; 
+
 if (locale === null) {
-  locale = "en";
-  localStorage.setItem("lang", "en");
+  if(userLang){
+    locale = userLang[0]+userLang[1];
+    localStorage.setItem("lang", locale);
+  }else{
+    locale = "en";
+    localStorage.setItem("lang", "en");
+  }
+  
 }
 
 const i18n = createI18n({
@@ -18,6 +26,11 @@ const i18n = createI18n({
   locale,
   messages: {
     en: {
+      welcome_page: {
+        welcome_to: "Welcome to",
+        this_is_made_exclusively_to:"This is made exclusively to",
+        read_the_terms_of_use:"Read the terms of use"
+      },
       email: "E-Mail",
       name: "Name",
       birthday: "Date of birth",
@@ -86,6 +99,11 @@ const i18n = createI18n({
       sDisagree: "Somewhat Disagree",
     },
     fr: {
+      welcome_page: {
+        welcome_to: "Bienvenue sur",
+        this_is_made_exclusively_to:"Ceci est fait exclusivement pour",
+        read_the_terms_of_use:"Lisez les conditions d'utilisation"
+      },
       email: "E-Mail",
       name: "Nom complet",
       birthday: "Date de naissance",
@@ -156,6 +174,11 @@ const i18n = createI18n({
       sDisagree: "Un peu pas d'accord",
     },
     ar: {
+      welcome_page: {
+        welcome_to: "مرحبا بك في",
+        this_is_made_exclusively_to:"هذا مصنوع حصريا ل",
+        read_the_terms_of_use:"اقرأ شروط الاستخدام"
+      },
       email: "البريد الإلكتروني",
       name: "الاسم الكامل",
       birthday: "تاريخ الولادة",

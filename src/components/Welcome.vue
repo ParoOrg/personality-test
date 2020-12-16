@@ -11,7 +11,7 @@
         />
         <div class="text-white">
           <p class="text-2xl md:text-3xl font-museoSansRounded-500">
-            Welcome to
+            {{$t("welcome_page.welcome_to")}}
           </p>
           <p
             class="text-5xl md:text-6xl font-museoSansRounded-900 tracking-wider"
@@ -21,7 +21,7 @@
           <p
             class="text-lg md:text-xl font-museoSansRounded-100 tracking-wide mt-3"
           >
-            This is made exclusively to
+            {{$t("welcome_page.this_is_made_exclusively_to")}}
           </p>
           <p
             class="text-3xl font-museoSansRounded-900 uppercase text-gradient bg-gradient-to-r from-pink-600 to-white"
@@ -32,7 +32,7 @@
           <button
             class="uppercase rounded-full border border-white text-white px-10 py-1 mt-5 bg-gradient-to-r hover:from-pink-800 hover:to-pink-400"
           >
-            <router-link to="/home">next</router-link>
+            <router-link to="/home">{{$t("next")}}</router-link>
           </button>
         </div>
       </div>
@@ -43,7 +43,7 @@
         <router-link
           class="text-sm font-museoSansRounded-300 underline text-gray-300"
           to=""
-          >Read the terms of use</router-link
+          >{{$t("welcome_page.read_the_terms_of_use")}}</router-link
         >
       </div>
     </div>

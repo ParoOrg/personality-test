@@ -13,7 +13,7 @@
         />
       </div>
       <div class="flex flex-col items-center space-y-10 mt-12">
-        <p class="font-sans text-xs text-center text-white font-normal px-14">
+        <p class="font-sans text-xs text-center text-white px-14">
           {{ $t("compatibilityDescription") }}
         </p>
         <div ref="segmentedInput" class="flex space-x-2">
@@ -76,20 +76,14 @@
         <p class="font-bold">{{ user.code }}</p>
       </div>
     </div>
-    <div
-      v-if="report && !load"
-      class="absolute text-green-500 border-2 z-50 bg-white rounded-lg border-gray-400 h-10/12 w-full lg:w-1/2 m-1/2 position-custom"
-    >
-      <div class="w-full p-5">
-        {{ report }}
-      </div>
-      <button
-        @click="() => (report = '')"
-        class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline lg:inline my-4"
-      >
-        {{ $t("close") }}
-      </button>
-    </div>
+    <report-popup
+      :report="report"
+      :show-condition="showPopup"
+      @close-popup="
+        report = '';
+        showPopup = false;
+      "
+    ></report-popup>
   </div>
   <moon-loader
     v-if="load"
@@ -100,12 +94,15 @@
 
 <script>
 import MoonLoader from "vue-spinner/src/MoonLoader";
+import ReportPopup from "@/components/ReportPopup";
 export default {
   components: {
     MoonLoader,
+    ReportPopup,
   },
   data() {
     return {
+      showPopup: false,
       codeA: Array(6).fill(""),
       load: false,
       report: "",
@@ -125,6 +122,7 @@ export default {
   },
   methods: {
     async submit() {
+      this.showPopup = !this.showPopup;
       this.error = "";
       if (this.code == this.user.code)
         return (this.error = this.$t("sameCode"));

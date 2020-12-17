@@ -179,7 +179,7 @@ export default {
       });
     },
     segmentedInput(val, idx) {
-      this.codeA[idx] = val.slice(-1);
+      this.codeA[idx] = val.charAt(val.length - 1);
       if (this.codeA[idx].length > 0) {
         if (idx === 5) {
           return;

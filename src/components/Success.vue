@@ -2,7 +2,7 @@
   <div
     class="flex justify-center flex-col h-screen items-center"
   >
-    <h1 class="text-3xl custom flex items-center"> LOVESTER <img src="/logo.png" class="h-10 w-10" alt=""></h1>
+    <h1 class="text-3xl custom flex items-center"> LOVESTER <img src="/logo1.png" class="h-10 w-10" alt=""></h1>
     <div
       v-if="success"
       class="absolute text-green-500 border-2 z-50  bg-white rounded-lg border-gray-400 h-10/12 m-1/2 position-loader"
@@ -23,15 +23,14 @@
       </button>
     </div>
   </div>
-  <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
+  <img src="/loading.gif" v-if="load" class="absolute position-loader">
 </template>
 
 <script>
-import MoonLoader from "vue-spinner/src/MoonLoader";
 
 export default {
   components: {
-    MoonLoader,
+    
   },
   data() {
     return {

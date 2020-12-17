@@ -8,9 +8,17 @@ import Vue2TouchEvents from 'vue2-touch-events'
 import vSelect from "vue-select";
 
 let locale = localStorage.getItem("lang");
+const userLang = navigator.language || navigator.userLanguage; 
+
 if (locale === null) {
-  locale = "en";
-  localStorage.setItem("lang", "en");
+  if(userLang){
+    locale = userLang[0]+userLang[1];
+    localStorage.setItem("lang", locale);
+  }else{
+    locale = "en";
+    localStorage.setItem("lang", "en");
+  }
+  
 }
 
 const i18n = createI18n({
@@ -18,6 +26,11 @@ const i18n = createI18n({
   locale,
   messages: {
     en: {
+      welcome_page: {
+        welcome_to: "Welcome to",
+        this_is_made_exclusively_to:"This is made exclusively to",
+        read_the_terms_of_use:"Read the terms of use"
+      },
       email: "E-Mail",
       name: "Name",
       birthday: "Date of birth",
@@ -36,6 +49,7 @@ const i18n = createI18n({
       noAccount: "Don't have an account?",
       compatibilityReport: "Compatibility Report",
       compatibilityDescription: "To view your compatibility report with another person you have to enter his code",
+      compatibilityPopupTitle: "Enjoy your compatibility report",
       yourCode: "This is your CODE",
       viewReportButton: "VIEW COMPATIBILITY REPORT",
       sameCode: "Please enter someone else's code",
@@ -68,6 +82,7 @@ const i18n = createI18n({
       personalityTaken: "Personality test already taken",
       close: "Close",
       yourResults: "Your test result",
+      personalityPopupTitle: "Enjoy your personality test",
       incompleteError: "You need to finish answering all the questions first!",
       submit: "Submit",
       incomplete: "Please fill out this field.",
@@ -85,8 +100,15 @@ const i18n = createI18n({
       hDisagree: "Strongly Disagree",
       mDisagree: "Disagree",
       sDisagree: "Somewhat Disagree",
+      question_number: "Question Number {n}",
+      of: "of"
     },
     fr: {
+      welcome_page: {
+        welcome_to: "Bienvenue sur",
+        this_is_made_exclusively_to:"Ceci est fait exclusivement pour",
+        read_the_terms_of_use:"Lisez les conditions d'utilisation"
+      },
       email: "E-Mail",
       name: "Nom complet",
       birthday: "Date de naissance",
@@ -105,6 +127,7 @@ const i18n = createI18n({
       noAccount: "Vous n'avez pas de compte?",
       compatibilityReport: "Rapport de compatibilité",
       compatibilityDescription: "Entrez le code de quelqu'un d'autre pour obtenir votre rapport de compatibilité",
+      compatibilityPopupTitle: "Profitez de votre rapport de compatibilité",
       yourCode: "Votre code",
       sameCode: "Please enter someone else's code",
       compatibilityError: "Rapport de compatibilité déjà envoyé",
@@ -137,6 +160,7 @@ const i18n = createI18n({
       personalityTaken: "Test de personnalité déjà passé",
       close: "Fermer",
       yourResults: "Votre résultat de test",
+      personalityPopupTitle: "Profitez de votre test de personnalité",
       incompleteError:
         "Vous devez d'abord finir de répondre à toutes les questions!",
       submit: "Soumettre",
@@ -155,8 +179,15 @@ const i18n = createI18n({
       hDisagree: "Pas du tout d'accord",
       mDisagree: "Pas d'accord",
       sDisagree: "Un peu pas d'accord",
+      question_number: "Question Numéro {n}",
+      of: "de"
     },
     ar: {
+      welcome_page: {
+        welcome_to: "مرحبا بك في",
+        this_is_made_exclusively_to:"هذا مصنوع حصريا ل",
+        read_the_terms_of_use:"اقرأ شروط الاستخدام"
+      },
       email: "البريد الإلكتروني",
       name: "الاسم الكامل",
       birthday: "تاريخ الولادة",
@@ -223,6 +254,8 @@ const i18n = createI18n({
       hDisagree: "غير موافق قطعا",
       mDisagree: "غير موافق",
       sDisagree: "غير موافق قليلا",
+      question_number: "سؤال عدد {n}",
+      of: "من"
     },
   },
 });

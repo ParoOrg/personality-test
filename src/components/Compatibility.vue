@@ -6,10 +6,10 @@
       <h1 class="text-sans text-xl text-white font-medium mt-36">
         {{ $t("compatibilityReport") }}
       </h1>
-      <div class="bg-white rounded-full w-16 h-16 mt-14 fix-rotation">
+      <div class="bg-white rounded-full w-16 h-16 mt-14">
         <img
           class="transform scale-150 h-full w-full"
-          src="../assets/compatibility_icon.png"
+          src="../assets/couples.svg"
         />
       </div>
       <div class="flex flex-col items-center space-y-10 mt-12">
@@ -19,48 +19,49 @@
         <div ref="segmentedInput" class="flex space-x-2">
           <input
             type="text"
-            class="code-input rounded-xl outline-none text-center font-black h-9 w-11"
+            class="input-color rounded-xl outline-none text-center font-black h-9 w-11"
             @input="segmentedInput($event.target.value, 0)"
             @keydown.delete="segmentedInputHandleBackSpace(0)"
             v-model="codeA[0]"
           />
           <input
             type="text"
-            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            class="input-color rounded-xl text-center outline-none h-9 w-11"
             @input="segmentedInput($event.target.value, 1)"
             @keydown.delete="segmentedInputHandleBackSpace(1)"
             v-model="codeA[1]"
           />
           <input
             type="text"
-            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            class="input-color rounded-xl text-center outline-none h-9 w-11"
             @input="segmentedInput($event.target.value, 2)"
             @keydown.delete="segmentedInputHandleBackSpace(2)"
             v-model="codeA[2]"
           />
           <input
             type="text"
-            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            class="input-color rounded-xl text-center outline-none h-9 w-11"
             @input="segmentedInput($event.target.value, 3)"
             @keydown.delete="segmentedInputHandleBackSpace(3)"
             v-model="codeA[3]"
           />
           <input
             type="text"
-            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            class="input-color rounded-xl text-center outline-none h-9 w-11"
             @input="segmentedInput($event.target.value, 4)"
             @keydown.delete="segmentedInputHandleBackSpace(4)"
             v-model="codeA[4]"
           />
           <input
             type="text"
-            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            class="input-color rounded-xl text-center outline-none h-9 w-11"
             @input="segmentedInput($event.target.value, 5)"
             @keydown.delete="segmentedInputHandleBackSpace(5)"
             v-model="codeA[5]"
           />
         </div>
         <button
+          :disabled="code.length !== 6"
           type="submit"
           @click="submit"
           class="font-sans text-xs text-center text-white font-normal px-4 py-1 bg-transparent rounded-full outline-solid-white"
@@ -78,34 +79,35 @@
     </div>
     <report-popup
       :report="report"
-      :show-condition="showPopup"
-      @close-popup="
-        report = '';
-        showPopup = false;
-      "
-    ></report-popup>
+      :show-condition="report !== '' && !load"
+      @close-popup="report = ''"
+    >
+      <template #popup-icon>
+        <div class="font-sans input-color font-bold text-2xl pl-1 pt-5">
+          68%
+        </div>
+      </template>
+      <template #popup-title>
+        {{ $t("compatibilityPopupTitle") }}
+      </template>
+    </report-popup>
   </div>
-  <moon-loader
-    v-if="load"
-    class="absolute position-loader"
-    color="#ffffff"
-  ></moon-loader>
+  <img src="/loading.gif" v-if="load" class="absolute position-loader" />
 </template>
 
 <script>
-import MoonLoader from "vue-spinner/src/MoonLoader";
 import ReportPopup from "@/components/ReportPopup";
+
 export default {
   components: {
-    MoonLoader,
     ReportPopup,
   },
   data() {
     return {
-      showPopup: false,
       codeA: Array(6).fill(""),
       load: false,
       report: "",
+      email: "",
       error: "",
       user: {},
     };
@@ -145,6 +147,7 @@ export default {
       if (!this.error) {
         await fetch(this.apiUrl + "send_report", {
           body: JSON.stringify({
+            email: this.email,
             subject: this.$t("compatibilityReport"),
             body: `<div><h1 style="text-align: center;">${this.$t(
               "compatibilityReport"
@@ -185,7 +188,7 @@ export default {
     segmentedInputHandleBackSpace(idx) {
       if (idx !== 0 && this.codeA[idx] === "") {
         const previousInput = this.$refs.segmentedInput.childNodes[idx - 1];
-        setTimeout(() => previousInput.focus(), 1);
+        previousInput.focus();
       }
     },
   },
@@ -193,15 +196,11 @@ export default {
 </script>
 
 <style>
-.code-input {
+.input-color {
   color: #b7517e;
 }
 .outline-solid-white {
   box-shadow: 0 0 0 1px #fff;
-}
-.fix-rotation {
-  -ms-transform: rotate(-5deg);
-  transform: rotate(-5deg);
 }
 .custom {
   color: #701e5d;

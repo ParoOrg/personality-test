@@ -3,19 +3,23 @@
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
     :class="load ? 'opacity' : ''"
   >
-    <div class="mt-5 h-20 flex items-center">
+    <div v-if="false" class="mt-5 h-20 flex items-center">
       <img class="w-14 h-14 inline mr-4" src="../assets/logo.png" />
       <h1 class="text-3xl custom m-0 inline">LOVESTER</h1>
+      <h1 class="text-2xl">{{ $t("personalityTest") }}</h1>
+    </div>
+    <div class="mt-12 w-full h-20 flex items-center sm:hidden">
+      <p class="inline w-full text-center"> {{ (index+1)+" "+ $t("of") +" 40"  }}</p>
+      <img class="w-14 h-14 inline mr-4  absolute right-2" src="../assets/logo.png" />
     </div>
 
-    <h1 class="text-2xl">{{ $t("personalityTest") }}</h1>
-
+    
     <div class="meter mt-5 sm:hidden">
       <span :style="'width: calc((100% / 40) * ' + index + ')'"></span>
     </div>
     <div
       :class="result || load ? 'blur' : ''"
-      class="container rounded-lg p-5"
+      class="container rounded-lg p-5 sm:mt-20"
       ref="main"
     >
       <lang-gear class="absolute custom-position"></lang-gear>
@@ -398,7 +402,7 @@ a:hover::after {
 }
 
 .meter {
-  height: 20px; /* Can be anything */
+  height: 10px;
   position: relative;
   background: #d9d9e8;
   width: 100%;

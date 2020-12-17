@@ -97,7 +97,8 @@ const i18n = createI18n({
       hDisagree: "Strongly Disagree",
       mDisagree: "Disagree",
       sDisagree: "Somewhat Disagree",
-      question_number: "Question Number {n}"
+      question_number: "Question Number {n}",
+      of: "of"
     },
     fr: {
       welcome_page: {
@@ -173,7 +174,8 @@ const i18n = createI18n({
       hDisagree: "Pas du tout d'accord",
       mDisagree: "Pas d'accord",
       sDisagree: "Un peu pas d'accord",
-      question_number: "Question Numéro {n}"
+      question_number: "Question Numéro {n}",
+      of: "de"
     },
     ar: {
       welcome_page: {
@@ -247,7 +249,8 @@ const i18n = createI18n({
       hDisagree: "غير موافق قطعا",
       mDisagree: "غير موافق",
       sDisagree: "غير موافق قليلا",
-      question_number: "سؤال عدد {n}"
+      question_number: "سؤال عدد {n}",
+      of: "من"
     },
   },
 });

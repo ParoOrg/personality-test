@@ -6,10 +6,10 @@
       <h1 class="text-sans text-xl text-white font-medium mt-36">
         {{ $t("compatibilityReport") }}
       </h1>
-      <div class="bg-white rounded-full w-16 h-16 mt-14 fix-rotation">
+      <div class="bg-white rounded-full w-16 h-16 mt-14">
         <img
           class="transform scale-150 h-full w-full"
-          src="../assets/compatibility_icon.png"
+          src="../assets/couples.svg"
         />
       </div>
       <div class="flex flex-col items-center space-y-10 mt-12">
@@ -195,10 +195,6 @@ export default {
 }
 .outline-solid-white {
   box-shadow: 0 0 0 1px #fff;
-}
-.fix-rotation {
-  -ms-transform: rotate(-5deg);
-  transform: rotate(-5deg);
 }
 .custom {
   color: #701e5d;

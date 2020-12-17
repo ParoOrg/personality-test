@@ -55,31 +55,28 @@
         </button>
       </div>
     </div>
-
-    <div
-      v-if="result.length > 0"
-      class="absolute border-2 z-50 bg-white rounded-lg border-gray-400 w-10/12 h-10/12 m-1/2 position-custom"
+    <report-popup
+      :report="result"
+      :show-condition="result.length > 0"
+      @close-popup="
+        () => {
+          result = 0;
+          index = 0;
+          //localStorage.removeItem('token');
+          $router.push({ name: 'compatibility' });
+        }
+      "
     >
-      <div class="w-full py-5 text-lg font-bold border-b-2 border-gray-400">
-        {{ $t("yourResults") }}
-      </div>
-      <div class="w-full p-5">
-        {{ result }}
-      </div>
-      <button
-        @click="
-          () => {
-            result = 0;
-            index = 0;
-            //localStorage.removeItem('token');
-            $router.push({ name: 'compatibility' });
-          }
-        "
-        class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline text-black lg:inline my-4"
-      >
-        {{ $t("close") }}
-      </button>
-    </div>
+      <template #popup-icon>
+        <img
+          class="object-scale-down h-full w-full transform scale-75"
+          src="../assets/new_logo.png"
+        />
+      </template>
+      <template #popup-title>
+        {{ $t("personalityPopupTitle") }}
+      </template>
+    </report-popup>
   </div>
   <img src="/loading.gif" v-if="load" class="absolute position-loader">
 </template>

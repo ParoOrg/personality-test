@@ -3,12 +3,16 @@
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
     :class="load ? 'opacity' : ''"
   >
-    <h1 class="text-3xl custom">LOVESTER</h1>
+    <div class="mt-20 h-20 flex items-center">
+      <img class="w-14 h-14 inline mr-4" src="../assets/logo.png" />
+      <h1 class="text-3xl custom m-0 inline">LOVESTER</h1>
+      </div>
+
     <h1 class="text-2xl">{{ $t("personalityTest") }}</h1>
 
     <div
       :class="result || load ? 'blur' : ''"
-      class="bg-gray-100 w-custom rounded-lg p-5"
+      class="container rounded-lg p-5"
       ref="main"
     >
       <lang-gear class="absolute custom-position"></lang-gear>
@@ -24,7 +28,7 @@
         <button
           type="submit"
           @click="decrement"
-          class="md:w-32 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
+          class="text-xl md:text-3xl rounded-full px-14 py-2 bg-gradient-to-r from-transparent to-transparent hover:from-primary-light hover:to-primary-dark hover:text-white border-primary border-2 hover:border-transparent text-primary transition ease-in-out duration-300"
         >
           {{ $t("back") }}
         </button>
@@ -36,7 +40,7 @@
           @click="
             () => (index == testQuestions.length - step ? send() : increment())
           "
-          class="md:w-32 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
+          class="text-xl md:text-3xl rounded-full px-14 py-2 bg-gradient-to-r from-primary-light to-primary-dark text-white hover:border-primary border-2 border-transparent hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300"
         >
           {{ index == testQuestions.length - step ? $t("submit") : $t("next") }}
         </button>
@@ -74,7 +78,7 @@
 <script>
 import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
-import Question from "./Question";
+import Question from "./Question1";
 import LangGear from "./LangGear";
 import MoonLoader from "vue-spinner/src/MoonLoader";
 
@@ -134,6 +138,7 @@ export default {
       localStorage.setItem("submitted", this.submitted);
     },
     async answer(index, val) {
+      console.log(val);
       this.answers[index] = val;
       await fetch(this.apiUrl + "answer?question=" + index + "&value=" + val, {
         method: "POST",
@@ -254,8 +259,16 @@ export default {
       localStorage.setItem("index", this.index);
       localStorage.setItem("verified", this.verified);
     },
+    windowResized(e) {
+      if (e.target.screen.width >= 768) {
+        this.step = 5;
+      } else {
+        this.step = 1;
+      }
+    },
   },
   async mounted() {
+    window.dispatchEvent(new Event("resize"));
     this.localStorage = localStorage;
     this.name = localStorage.getItem("name") || this.name;
     this.gender = localStorage.getItem("gender") || this.gender;
@@ -326,6 +339,12 @@ export default {
     this.user = user;
     if (user?.n === 0 || user?.n) this.$router.push({ name: "compatibility" });
   },
+  created() {
+    window.addEventListener("resize", this.windowResized);
+  },
+  unmounted() {
+    window.removeEventListener("resize", this.windowResized);
+  },
 };
 </script>
 
@@ -371,11 +390,5 @@ a:hover::after {
 .custom {
   color: #701e5d;
   margin-top: 60px;
-}
-
-@media (min-width: 1024px) {
-  .w-custom {
-    width: 80vw;
-  }
 }
 </style>

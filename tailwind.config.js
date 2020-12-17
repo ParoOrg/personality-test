@@ -11,6 +11,18 @@ module.exports = {
     // './src/**/*.vue',
   ],
   theme: {
+    colors: {
+      primary: {
+        dark: "#8F144A",
+        DEFAULT: "#981851",
+        light: "#EF4E9A",
+      },
+      ...defaultTheme.colors
+    },
+    screens: {
+      xs: "512px",
+      ...defaultTheme.screens
+    },
     fontFamily: {
       "sans": ["Inter", ...defaultTheme.fontFamily.sans],
       "museoSansRounded-100": ['"Museo Sans Rounded 100"', "sans-serif"],
@@ -20,11 +32,7 @@ module.exports = {
       "museoSansRounded-900": ['"Museo Sans Rounded 900"', "sans-serif"],
       "museoSansRounded-1000": ['"Museo Sans Rounded 1000"', "sans-serif"],
     },
-    extend: {
-      screens: {
-        xs: "512px",
-      },
-    },
+ 
   },
   variants: {},
   plugins: [],

@@ -80,10 +80,7 @@
     <report-popup
       :report="report"
       :show-condition="report !== '' && !load"
-      @close-popup="
-        report = '';
-        showPopup = false;
-      "
+      @close-popup="report = ''"
     >
       <template #popup-icon>
         <div class="font-sans input-color font-bold text-2xl pl-1 pt-5">

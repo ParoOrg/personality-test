@@ -82,6 +82,7 @@ const i18n = createI18n({
       personalityTaken: "Personality test already taken",
       close: "Close",
       yourResults: "Your test result",
+      personalityPopupTitle: "Enjoy your personality test",
       incompleteError: "You need to finish answering all the questions first!",
       submit: "Submit",
       incomplete: "Please fill out this field.",
@@ -159,6 +160,7 @@ const i18n = createI18n({
       personalityTaken: "Test de personnalité déjà passé",
       close: "Fermer",
       yourResults: "Votre résultat de test",
+      personalityPopupTitle: "Profitez de votre test de personnalité",
       incompleteError:
         "Vous devez d'abord finir de répondre à toutes les questions!",
       submit: "Soumettre",

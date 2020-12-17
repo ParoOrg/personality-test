@@ -20,6 +20,7 @@ module.exports = {
       ...defaultTheme.colors
     },
     screens: {
+      '2xs': "384px",
       xs: "512px",
       ...defaultTheme.screens
     },

@@ -3,13 +3,16 @@
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
     :class="load ? 'opacity' : ''"
   >
-    <div class="mt-20 h-20 flex items-center">
+    <div class="mt-5 h-20 flex items-center">
       <img class="w-14 h-14 inline mr-4" src="../assets/logo.png" />
       <h1 class="text-3xl custom m-0 inline">LOVESTER</h1>
-      </div>
+    </div>
 
     <h1 class="text-2xl">{{ $t("personalityTest") }}</h1>
 
+    <div class="meter mt-5 sm:hidden">
+      <span :style="'width: calc((100% / 40) * ' + index + ')'"></span>
+    </div>
     <div
       :class="result || load ? 'blur' : ''"
       class="container rounded-lg p-5"
@@ -24,11 +27,13 @@
         :key="i"
         :callback="(val, index) => answer(index, val)"
       ></question>
-      <div class="w-full ltr flex items-center justify-between p-5">
+      <div
+        class="w-full ltr flex items-center flex-col xs:flex-row justify-between p-5"
+      >
         <button
           type="submit"
           @click="decrement"
-          class="text-xl md:text-3xl rounded-full px-14 py-2 bg-gradient-to-r from-transparent to-transparent hover:from-primary-light hover:to-primary-dark hover:text-white border-primary border-2 hover:border-transparent text-primary transition ease-in-out duration-300"
+          class="text-xl m-2 order-2 xs:order-1 md:text-3xl rounded-full px-14 py-2 bg-gradient-to-r from-transparent to-transparent hover:from-primary-light hover:to-primary-dark hover:text-white border-primary border-2 hover:border-transparent text-primary transition ease-in-out duration-300"
         >
           {{ $t("back") }}
         </button>
@@ -40,7 +45,7 @@
           @click="
             () => (index == testQuestions.length - step ? send() : increment())
           "
-          class="text-xl md:text-3xl rounded-full px-14 py-2 bg-gradient-to-r from-primary-light to-primary-dark text-white hover:border-primary border-2 border-transparent hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300"
+          class="text-xl m-2 order-1 xs:order-2 md:text-3xl rounded-full px-14 py-2 bg-gradient-to-r from-primary-light to-primary-dark text-white hover:border-primary border-2 border-transparent hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300"
         >
           {{ index == testQuestions.length - step ? $t("submit") : $t("next") }}
         </button>
@@ -379,5 +384,27 @@ a:hover::after {
 .custom {
   color: #701e5d;
   margin-top: 60px;
+}
+
+.meter {
+  height: 20px; /* Can be anything */
+  position: relative;
+  background: #d9d9e8;
+  width: 100%;
+  box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  background-color: theme("colors.primary.DEFAULT");
+  background-image: linear-gradient(
+    to right,
+    theme("colors.primary.dark"),
+    theme("colors.primary.light")
+  );
+  box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
 }
 </style>

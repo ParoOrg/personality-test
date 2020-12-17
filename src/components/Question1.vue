@@ -15,12 +15,12 @@
               selection = 1;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-28 h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
           :class="selection == 1 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
         >
-          <img class="w-10 h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-10 h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs p-2">{{ $t("hDisagree") }}</p>
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
+          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("hDisagree") }}</p>
         </button>
       </div>
       <div>
@@ -31,12 +31,12 @@
               selection = 2;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-28 h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
           :class="selection == 2 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
         >
-          <img class="w-10 h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-10 h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs p-2">{{ $t("mDisagree") }}</p>
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
+          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("mDisagree") }}</p>
         </button>
       </div>
       <div>
@@ -47,12 +47,12 @@
               selection = 3;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-28 h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
           :class="selection == 3 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
         >
-          <img class="w-10 h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-10 h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs p-2">{{ $t("sDisagree") }}</p>
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
+          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("sDisagree") }}</p>
         </button>
       </div>
       <div>
@@ -63,12 +63,12 @@
               selection = 4;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-28 h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
           :class="selection == 4 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
         >
-          <img class="w-10 h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-10 h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs p-2">{{ $t("sAgree") }}</p>
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
+          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("sAgree") }}</p>
         </button>
       </div>
       <div>
@@ -79,12 +79,12 @@
               selection = 5;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-28 h-28  sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28  sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
           :class="selection == 5 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
         >
-          <img class="w-10 h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-10 h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs p-2">{{ $t("mAgree") }}</p>
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
+          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("mAgree") }}</p>
         </button>
       </div>
       <div>
@@ -95,12 +95,12 @@
               selection = 6;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-28 h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
           :class="selection == 6 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
         >
-          <img class="w-10 h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-10 h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs p-2">{{ $t("hAgree") }}</p>
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
+          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
+          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("hAgree") }}</p>
         </button>
       </div>
     </div>

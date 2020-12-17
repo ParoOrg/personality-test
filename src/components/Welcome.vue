@@ -55,10 +55,28 @@ export default {
   data() {
     return {
       load: true,
+      imagesToPreload: [
+        "https://manel.lovester.net/img/logo_with_shadow.db6dbf30.png",
+        "https://manel.lovester.net/img/background_mobile.7fe09207.png",
+      ],
     };
   },
-  mounted() {
-    setTimeout(()=>this.load = false, 1500)
+  created() {
+    let imageLoaded = 0;
+    for (const imageSrc of this.imagesToPreload) {
+      const img = new Image();
+      img.src = imageSrc;
+
+      img.onload = () => {
+        imageLoaded++;
+
+        if (imageLoaded === this.imagesToPreload.length) {
+          setTimeout(()=>(this.load = false), 1000);
+        }
+
+        console.log(imageLoaded);
+      };
+    }
   },
   methods: {
     async redirect() {

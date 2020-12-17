@@ -7,8 +7,8 @@ module.exports = {
     // purgeLayersByDefault: true,
   },
   purge: [
-    // './public/**/*.html',
-    // './src/**/*.vue',
+    './public/**/*.html',
+    './src/**/*.vue',
   ],
   theme: {
     colors: {

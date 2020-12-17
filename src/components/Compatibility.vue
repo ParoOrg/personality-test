@@ -19,7 +19,7 @@
         <div ref="segmentedInput" class="flex space-x-2">
           <input
             type="text"
-            class="input-color rounded-xl outline-none text-center font-black h-9 w-11"
+            class="input-color rounded-xl outline-none text-center h-9 w-11"
             @input="segmentedInput($event.target.value, 0)"
             @keydown.delete="segmentedInputHandleBackSpace(0)"
             v-model="codeA[0]"
@@ -198,7 +198,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .input-color {
   color: #b7517e;
 }
@@ -212,5 +212,8 @@ export default {
 .custom-position {
   top: 5px;
   right: 5px;
+}
+input[type="text"] {
+  font-size: 16px;
 }
 </style>

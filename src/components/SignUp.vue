@@ -270,20 +270,19 @@
       <p>{{ $t("signupSuccess") }}</p>
     </popup>
   </div>
-  <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
+  <img src="/loading.gif" v-if="load" class="absolute position-loader">
 </template>
 
 <script>
 import LangGear from "./LangGear";
 import Popup from "./Popup";
 import CountrySelector from "./CountrySelector";
-import MoonLoader from "vue-spinner/src/MoonLoader";
 import * as countries from "i18n-iso-countries";
 
 export default {
   components: {
     LangGear,
-    MoonLoader,
+    
     Popup,
     CountrySelector,
   },

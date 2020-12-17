@@ -71,17 +71,16 @@
       {{ $t("close") }}
     </button>
   </div>
-  <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
+  <img src="/loading.gif" v-if="load" class="absolute position-loader">
 </template>
 
 <script>
 import LangGear from "./LangGear";
-import MoonLoader from "vue-spinner/src/MoonLoader";
 
 export default {
   components: {
     LangGear,
-    MoonLoader,
+    
   },
   data() {
     return {

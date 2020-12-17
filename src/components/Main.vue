@@ -81,7 +81,7 @@
       </button>
     </div>
   </div>
-  <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
+  <img src="/loading.gif" v-if="load" class="absolute position-loader">
 </template>
 
 <script>
@@ -89,8 +89,7 @@ import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question1";
 import LangGear from "./LangGear";
-import MoonLoader from "vue-spinner/src/MoonLoader";
-
+// 
 export default {
   name: "HelloWorld",
   data() {
@@ -123,7 +122,7 @@ export default {
   },
   components: {
     Question,
-    MoonLoader,
+    // 
     LangGear,
   },
   methods: {

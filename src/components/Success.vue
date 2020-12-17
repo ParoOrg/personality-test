@@ -23,15 +23,14 @@
       </button>
     </div>
   </div>
-  <moon-loader v-if="load" class="absolute position-loader"></moon-loader>
+  <img src="/loading.gif" v-if="load" class="absolute position-loader">
 </template>
 
 <script>
-import MoonLoader from "vue-spinner/src/MoonLoader";
 
 export default {
   components: {
-    MoonLoader,
+    
   },
   data() {
     return {

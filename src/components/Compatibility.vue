@@ -79,7 +79,7 @@
     </div>
     <report-popup
       :report="report"
-      :show-condition="report !== '' && !load"
+      :show-condition="report.length!==0"
       @close-popup="report = ''"
     >
       <template #popup-icon>
@@ -129,7 +129,7 @@ export default {
       if (this.code == this.user.code)
         return (this.error = this.$t("sameCode"));
       this.load = true;
-      const data = await fetch(this.apiUrl + "code?code=" + this.code, {
+      const data = await fetch(this.apiUrl + "code?code=" + this.code+"&lang="+this.$i18n.locale, {
         method: "POST",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -165,6 +165,7 @@ export default {
           },
         }).catch(() => {});
         this.report = data.report;
+        console.log(data)
         this.percentage = data.compatibility | 0;
       }
       this.load = false;

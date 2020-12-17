@@ -9,11 +9,15 @@
       <h1 class="text-2xl">{{ $t("personalityTest") }}</h1>
     </div>
     <div class="mt-12 w-full h-20 flex items-center sm:hidden">
-      <p class="inline w-full text-center"> {{ (index+1)+" "+ $t("of") +" 40"  }}</p>
-      <img class="w-14 h-14 inline mr-4  absolute right-2" src="../assets/logo.png" />
+      <p class="inline w-full text-center">
+        {{ index + 1 + " " + $t("of") + " 40" }}
+      </p>
+      <img
+        class="w-14 h-14 inline mr-4  absolute right-2"
+        src="../assets/logo.png"
+      />
     </div>
 
-    
     <div class="meter mt-5 sm:hidden">
       <span :style="'width: calc((100% / 40) * ' + index + ')'"></span>
     </div>
@@ -31,9 +35,7 @@
         :key="i"
         :callback="(val, index) => answer(index, val)"
       ></question>
-      <div
-        class="w-full ltr flex items-center  justify-between p-5"
-      >
+      <div class="w-full ltr flex items-center  justify-between p-5">
         <button
           type="submit"
           @click="decrement"
@@ -78,7 +80,7 @@
       </template>
     </report-popup>
   </div>
-  <img src="/loading.gif" v-if="load" class="absolute position-loader">
+  <img src="/loading.gif" v-if="load" class="absolute position-loader" />
 </template>
 
 <script>
@@ -86,7 +88,8 @@ import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question1";
 import LangGear from "./LangGear";
-// 
+import ReportPopup from "./ReportPopup";
+//
 export default {
   name: "HelloWorld",
   data() {
@@ -119,7 +122,7 @@ export default {
   },
   components: {
     Question,
-    // 
+    ReportPopup,
     LangGear,
   },
   methods: {

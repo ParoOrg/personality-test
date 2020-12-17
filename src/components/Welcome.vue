@@ -2,7 +2,7 @@
   <div
     class="bg-main-mobile sm:bg-main bg-cover bg-no-repeat h-screen w-screen"
   >
-    <div class="container mx-auto h-full flex">
+    <div v-if="!load" class="container mx-auto h-full flex">
       <div class="h-auto self-center">
         <img
           alt="logo"
@@ -11,11 +11,9 @@
         />
         <div class="text-white">
           <p class="text-2xl md:text-3xl tracking-widest">
-            {{$t("welcome_page.welcome_to")}}
+            {{ $t("welcome_page.welcome_to") }}
           </p>
-          <p
-            class="text-5xl font-bold md:text-6xl tracking-wider"
-          >
+          <p class="text-5xl font-bold md:text-6xl tracking-wider">
             LOVESTER
           </p>
           <p
@@ -32,7 +30,7 @@
           <button
             class="uppercase rounded-full border border-white text-white px-10 py-1 mt-5 bg-gradient-to-r hover:from-pink-800 hover:to-pink-400"
           >
-            <router-link to="/home">{{ $t("next") }}</router-link>
+            <p @click="redirect">{{ $t("next") }}</p>
           </button>
         </div>
       </div>
@@ -48,13 +46,75 @@
       </div>-->
     </div>
   </div>
+  <img src="/loading.gif" v-if="load" class="absolute position-loader" />
 </template>
 
 <script>
 export default {
   name: "Welcome",
+  data() {
+    return {
+      load: true,
+    };
+  },
+  mounted() {
+    setTimeout(()=>this.load = false, 1500)
+  },
+  methods: {
+    async redirect() {
+      this.load = true;
+      if (this.$route.query.code && this.$route.query.code == "QlsKr") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "manel@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "LZfKr") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "manel1@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "UIfKM") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "manel2@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
+.position-loader {
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
 </style>

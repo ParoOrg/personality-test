@@ -1,12 +1,12 @@
 <template>
   <div class="mb-10 flex flex-col">
     <div
-      class="border border-primary text-primary rounded-full self-center sm:self-start mb-3 w-48 py-2"
+      class="border border-primary text-primary rounded-full hidden sm:block self-start mb-3 w-48 py-2"
     >
       {{ $t("question_number",index + 1)}}
     </div>
     <div class="mb-3 text-primary font-museoSansRounded-100 text-2xl text-center">{{ question }}</div>
-    <div class="grid grid-cols-3 md:grid-cols-6 gap-4">
+    <div class="grid grid-cols-3 md:grid-cols-6 gap-4 border-b-2 pb-10">
       <div class="h-full w-full">
         <button
           @click="

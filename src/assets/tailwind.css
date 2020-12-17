@@ -2,14 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* import museo sans rounded font*/
+@import url("/public/fonts/museo-sans-rounded/style.css");
+
 @layer utilities {
-    @variants responsive {
-      .bg-main {
-        background-image: url("./background_web.png");
-        background-size: 100% 100% !important;
-      }
-      .bg-main-mobile {
-        background-image: url("./background_mobile.png");
-      }
+  .text-gradient {
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  @variants responsive {
+    .bg-main {
+      background-image: url("./background_web.png");
+      background-size: 100% 100% !important;
+    }
+    .bg-main-mobile {
+      background-image: url("./background_mobile.png");
+      background-size: 100% 100% !important;
     }
   }
+}

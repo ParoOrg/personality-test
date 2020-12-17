@@ -37,7 +37,7 @@
         <button
           type="submit"
           @click="decrement"
-          class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:from-primary-light hover:to-primary-dark hover:text-white border-primary border-2 hover:border-transparent text-primary transition ease-in-out duration-300"
+          class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:border-white hover:from-primary-light hover:to-primary hover:text-white border-primary border-2  text-primary transition ease-in-out duration-300"
         >
           {{ $t("back") }}
         </button>
@@ -49,7 +49,7 @@
           @click="
             () => (index == testQuestions.length - step ? send() : increment())
           "
-          class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-primary-light to-primary-dark text-white hover:border-primary border-2 border-transparent hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300"
+          class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-primary-light to-primary border-white text-white hover:border-primary border-2 hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300"
         >
           {{ index == testQuestions.length - step ? $t("submit") : $t("next") }}
         </button>

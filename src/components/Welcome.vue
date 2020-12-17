@@ -28,7 +28,7 @@
           </p>
 
           <button
-            class="uppercase rounded-full border border-white text-white px-10 py-1 mt-5 bg-gradient-to-r hover:from-pink-800 hover:to-pink-400"
+            class="uppercase rounded-full border border-white text-white px-10 py-1 mt-5 bg-gradient-to-r hover:from-pink-800 hover:to-pink-400 outline-none"
           >
             <p @click="redirect">{{ $t("next") }}</p>
           </button>

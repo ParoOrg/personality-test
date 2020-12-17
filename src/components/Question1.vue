@@ -3,9 +3,13 @@
     <div
       class="border border-primary text-primary rounded-full hidden sm:block self-start mb-3 w-48 py-2"
     >
-      {{ $t("question_number",index + 1)}}
+      {{ $t("question_number", index + 1) }}
     </div>
-    <div class="mb-3 text-primary font-museoSansRounded-100 text-2xl text-center">{{ question }}</div>
+    <div
+      class="mb-3 text-primary font-museoSansRounded-100 text-2xl text-center"
+    >
+      {{ question }}
+    </div>
     <div class="grid grid-cols-3 md:grid-cols-6 gap-4 border-b-2 pb-10">
       <div class="h-full w-full">
         <button
@@ -15,12 +19,25 @@
               selection = 1;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
-          :class="selection == 1 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          :class="
+            selection == 1
+              ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
+              : ''
+          "
         >
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("hDisagree") }}</p>
+          <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
+            <strongly-disagree-icon
+              class="flex-1 self-center w-auto max-h-16 max-w-16 2xs:max-h-20 2xs:max-w-20 h-auto mx-auto icon1 fill-current"
+            />
+          </div>
+          <div class="h-1/2 flex px-2 sm:pb-5 md:pb-0 lg:pb-5">
+            <p
+              class="flex-1 self-center text-xs sm:text-base md:text-xs lg:text-sm p-2 h-auto"
+            >
+              {{ $t("hDisagree") }}
+            </p>
+          </div>
         </button>
       </div>
       <div>
@@ -31,12 +48,23 @@
               selection = 2;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
-          :class="selection == 2 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          :class="
+            selection == 2
+              ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
+              : ''
+          "
         >
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("mDisagree") }}</p>
+          <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
+            <disagree-icon
+              class="flex-1 self-center w-auto max-h-16 max-w-16 2xs:max-h-20 2xs:max-w-20 h-auto mx-auto icon1 fill-current"
+            />
+          </div>
+          <div class="h-1/2 flex px-2 sm:pb-5 md:pb-0 lg:pb-5">
+            <p class="flex-1 self-center text-xs sm:text-base md:text-xs lg:text-sm p-2 h-auto">
+              {{ $t("mDisagree") }}
+            </p>
+          </div>
         </button>
       </div>
       <div>
@@ -47,12 +75,23 @@
               selection = 3;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
-          :class="selection == 3 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          :class="
+            selection == 3
+              ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
+              : ''
+          "
         >
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("sDisagree") }}</p>
+        <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
+          <somewhat-disagree-icon
+            class="flex-1 self-center w-auto max-h-16 max-w-16 2xs:max-h-20 2xs:max-w-20 h-auto mx-auto icon1 fill-current"
+          />
+        </div>
+          <div class="h-1/2 flex px-2 sm:pb-5 md:pb-0 lg:pb-5">
+          <p class="flex-1 self-center text-xs sm:text-base md:text-xs lg:text-sm p-2 h-auto">
+            {{ $t("sDisagree") }}
+          </p>
+          </div>
         </button>
       </div>
       <div>
@@ -63,12 +102,23 @@
               selection = 4;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
-          :class="selection == 4 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          :class="
+            selection == 4
+              ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
+              : ''
+          "
         >
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("sAgree") }}</p>
+        <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
+          <somewhat-agree-icon
+            class="flex-1 self-center w-auto max-h-16 max-w-16 2xs:max-h-20 2xs:max-w-20 h-auto mx-auto icon1 fill-current"
+          />
+        </div>
+          <div class="h-1/2 flex sm:pb-5 md:pb-0 lg:pb-5">
+          <p class="flex-1 self-center text-xs sm:text-base md:text-xs lg:text-sm p-2 h-auto">
+            {{ $t("sAgree") }}
+          </p>
+          </div>
         </button>
       </div>
       <div>
@@ -79,12 +129,23 @@
               selection = 5;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28  sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
-          :class="selection == 5 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          :class="
+            selection == 5
+              ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
+              : ''
+          "
         >
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("mAgree") }}</p>
+        <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
+          <agree-icon
+            class="flex-1 self-center w-auto max-h-16 max-w-16 2xs:max-h-20 2xs:max-w-20 h-auto mx-auto icon1 fill-current"
+          />
+        </div>
+        <div class="h-1/2 flex px-2 sm:pb-5 md:pb-0 lg:pb-5">
+          <p class="flex-1 self-center text-xs sm:text-base md:text-xs lg:text-sm p-2 h-auto">
+            {{ $t("mAgree") }}
+          </p>
+        </div>
         </button>
       </div>
       <div>
@@ -95,12 +156,23 @@
               selection = 6;
             }
           "
-          class="bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
-          :class="selection == 6 ? 'selected bg-gradient-to-r from-primary-dark to-primary-light text-white' : ''"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          :class="
+            selection == 6
+              ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
+              : ''
+          "
         >
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon1" src="../assets/agree_color.png" />
-          <img class="w-8 h-8 2xs:w-10 2xs:h-10 sm:w-14 sm:h-14 md:w-10 md:h-10 mx-auto icon2" src="../assets/agree.png" />
-          <p class="text-xs sm:text-base md:text-xs lg:text-sm p-2">{{ $t("hAgree") }}</p>
+        <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
+          <strongly-agree-icon
+            class="flex-1 self-center w-auto max-h-16 max-w-16 2xs:max-h-20 2xs:max-w-20 h-auto mx-auto icon1 fill-current"
+          />
+        </div>
+        <div class="h-1/2 flex px-2 sm:pb-5 md:pb-0 lg:pb-5">
+          <p class="flex-1 self-center text-xs sm:text-base md:text-xs lg:text-sm p-2 h-auto">
+            {{ $t("hAgree") }}
+          </p>
+        </div>
         </button>
       </div>
     </div>
@@ -108,7 +180,21 @@
 </template>
 
 <script>
+import StronglyDisagreeIcon from "@/assets/test-icons/strongly-disagree.svg";
+import DisagreeIcon from "@/assets/test-icons/disagree.svg";
+import SomewhatDisagreeIcon from "@/assets/test-icons/somewhat-disagree.svg";
+import SomewhatAgreeIcon from "@/assets/test-icons/somewhat-agree.svg";
+import AgreeIcon from "@/assets/test-icons/agree.svg";
+import StronglyAgreeIcon from "@/assets/test-icons/strongly-agree.svg";
 export default {
+  components: {
+    StronglyDisagreeIcon,
+    DisagreeIcon,
+    SomewhatDisagreeIcon,
+    SomewhatAgreeIcon,
+    AgreeIcon,
+    StronglyAgreeIcon,
+  },
   props: {
     question: {
       type: String,
@@ -130,9 +216,9 @@ export default {
     };
   },
   computed: {
-    selection(){
-      return this.answer
-    }
+    selection() {
+      return this.answer;
+    },
   },
   methods: {
     test() {},
@@ -142,75 +228,6 @@ export default {
 </script>
 
 <style scoped>
-.icon2{
-  display: none;
-}
-button:hover .icon1{
-    display: none;
-}
-button.selected .icon1{
-    display: none;
-}
-button:hover .icon2{
-    display: block;
-}
-button.selected .icon2{
-    display: block;
-}
-.border-custom-6:hover {
-  border-color: #2ffe66;
-  color: #2ffe66;
-}
-.selection-custom-6 {
-  border-color: #2ffe66;
-  color: #2ffe66;
-}
-
-.border-custom-5:hover {
-  border-color: #2ffe66;
-  color: #2ffe66;
-}
-.selection-custom-5 {
-  border-color: #55d85c;
-  color: #55d85c;
-}
-
-.border-custom-4:hover {
-  border-color: #2ffe66;
-  color: #2ffe66;
-}
-.selection-custom-4 {
-  border-color: #7cae4f;
-  color: #7cae4f;
-}
-
-.border-custom-3:hover {
-  border-color: #2ffe66;
-  color: #2ffe66;
-}
-.selection-custom-3 {
-  border-color: #a98142;
-  color: #a98142;
-}
-
-.border-custom-2:hover {
-  border-color: #2ffe66;
-  color: #2ffe66;
-}
-.selection-custom-2 {
-  border-color: #df4b33;
-  color: #df4b33;
-}
-
-.border-custom-1:hover {
-  border-color: #2ffe66;
-  color: #2ffe66;
-}
-.selection-custom-1 {
-  border-color: #ff2a29;
-  color: #ff2a29;
-}
-
 .transition {
   transition: 0.5s;
 }

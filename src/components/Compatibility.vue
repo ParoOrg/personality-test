@@ -56,6 +56,7 @@ export default {
       code: "",
       load: false,
       report: "",
+      email: "",
       error: "",
       user: {},
     };
@@ -89,6 +90,7 @@ export default {
       if (!this.error) {
         await fetch(this.apiUrl + "send_report", {
           body: JSON.stringify({
+            email: this.email,
             subject: this.$t("compatibilityReport"),
             body: `<div><h1 style="text-align: center;">${this.$t(
               "compatibilityReport"

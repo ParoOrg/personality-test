@@ -84,7 +84,7 @@
     >
       <template #popup-icon>
         <div class="font-sans input-color font-bold text-2xl pl-1 pt-5">
-          68%
+          {{percentage}}%
         </div>
       </template>
       <template #popup-title>
@@ -148,6 +148,7 @@ export default {
         await fetch(this.apiUrl + "send_report", {
           body: JSON.stringify({
             email: this.email,
+            lang: this.$i18n.locale,
             subject: this.$t("compatibilityReport"),
             body: `<div><h1 style="text-align: center;">${this.$t(
               "compatibilityReport"
@@ -164,6 +165,7 @@ export default {
           },
         }).catch(() => {});
         this.report = data.report;
+        this.percentage = data.compatibility | 0;
       }
       this.load = false;
     },

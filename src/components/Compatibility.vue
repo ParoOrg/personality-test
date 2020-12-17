@@ -1,58 +1,109 @@
 <template>
-  <div v-if="!load" class="flex justify-center flex-col h-screen items-center">
-    <h1 class="text-3xl custom">LOVESTER</h1>
-    <div
-      class="w-full relative lg:h-auto lg:w-1/2 max-w-lg bg-gray-100 rounded-lg p-10"
-    >
-      <lang-gear class="absolute custom-position"></lang-gear>
-      <p class="font-bold">{{ $t("compatibilityDescription") }}</p>
-      <p>{{ $t("yourCode") }}: {{ user.code }}</p>
-      <input
-        type="text"
-        class="block m-auto px-5 mt-5"
-        id="input-code"
-        :placeholder="$t('enterCode')"
-        v-model="code"
-      />
-      <button
-        type="submit"
-        @click="submit"
-        class="md:w-32 block m-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
-      >
-        {{ $t("submit") }}
-      </button>
-      <p class="text-red-500 mt-4 text-xs italic">
+  <div
+    class="bg-main-mobile md:bg-main bg-cover bg-no-repeat h-screen w-screen"
+  >
+    <div v-if="!load" class="flex flex-col h-screen items-center">
+      <h1 class="text-sans text-xl text-white font-medium mt-36">
+        {{ $t("compatibilityReport") }}
+      </h1>
+      <div class="bg-white rounded-full w-24 h-24 mt-14">
+        <img
+          class="object-cover h-full"
+          src="../assets/compatibility_icon.png"
+        />
+      </div>
+      <div class="flex flex-col items-center space-y-10 mt-10">
+        <p class="font-sans text-xs text-center text-white font-normal px-14">
+          {{ $t("compatibilityDescription") }}
+        </p>
+        <div ref="segmentedInput" class="flex space-x-2">
+          <input
+            type="text"
+            class="code-input rounded-xl outline-none text-center font-black h-9 w-11"
+            @input="segmentedInput($event.target.value, 0)"
+            @keydown.delete="segmentedInputHandleBackSpace(0)"
+            v-model="codeA[0]"
+          />
+          <input
+            type="text"
+            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            @input="segmentedInput($event.target.value, 1)"
+            @keydown.delete="segmentedInputHandleBackSpace(1)"
+            v-model="codeA[1]"
+          />
+          <input
+            type="text"
+            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            @input="segmentedInput($event.target.value, 2)"
+            @keydown.delete="segmentedInputHandleBackSpace(2)"
+            v-model="codeA[2]"
+          />
+          <input
+            type="text"
+            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            @input="segmentedInput($event.target.value, 3)"
+            @keydown.delete="segmentedInputHandleBackSpace(3)"
+            v-model="codeA[3]"
+          />
+          <input
+            type="text"
+            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            @input="segmentedInput($event.target.value, 4)"
+            @keydown.delete="segmentedInputHandleBackSpace(4)"
+            v-model="codeA[4]"
+          />
+          <input
+            type="text"
+            class="code-input rounded-xl text-center outline-none h-9 w-11"
+            @input="segmentedInput($event.target.value, 5)"
+            @keydown.delete="segmentedInputHandleBackSpace(5)"
+            v-model="codeA[5]"
+          />
+        </div>
+        <button
+          type="submit"
+          @click="submit"
+          class="font-sans text-xs text-center text-white font-normal px-4 py-1 bg-transparent rounded-full outline-solid-white"
+        >
+          {{ $t("viewReportButton") }}
+        </button>
+      </div>
+      <p class="text-red-500 text-xs pt-3">
         {{ error }}
       </p>
+      <div class="flex font-sans text-white mt-auto mb-14">
+        <p class="font-semibold mr-1">{{ $t("yourCode") }} :</p>
+        <p class="font-bold">{{ user.code }}</p>
+      </div>
     </div>
-  </div>
-  <div
-    v-if="report && !load"
-    class="absolute text-green-500 border-2 z-50 bg-white rounded-lg border-gray-400 h-10/12 w-full lg:w-1/2 m-1/2 position-custom"
-  >
-    <div class="w-full p-5">
-      {{ report }}
-    </div>
-    <button
-      @click="() => (report = '')"
-      class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline lg:inline my-4"
+    <div
+      v-if="report && !load"
+      class="absolute text-green-500 border-2 z-50 bg-white rounded-lg border-gray-400 h-10/12 w-full lg:w-1/2 m-1/2 position-custom"
     >
-      {{ $t("close") }}
-    </button>
+      <div class="w-full p-5">
+        {{ report }}
+      </div>
+      <button
+        @click="() => (report = '')"
+        class="transition p-2 bg-red-500 px-4 text-white rounded-lg inline lg:inline my-4"
+      >
+        {{ $t("close") }}
+      </button>
+    </div>
   </div>
   <img src="/loading.gif" v-if="load" class="absolute position-loader">
 </template>
 
 <script>
 import LangGear from "./LangGear";
+
 export default {
-  components: {
-    
+  components: {    
     LangGear,
   },
   data() {
     return {
-      code: "",
+      codeA: Array(6).fill(""),
       load: false,
       report: "",
       email: "",
@@ -64,6 +115,11 @@ export default {
     if (localStorage.getItem("user") && localStorage.getItem("token")) {
       this.user = JSON.parse(localStorage.getItem("user"));
     } else this.$router.push({ name: "login" });
+  },
+  computed: {
+    code() {
+      return this.codeA.join("");
+    },
   },
   methods: {
     async submit() {
@@ -117,11 +173,33 @@ export default {
         },
       });
     },
+    segmentedInput(val, idx) {
+      this.codeA[idx] = val.slice(-1);
+      if (this.codeA[idx].length > 0) {
+        if (idx === 5) {
+          return;
+        }
+        const nextInput = this.$refs.segmentedInput.childNodes[idx + 1];
+        nextInput.focus();
+      }
+    },
+    segmentedInputHandleBackSpace(idx) {
+      if (idx !== 0 && this.codeA[idx] === "") {
+        const previousInput = this.$refs.segmentedInput.childNodes[idx - 1];
+        setTimeout(() => previousInput.focus(), 1);
+      }
+    },
   },
 };
 </script>
 
 <style>
+.code-input {
+  color: #b7517e;
+}
+.outline-solid-white {
+  box-shadow: 0 0 0 1px #fff;
+}
 .position-custom {
   top: 2rem !important;
   left: 0;

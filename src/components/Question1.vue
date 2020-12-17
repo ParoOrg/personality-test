@@ -1,7 +1,7 @@
 <template>
   <div class="mb-10 flex flex-col">
     <div
-      class="border border-primary text-primary rounded-full float-left mb-3 w-48 py-2"
+      class="border border-primary text-primary rounded-full self-center sm:self-start mb-3 w-48 py-2"
     >
       {{ $t("question_number",index + 1)}}
     </div>

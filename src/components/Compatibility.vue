@@ -182,7 +182,7 @@ export default {
     segmentedInputHandleBackSpace(idx) {
       if (idx !== 0 && this.codeA[idx] === "") {
         const previousInput = this.$refs.segmentedInput.childNodes[idx - 1];
-        setTimeout(() => previousInput.focus(), 1);
+        previousInput.focus();
       }
     },
   },

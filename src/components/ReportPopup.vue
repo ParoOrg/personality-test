@@ -33,7 +33,7 @@
         <div class="text-xl font-medium">
           <slot name="popup-title"></slot>
         </div>
-        <div class="text-gray-300 font-thin text-sm h-3/5 py-4 px-2">
+        <div class="text-gray-300 font-thin text-sm overflow-y-auto h-3/5 py-4 px-2">
           <div class="text-justify overflow-y-auto max-h-full p-2">
             {{ report }}
           </div>

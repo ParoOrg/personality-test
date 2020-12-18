@@ -25,7 +25,7 @@
               />
               <img
                 :class="lang === 'en' ? 'block' : 'hidden'"
-                src="../assets/flag_en_heart_selected.png"
+                src="../assets/flag_en_heart.png"
               />
             </div>
             <div
@@ -38,7 +38,7 @@
               />
               <img
                 :class="lang === 'fr' ? 'block' : 'hidden'"
-                src="../assets/flag_fr_heart_selected.png"
+                src="../assets/flag_fr_heart.png"
               />
             </div>
           </div>

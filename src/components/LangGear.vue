@@ -1,26 +1,19 @@
 <template>
   <div class="flex">
-    <en-flag
-      
+    <!-- <img
+      src="/flag_en.svg"
       class="w-auto h-4 mx-1 cursor-pointer"
       @click="() => changeLang('en')"
       alt=""
       srcset=""
     />
-    <fr-flag
-     
-      class="w-auto h-4 mx-1 cursor-pointer"
-      @click="() => changeLang('fr')"
-      alt=""
-      srcset=""
-    />
-    <ar-flag
-   
+    <img
+      src="/flag_fr.svg"
       class="w-auto h-4 mx-1 cursor-pointer"
       @click="() => changeLang('ar')"
       alt=""
       srcset=""
-    />
+    /> -->
   </div>
 </template>
 
@@ -31,14 +24,14 @@ import enFlag from "@/assets/flag_en.svg";
 
 export default {
   components: {
-    arFlag,
-    enFlag,
-    frFlag,
   },
   data() {
     return {
       lang: "",
       enable: false,
+      frFlag,
+      enFlag,
+      arFlag
     };
   },
   methods: {

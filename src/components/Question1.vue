@@ -1,25 +1,28 @@
 <template>
-  <div class="mb-10 flex flex-col">
+  <div class="mb-2 flex flex-col">
     <div
+    ref="q"
       class="border border-primary text-primary rounded-full hidden sm:block self-start mb-3 w-48 py-2"
     >
       {{ $t("question_number", index + 1) }}
     </div>
     <div
-      class="mb-3 text-primary font-museoSansRounded-100 text-2xl text-center"
+      class="mb-1 text-primary h-40 font-museoSansRounded-100 text-2xl text-center"
     >
       {{ question }}
     </div>
-    <div class="grid grid-cols-3 md:grid-cols-6 gap-4 border-b-2 pb-10">
-      <div class="h-full w-full">
+    <div class="flex flex-row flex-wrap justify-evenly lg:flex-no-wrap border-b-2 pb-2">
+      <div class="w-1/3 lg:w-1/6 mb-1">
         <button
           @click="
             () => {
               callback(1, index);
               selection = 1;
+
+              $refs.q.click()
             }
           "
-          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
           :class="
             selection == 1
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -40,7 +43,7 @@
           </div>
         </button>
       </div>
-      <div>
+      <div class="w-1/3 lg:w-1/6 mb-2">
         <button
           @click="
             () => {
@@ -48,7 +51,7 @@
               selection = 2;
             }
           "
-          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
           :class="
             selection == 2
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -67,7 +70,7 @@
           </div>
         </button>
       </div>
-      <div>
+      <div class="w-1/3 lg:w-1/6 mb-2">
         <button
           @click="
             () => {
@@ -75,7 +78,7 @@
               selection = 3;
             }
           "
-          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
           :class="
             selection == 3
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -94,7 +97,7 @@
           </div>
         </button>
       </div>
-      <div>
+      <div class="w-1/3 lg:w-1/6 mb-2">
         <button
           @click="
             () => {
@@ -102,7 +105,7 @@
               selection = 4;
             }
           "
-          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
           :class="
             selection == 4
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -121,7 +124,7 @@
           </div>
         </button>
       </div>
-      <div>
+      <div class="w-1/3 lg:w-1/6 mb-2">
         <button
           @click="
             () => {
@@ -129,7 +132,7 @@
               selection = 5;
             }
           "
-          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
           :class="
             selection == 5
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -148,7 +151,7 @@
         </div>
         </button>
       </div>
-      <div>
+      <div class="w-1/3 lg:w-1/6 mb-2">
         <button
           @click="
             () => {
@@ -156,7 +159,7 @@
               selection = 6;
             }
           "
-          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r hover:from-primary-dark hover:to-primary-light text-primary hover:text-white outline-none"
+          class="group bg-white rounded-full shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
           :class="
             selection == 6
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -217,6 +220,7 @@ export default {
   },
   computed: {
     selection() {
+      console.log(this.selection)
       return this.answer;
     },
   },

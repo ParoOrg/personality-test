@@ -28,7 +28,7 @@ const i18n = createI18n({
     en: {
       welcome_page: {
         welcome_to: "Welcome to",
-        this_is_made_exclusively_to:"This is made exclusively to",
+        this_is_made_exclusively_to:"This is made exclusively for",
         read_the_terms_of_use:"Read the terms of use"
       },
       email: "E-Mail",
@@ -53,7 +53,7 @@ const i18n = createI18n({
       yourCode: "This is your CODE",
       viewReportButton: "VIEW COMPATIBILITY REPORT",
       sameCode: "Please enter someone else's code",
-      compatibilityError: "Compatibility report already sent",
+      compatibilityError: "Compatibility report already seen",
       passwordEmailSent: "We have sent you an e-mail to set a password",
       unconfirmed: "Please verify your e-mail (check your inbox)",
       noOceanError: "Please take the personality test first",

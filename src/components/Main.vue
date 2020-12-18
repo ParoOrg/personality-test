@@ -3,23 +3,18 @@
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
     :class="load ? 'opacity' : ''"
   >
-    <div v-if="false" class="mt-5 h-20 flex items-center">
-      <img class="w-14 h-14 inline mr-4" src="../assets/logo.png" />
-      <h1 class="text-3xl custom m-0 inline">LOVESTER</h1>
-      <h1 class="text-2xl">{{ $t("personalityTest") }}</h1>
-    </div>
-    <div class="mt-12 w-full h-20 flex items-center sm:hidden">
+    <div class="mt-2 relative w-full h-20 flex items-center sm:hidden">
       <p class="inline w-full text-center">
         {{ index + 1 + " " + $t("of") + " 40" }}
       </p>
-      <img
-        class="w-14 h-14 inline mr-4  absolute right-2"
-        src="../assets/logo.png"
-      />
+      <img class="w-14 inline mr-4 absolute left-2" src="../assets/logo.png" />
     </div>
 
-    <div class="meter mt-5 sm:hidden">
-      <span :style="'width: calc((100% / 40) * ' + index + ')'"></span>
+    <div class="meter h-1 sm:hidden">
+      <span
+        class="h-1"
+        :style="'width: calc((100% / 40) * ' + index + ')'"
+      ></span>
     </div>
     <div
       :class="result || load ? 'blur' : ''"
@@ -33,9 +28,14 @@
         :question="testQuestions[i + index].text[$i18n.locale]"
         :answer="answers[i + index]"
         :key="i"
-        :callback="(val, index) => answer(index, val)"
+        :callback="
+          (val, index) => {
+            answer(index, val);
+            if (width < 640) increment();
+          }
+        "
       ></question>
-      <div class="w-full ltr flex items-center  justify-between p-5">
+      <div class="w-full ltr flex items-center pt-0 justify-between p-5">
         <button
           type="submit"
           @click="decrement"
@@ -43,9 +43,7 @@
         >
           {{ $t("back") }}
         </button>
-        <div v-if="!verified" class="text-red-600">
-          {{ $t("incompleteError") }}
-        </div>
+
         <button
           type="submit"
           @click="
@@ -55,6 +53,9 @@
         >
           {{ index == testQuestions.length - step ? $t("submit") : $t("next") }}
         </button>
+      </div>
+      <div v-if="!verified" class="text-red-600">
+        {{ $t("incompleteError") }}
       </div>
     </div>
     <report-popup
@@ -98,6 +99,7 @@ export default {
       photoUrl: "",
       gender: -1,
       result: "",
+      width: window.innerWidth,
       testQuestions: questions
         .map((a) => [Math.random(), a])
         .sort((a, b) => a[0] - b[0])
@@ -146,7 +148,6 @@ export default {
       localStorage.setItem("submitted", this.submitted);
     },
     async answer(index, val) {
-      console.log(val);
       this.answers[index] = val;
       await fetch(this.apiUrl + "answer?question=" + index + "&value=" + val, {
         method: "POST",
@@ -156,6 +157,7 @@ export default {
           "Content-Type": "application/json",
         },
       });
+
       localStorage.setItem("answers", this.answers);
     },
     send() {
@@ -245,6 +247,17 @@ export default {
       this.index = Math.max(this.index - this.step, 0);
       localStorage.setItem("index", this.index);
       localStorage.setItem("submitted", this.submitted);
+    },
+    isMobile() {
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     },
     increment() {
       if (this.result) return;

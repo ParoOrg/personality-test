@@ -41,7 +41,7 @@
         <div class="absolute inset-x-0 bottom-0 text-xs border-top py-4">
           <span class="flex justify-center space-x-1">
             <span>Made with</span>
-            <img src="../assets/love.svg" class="h-4 w-4" />
+            <img src="/love.svg" class="h-4 w-4" />
             <span>By lovester team</span>
           </span>
         </div>

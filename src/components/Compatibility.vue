@@ -3,13 +3,13 @@
     class="bg-main-mobile md:bg-main bg-cover bg-no-repeat h-screen w-screen"
   >
     <div v-if="!load" class="flex flex-col h-screen items-center">
-      <h1 class="text-sans text-xl text-white font-medium mt-36">
+      <h1 class="text-sans text-xl text-white font-medium mt-16">
         {{ $t("compatibilityReport") }}
       </h1>
-      <div class="bg-white rounded-full w-16 h-16 mt-14">
+      <div class="bg-white rounded-full w-16 h-16 mt-8">
         <img
           class="transform scale-150 h-full w-full"
-          src="../assets/couples.svg"
+          src="/couples.svg"
         />
       </div>
       <div class="flex flex-col items-center space-y-10 mt-12">
@@ -69,10 +69,10 @@
           {{ $t("viewReportButton") }}
         </button>
       </div>
-      <p class="text-red-500 text-xs pt-3">
+      <p class="text-red-500 text-xs pt-1">
         {{ error }}
       </p>
-      <div class="flex font-sans text-white mt-auto mb-14">
+      <div class="flex font-sans text-white mt-5">
         <p class="font-semibold mr-1">{{ $t("yourCode") }} :</p>
         <p class="font-bold">{{ user.code }}</p>
       </div>

@@ -1,8 +1,9 @@
 <template>
   <div
+   :class="load?'hidden':'block'"
     class="bg-main-mobile sm:bg-main bg-cover bg-no-repeat h-screen w-screen"
   >
-    <div v-if="!load" class="container mx-auto h-full flex">
+    <div class="container flex-custom">
       <div class="h-auto self-center">
         <img
           alt="logo"
@@ -24,7 +25,7 @@
           <p
             class="text-3xl font-bold uppercase text-gradient bg-gradient-to-r from-pink-600 to-white"
           >
-            Manel
+            Manel Amara
           </p>
 
           <button
@@ -56,8 +57,8 @@ export default {
     return {
       load: true,
       imagesToPreload: [
-        "https://manel.lovester.net/img/logo_with_shadow.db6dbf30.png",
-        "https://manel.lovester.net/img/background_mobile.7fe09207.png",
+        "https://manel.lovester.net/background_web.png",
+        "https://manel.lovester.net/background_mobile.png",
       ],
     };
   },
@@ -69,12 +70,9 @@ export default {
 
       img.onload = () => {
         imageLoaded++;
-
         if (imageLoaded === this.imagesToPreload.length) {
-          setTimeout(()=>(this.load = false), 1000);
+          setTimeout(()=>(this.load = false), 2000);
         }
-
-        console.log(imageLoaded);
       };
     }
   },
@@ -132,7 +130,18 @@ export default {
 .position-loader {
   top: 50%;
   left: 50%;
+  background-size: 500% 500%;
+  background-color: white;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
+}
+
+.flex-custom {
+  display: flex;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  align-items: center;
+  justify-content: center;
 }
 </style>

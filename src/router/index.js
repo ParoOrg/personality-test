@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import LanguageSelection from "../components/LanguageSelection.vue"
 import Welcome from "../components/Welcome.vue"
 import Main from "../components/Main.vue";
 import SignUp from "../components/SignUp.vue";
@@ -13,6 +14,11 @@ import Compatibility from "../components/Compatibility.vue";
 const routes = [
   {
     path: "/",
+    name: "laguage_selection",
+    component: LanguageSelection,
+  },
+  {
+    path: "/welcome",
     name: "landing",
     component: Welcome,
   },

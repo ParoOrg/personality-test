@@ -7,11 +7,13 @@ import vueCountryRegionSelect from "vue-country-region-select";
 import Vue2TouchEvents from 'vue2-touch-events'
 import vSelect from "vue-select";
 
+const supportedLanguages = ["en", "fr"]
+
 let locale = localStorage.getItem("lang");
 const userLang = navigator.language || navigator.userLanguage; 
 
 if (locale === null) {
-  if(userLang){
+  if(supportedLanguages.includes(userLang[0]+userLang[1])){
     locale = userLang[0]+userLang[1];
     localStorage.setItem("lang", locale);
   }else{
@@ -31,6 +33,7 @@ const i18n = createI18n({
         this_is_made_exclusively_to:"This is made exclusively for",
         read_the_terms_of_use:"Read the terms of use"
       },
+      choose_language: "Choose your language",
       email: "E-Mail",
       name: "Name",
       birthday: "Date of birth",
@@ -109,6 +112,7 @@ const i18n = createI18n({
         this_is_made_exclusively_to:"Ceci est fait exclusivement pour",
         read_the_terms_of_use:"Lisez les conditions d'utilisation"
       },
+      choose_language: "Choisissez votre langue",
       email: "E-Mail",
       name: "Nom complet",
       birthday: "Date de naissance",
@@ -189,6 +193,7 @@ const i18n = createI18n({
         this_is_made_exclusively_to:"هذا مصنوع حصريا ل",
         read_the_terms_of_use:"اقرأ شروط الاستخدام"
       },
+      choose_language: "اختر لغتك",
       email: "البريد الإلكتروني",
       name: "الاسم الكامل",
       birthday: "تاريخ الولادة",

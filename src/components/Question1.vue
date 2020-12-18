@@ -220,7 +220,6 @@ export default {
   },
   computed: {
     selection() {
-      console.log(this.selection)
       return this.answer;
     },
   },

@@ -1,9 +1,13 @@
 <template>
   <div
-   :class="load?'hidden':'block'"
+    :class="load ? 'hidden' : 'block'"
     class="bg-main-mobile sm:bg-main bg-cover bg-no-repeat h-screen w-screen"
   >
-    <div class="container flex-custom">
+    <language-selection
+      @selected="()=>languageSelected = true"
+      v-if="!languageSelected"
+    ></language-selection>
+    <div v-else class="container flex-custom">
       <div class="h-auto self-center">
         <img
           alt="logo"
@@ -51,11 +55,17 @@
 </template>
 
 <script>
+import LanguageSelection from "./LanguageSelection";
+
 export default {
   name: "Welcome",
+  components: {
+    LanguageSelection,
+  },
   data() {
     return {
       load: true,
+      languageSelected: false,
       imagesToPreload: [
         "https://manel.lovester.net/background_web.png",
         "https://manel.lovester.net/background_mobile.png",
@@ -71,7 +81,7 @@ export default {
       img.onload = () => {
         imageLoaded++;
         if (imageLoaded === this.imagesToPreload.length) {
-          setTimeout(()=>(this.load = false), 2000);
+          setTimeout(() => (this.load = false), 2000);
         }
       };
     }

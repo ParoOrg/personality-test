@@ -2,7 +2,7 @@
   <div
     class="bg-main-mobile sm:bg-main bg-cover bg-no-repeat h-screen w-screen"
   >
-    <div v-if="!load" class="container mx-auto h-full flex">
+    <div class="container mx-auto h-full flex">
       <div class="h-auto self-center">
         <img
           alt="logo"
@@ -19,32 +19,39 @@
               class=" h-28 w-28 mx-1 cursor-pointer flag"
               @click="() => changeLang('en')"
             >
-              <img :class="lang!=='en'?'block':'hidden'" src="../assets/flag_en_heart.png" />
-              <img :class="lang==='en'?'block':'hidden'" src="../assets/flag_en_heart_selected.png"/>
+              <img
+                :class="lang !== 'en' ? 'block' : 'hidden'"
+                src="../assets/flag_en_heart.png"
+              />
+              <img
+                :class="lang === 'en' ? 'block' : 'hidden'"
+                src="../assets/flag_en_heart_selected.png"
+              />
             </div>
             <div
               class=" h-28 w-28 mx-1 cursor-pointer flag"
               @click="() => changeLang('fr')"
             >
-              <img :class="lang!=='fr'?'block':'hidden'" src="../assets/flag_fr_heart.png" />
-              <img :class="lang==='fr'?'block':'hidden'" src="../assets/flag_fr_heart_selected.png"/>
+              <img
+                :class="lang !== 'fr' ? 'block' : 'hidden'"
+                src="../assets/flag_fr_heart.png"
+              />
+              <img
+                :class="lang === 'fr' ? 'block' : 'hidden'"
+                src="../assets/flag_fr_heart_selected.png"
+              />
             </div>
-           
-            
           </div>
-
-       
         </div>
       </div>
     </div>
   </div>
-  <img src="/loading.gif" v-if="load" class="absolute position-loader" />
 </template>
 
 <script>
 export default {
   name: "LanguageSelection",
-
+  emits: 'selected',
   data() {
     return {
       load: true,
@@ -102,9 +109,9 @@ export default {
     },
     changeLang(l) {
       localStorage.setItem("lang", l);
-      this.lang = l
+      this.lang = l;
       this.$i18n.locale = l;
-      this.$router.push({ name: "landing" });
+      this.$emit("selected");
     },
   },
 };
@@ -117,5 +124,4 @@ export default {
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 }
-
 </style>

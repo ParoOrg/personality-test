@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="load ? 'hidden' : 'block'"
+    :class="load && dataLoad ? 'hidden' : 'block'"
     class="bg-main-mobile sm:bg-main bg-cover bg-no-repeat h-screen w-screen"
   >
     <language-selection
@@ -51,7 +51,8 @@
       </div>-->
     </div>
   </div>
-  <img src="/loading.gif" v-if="load" class="absolute position-loader" />
+  <img src="" v-if="load" class="absolute position-loader" />
+  <img src="/loading.gif" v-if="dataLoad" class="absolute z-10 position-loader" />
 </template>
 
 <script>
@@ -65,6 +66,7 @@ export default {
   data() {
     return {
       load: true,
+      dataLoad: false,
       languageSelected: false,
       imagesToPreload: [
         "https://manel.lovester.net/background_web.png",
@@ -88,7 +90,7 @@ export default {
   },
   methods: {
     async redirect() {
-      this.load = true;
+      this.dataLoad = true;
       if (this.$route.query.code && this.$route.query.code == "QlsKr") {
         const token = (
           await fetch(this.apiUrl + "auth/login", {

@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
-    :class="load ? 'opacity' : ''"
+    v-if="!dataLoad"
   >
     <div class="mt-2 relative w-full h-20 flex items-center sm:hidden">
       <p class="inline w-full text-center">
@@ -60,7 +60,8 @@
     </div>
     <report-popup
       :report="result"
-      :show-condition="result.length > 0"
+      :show-condition="load || result.length > 0"
+      :is-loading="load"
       @close-popup="
         () => {
           result = 0;
@@ -81,7 +82,7 @@
       </template>
     </report-popup>
   </div>
-  <img src="/loading.gif" v-if="load" class="absolute position-loader" />
+  <img src="/loading.gif" v-if="dataLoad" class="absolute z-10 position-loader" />
 </template>
 
 <script>
@@ -99,6 +100,7 @@ export default {
       photoUrl: "",
       gender: -1,
       result: "",
+      dataLoad: true,
       width: window.innerWidth,
       testQuestions: questions
         .map((a) => [Math.random(), a])
@@ -314,7 +316,7 @@ export default {
     this.n = localStorage.getItem("n") || this.n;
     this.index = +localStorage.getItem("index") || this.index;
     this.step = localStorage.getItem("step") || this.step;
-    this.load = true;
+    this.dataLoad = true;
     let token = localStorage.getItem("token");
     if (this.$route.query.code && this.$route.query.code == "QlsKr")
       token = (
@@ -340,25 +342,25 @@ export default {
           }
           this.token = localStorage.getItem("token");
           setTimeout(() => {
-            this.load = false;
+            this.dataLoad = false;
           }, 300);
           return res.json();
         })
         .catch(() => {
           setTimeout(() => {
-            this.load = false;
+            this.dataLoad = false;
           }, 300);
           this.$router.push({ name: "check" });
         });
     } else {
       setTimeout(() => {
-        this.load = false;
+        this.dataLoad = false;
       }, 300);
       this.$router.push({ name: "check" });
     }
     localStorage.setItem("user", JSON.stringify(user));
     this.user = user;
-    if (user?.n === 0 || user?.n) this.$router.push({ name: "compatibility" });
+    // if (user?.n === 0 || user?.n) this.$router.push({ name: "compatibility" });
   },
   created() {
     window.addEventListener("resize", this.windowResized);
@@ -434,4 +436,14 @@ a:hover::after {
   position: relative;
   overflow: hidden;
 }
+
+.position-loader {
+  top: 50%;
+  left: 50%;
+  background-size: 500% 500%;
+  background-color: white;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
 </style>

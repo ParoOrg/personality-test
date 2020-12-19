@@ -1,7 +1,6 @@
 <template>
   <div
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
-    :class="load ? 'opacity' : ''"
   >
     <div class="mt-2 relative w-full h-20 flex items-center sm:hidden">
       <p class="inline w-full text-center">
@@ -60,7 +59,8 @@
     </div>
     <report-popup
       :report="result"
-      :show-condition="result.length > 0"
+      :show-condition="load || result.length > 0"
+      :is-loading="load"
       @close-popup="
         () => {
           result = 0;
@@ -81,7 +81,6 @@
       </template>
     </report-popup>
   </div>
-  <img src="/loading.gif" v-if="load" class="absolute position-loader" />
 </template>
 
 <script>

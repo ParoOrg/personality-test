@@ -2,15 +2,12 @@
   <div
     class="bg-main-mobile md:bg-main bg-cover bg-no-repeat h-screen w-screen"
   >
-    <div v-if="!load" class="flex flex-col h-screen items-center">
+    <div class="flex flex-col h-screen items-center">
       <h1 class="text-sans text-xl text-white font-medium mt-16">
         {{ $t("compatibilityReport") }}
       </h1>
       <div class="bg-white rounded-full w-16 h-16 mt-8">
-        <img
-          class="transform scale-150 h-full w-full"
-          src="/couples.svg"
-        />
+        <img class="transform scale-150 h-full w-full" src="/couples.svg" />
       </div>
       <div class="flex flex-col items-center space-y-10 mt-12">
         <p class="font-sans text-xs text-center text-white px-14">
@@ -79,12 +76,13 @@
     </div>
     <report-popup
       :report="report"
-      :show-condition="report.length!==0"
+      :show-condition="load || report.length !== 0"
+      :is-loading="load"
       @close-popup="report = ''"
     >
       <template #popup-icon>
         <div class="font-sans input-color font-bold text-2xl pl-1 pt-5">
-          {{percentage}}%
+          {{ percentage || "??" }}%
         </div>
       </template>
       <template #popup-title>
@@ -92,7 +90,6 @@
       </template>
     </report-popup>
   </div>
-  <img src="/loading.gif" v-if="load" class="absolute position-loader" />
 </template>
 
 <script>
@@ -129,13 +126,16 @@ export default {
       if (this.code == this.user.code)
         return (this.error = this.$t("sameCode"));
       this.load = true;
-      const data = await fetch(this.apiUrl + "code?code=" + this.code+"&lang="+this.$i18n.locale, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-          "Content-Type": "application/json",
-        },
-      }).then((x) => {
+      const data = await fetch(
+        this.apiUrl + "code?code=" + this.code + "&lang=" + this.$i18n.locale,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((x) => {
         if (x.status !== 200)
           return (this.error =
             x.status == 402
@@ -165,7 +165,6 @@ export default {
           },
         }).catch(() => {});
         this.report = data.report;
-        console.log(data)
         this.percentage = data.compatibility | 0;
       }
       this.load = false;

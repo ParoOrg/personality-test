@@ -6,6 +6,9 @@
       </div>
       <div
         class="absolute h-2/3 w-5/6 custom-position rounded-3xl bg-gradient text-sans text-white"
+        :class="{
+          'flex flex-col': isLoading,
+        }"
       >
         <div
           class="absolute -top-2 -right-2 rounded-full bg-close w-7 h-7"
@@ -30,20 +33,27 @@
         >
           <slot name="popup-icon"></slot>
         </div>
-        <div class="text-xl font-medium">
-          <slot name="popup-title"></slot>
+        <div v-if="isLoading" class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
         </div>
-        <div class="text-gray-300 font-thin text-sm h-3/5 py-4 px-2">
-          <div class="text-justify overflow-y-auto max-h-full p-2">
-            {{ report }}
+        <div v-else>
+          <div class="text-xl font-medium">
+            <slot name="popup-title"></slot>
           </div>
-        </div>
-        <div class="absolute inset-x-0 bottom-0 text-xs border-top py-4">
-          <span class="flex justify-center space-x-1">
-            <span>Made with</span>
-            <img src="/love.svg" class="h-4 w-4" />
-            <span>By lovester team</span>
-          </span>
+          <div class="text-gray-300 font-thin text-sm h-3/5 py-4 px-2">
+            <div class="text-justify overflow-y-auto max-h-full p-2">
+              {{ report }}
+            </div>
+          </div>
+          <div class="absolute inset-x-0 bottom-0 text-xs border-top py-4">
+            <span class="flex justify-center space-x-1">
+              <span>Made with</span>
+              <img src="/love.svg" class="h-4 w-4" />
+              <span>By lovester team</span>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -60,6 +70,10 @@ export default {
     showCondition: {
       type: Boolean,
       required: true,
+    },
+    isLoading: {
+      type: Boolean,
+      defulat: false,
     },
   },
   emits: ["close-popup"],
@@ -116,5 +130,58 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.spinner {
+  position: relative;
+  margin: auto auto auto auto;
+  bottom: 40px;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 </style>

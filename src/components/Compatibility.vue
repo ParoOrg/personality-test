@@ -164,7 +164,6 @@ export default {
             "Content-Type": "application/json",
           },
         }).catch(() => {});
-        console.log(data)
         this.report = data.report;
         this.percentage = data.compatibility | 0;
       }

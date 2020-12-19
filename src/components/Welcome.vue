@@ -81,7 +81,7 @@ export default {
       img.onload = () => {
         imageLoaded++;
         if (imageLoaded === this.imagesToPreload.length) {
-          setTimeout(() => (this.load = false), 2000);
+          setTimeout(() => (this.load = false), 5000);
         }
       };
     }

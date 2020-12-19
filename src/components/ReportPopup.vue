@@ -5,7 +5,7 @@
         <div class="absolute inset-0 bg-white opacity-75"></div>
       </div>
       <div
-        class="absolute h-2/3 w-5/6 custom-position rounded-3xl bg-gradient text-sans text-white"
+        class="relative h-4/5 w-5/6 pb- custom-position rounded-3xl bg-gradient text-sans text-white"
       >
         <div
           class="absolute -top-2 -right-2 rounded-full bg-close w-7 h-7"
@@ -30,7 +30,7 @@
         >
           <slot name="popup-icon"></slot>
         </div>
-        <div class="text-xl font-medium">
+        <div class="text-xl font-medium -mt-6">
           <slot name="popup-title"></slot>
         </div>
         <div class="text-gray-300 font-thin text-sm overflow-y-auto h-3/5 py-4 px-2">
@@ -38,6 +38,7 @@
             {{ report }}
           </div>
         </div>
+        <!-- <div class="w-full h-20 inline-block"></div> -->
         <div class="absolute inset-x-0 bottom-0 text-xs border-top py-4">
           <span class="flex justify-center space-x-1">
             <span>Made with</span>

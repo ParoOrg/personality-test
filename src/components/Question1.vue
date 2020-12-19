@@ -7,7 +7,7 @@
       {{ $t("question_number", index + 1) }}
     </div>
     <div
-      class="mb-1 text-primary h-40 font-museoSansRounded-100 text-2xl text-center"
+      class="mb-1 text-primary h-36 font-museoSansRounded-100 text-lg text-center"
     >
       {{ question }}
     </div>
@@ -26,7 +26,7 @@
           :class="
             selection == 1
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
-              : ''
+              : 'text-primary'
           "
         >
           <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
@@ -55,7 +55,7 @@
           :class="
             selection == 2
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
-              : ''
+              : 'text-primary'
           "
         >
           <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
@@ -82,7 +82,7 @@
           :class="
             selection == 3
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
-              : ''
+              : 'text-primary'
           "
         >
         <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
@@ -109,7 +109,7 @@
           :class="
             selection == 4
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
-              : ''
+              : 'text-primary'
           "
         >
         <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
@@ -136,7 +136,7 @@
           :class="
             selection == 5
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
-              : ''
+              : 'text-primary'
           "
         >
         <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">
@@ -163,7 +163,7 @@
           :class="
             selection == 6
               ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
-              : ''
+              : 'text-primary'
           "
         >
         <div class="h-1/2 flex sm:pt-5 md:pt-0 lg:pt-5">

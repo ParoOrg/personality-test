@@ -33,23 +33,27 @@
         >
           <slot name="popup-icon"></slot>
         </div>
-        <div v-if="isLoading" class="spinner w-1/2">
+        <div v-if="isLoading" class="spinner h-auto w-1/2">
           <span class="text-xl block">{{ $t("reportLoading") }}</span>
           <div class="bounce1"></div>
           <div class="bounce2"></div>
           <div class="bounce3"></div>
         </div>
-        <div v-else>
+        <div class="flex flex-col h-main" v-else>
           <div class="text-xl font-medium">
             <slot name="popup-title"></slot>
           </div>
-          <div class="text-gray-300 overflow-y-auto font-thin text-sm h-custom-main py-4 px-2">
-            <div class="text-justify overflow-y-auto max-h-full p-2 h-custom-sub">
-              {{ report }}
+          <div
+            class="text-gray-300 flex-grow overflow-y-auto font-thin text-sm py-4 px-2"
+          >
+            <div
+              class="text-justify overflow-y-auto max-h-full p-2"
+            >
+              {{report}}
             </div>
           </div>
-          <div class="absolute inset-x-0 bottom-0 text-xs border-top py-4">
-            <span class="flex justify-center space-x-1">
+          <div class="text-xs border-top custom-flex">
+            <span class="flex justify-center mt-4 items-center space-x-1">
               <span>Made with</span>
               <img src="/love.svg" class="h-4 w-4" />
               <span>By lovester team</span>
@@ -91,6 +95,10 @@ export default {
   left: 8.33% !important;
 }
 
+.custom-flex {
+  justify-self: flex-end;
+}
+
 .logo {
   border: 2px solid #cb3579;
 }
@@ -107,13 +115,16 @@ export default {
   background-color: #8d1147;
 }
 
-.h-custom-main{
+.h-custom-main {
   height: 80vh !important;
 }
 
+.h-custom-sub {
+  height: calc(93% - 9rem - 5.5vw) !important;
+}
 
-.h-custom-sub{
-  height: calc(93% - 9rem - 6.5vw) !important;
+.h-main {
+  height: calc(100% - 6rem);
 }
 
 ::-webkit-scrollbar {

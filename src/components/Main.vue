@@ -82,7 +82,11 @@
       </template>
     </report-popup>
   </div>
-  <img src="/loading.gif" v-if="dataLoad" class="absolute z-10 position-loader" />
+  <div v-if="dataLoad" class="spinner h-1/4 absolute z-10 position-loader w-1/2">
+    <div class="bounce1 bg-primary"></div>
+    <div class="bounce2 bg-primary"></div>
+    <div class="bounce3 bg-primary"></div>
+  </div>
 </template>
 
 <script>
@@ -191,7 +195,7 @@ export default {
     async sendReport() {
       this.load = true;
       const data = await (
-        await fetch("https://report-gen-api.herokuapp.com/generate_report", {
+        await fetch("https://lovester.net/backend/public/api/personality", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -360,7 +364,7 @@ export default {
     }
     localStorage.setItem("user", JSON.stringify(user));
     this.user = user;
-    // if (user?.n === 0 || user?.n) this.$router.push({ name: "compatibility" });
+    if (user?.n === 0 || user?.n) this.$router.push({ name: "compatibility" });
   },
   created() {
     window.addEventListener("resize", this.windowResized);
@@ -406,6 +410,85 @@ a:hover::after {
 
 .opacity {
   filter: opacity(0);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cb588b;
+  border-radius: 9999px;
+  max-height: 100px !important;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.spinner {
+  position: relative;
+  margin: auto auto auto auto;
+  bottom: 40px;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 .position-custom {
   top: 2rem;

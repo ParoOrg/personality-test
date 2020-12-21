@@ -113,7 +113,7 @@ export default {
 
 
 .h-custom-sub{
-  height: calc(100% - 11rem) !important;
+  height: calc(93% - 9rem - 6.5vw) !important;
 }
 
 ::-webkit-scrollbar {

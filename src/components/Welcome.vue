@@ -1,10 +1,10 @@
 <template>
   <div
-    :class="load && dataLoad ? 'hidden' : 'block'"
+    :class="load || dataLoad ? 'hidden' : 'block'"
     class="bg-main-mobile sm:bg-main bg-cover bg-no-repeat h-screen w-screen"
   >
     <language-selection
-      @selected="()=>languageSelected = true"
+      @selected="() => (languageSelected = true)"
       v-if="!languageSelected"
     ></language-selection>
     <div v-else class="container flex-custom">
@@ -51,8 +51,19 @@
       </div>-->
     </div>
   </div>
-  <img src="" v-if="load" class="absolute position-loader" />
-  <img src="/loading.gif" v-if="dataLoad" class="absolute z-10 position-loader" />
+  <div v-if="load" class="absolute position-loader-empty">
+    <div v-if="extraLoad" class="spinner h-1/4 absolute position-loader w-1/2">
+      <div class="bounce1 bg-primary"></div>
+      <div class="bounce2 bg-primary"></div>
+      <div class="bounce3 bg-primary"></div>
+    </div>
+  </div>
+  <div v-if="dataLoad" class="spinner h-1/4 absolute position-loader w-1/2">
+    <div class="bounce1 bg-primary"></div>
+    <div class="bounce2 bg-primary"></div>
+    <div class="bounce3 bg-primary"></div>
+  </div>
+  <!-- <img src="/loading.gif" v-if="dataLoad" class="absolute z-10 position-loader" /> -->
 </template>
 
 <script>
@@ -66,6 +77,7 @@ export default {
   data() {
     return {
       load: true,
+      extraLoad: false,
       dataLoad: false,
       languageSelected: false,
       imagesToPreload: [
@@ -75,6 +87,7 @@ export default {
     };
   },
   created() {
+    setTimeout(() => (this.extraLoad = true), 3000);
     let imageLoaded = 0;
     for (const imageSrc of this.imagesToPreload) {
       const img = new Image();
@@ -83,7 +96,7 @@ export default {
       img.onload = () => {
         imageLoaded++;
         if (imageLoaded === this.imagesToPreload.length) {
-          setTimeout(() => (this.load = false), 5000);
+          setTimeout(() => (this.load = false), 6000);
         }
       };
     }
@@ -147,6 +160,16 @@ export default {
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 }
+.position-loader-empty {
+  top: 50%;
+  left: 50%;
+  background-size: 500% 500%;
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
 
 .flex-custom {
   display: flex;
@@ -155,5 +178,108 @@ export default {
   margin-left: auto;
   align-items: center;
   justify-content: center;
+}
+
+.logo {
+  border: 2px solid #cb3579;
+}
+
+.bg-gradient {
+  background-image: linear-gradient(to top right, #8e1249, #f54f9a);
+}
+
+.border-top {
+  border-top: 2px solid #c65588;
+}
+
+.bg-close {
+  background-color: #8d1147;
+}
+
+.h-custom-main {
+  height: 80vh !important;
+}
+
+.h-custom-sub {
+  height: calc(100% - 11rem) !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cb588b;
+  border-radius: 9999px;
+  max-height: 100px !important;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.spinner {
+  position: relative;
+  margin: auto auto auto auto;
+  bottom: 40px;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 </style>

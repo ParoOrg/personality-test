@@ -12,11 +12,11 @@
   }
   @variants responsive {
     .bg-main {
-      background-image: url("https://manel.lovester.net/background_web.png");
+      background-image: url("https://lovester.net/background_web.png");
       background-size: 100% 100% !important;
     }
     .bg-main-mobile {
-      background-image: url("https://manel.lovester.net/background_mobile.png");
+      background-image: url("https://lovester.net/background_mobile.png");
       background-size: 100% 100% !important;
     }
   }

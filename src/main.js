@@ -30,7 +30,7 @@ const i18n = createI18n({
     en: {
       welcome_page: {
         welcome_to: "Welcome to",
-        this_is_made_exclusively_to:"This is made exclusively for",
+        this_is_made_exclusively_to:"This is exclusive access",
         read_the_terms_of_use:"Read the terms of use"
       },
       choose_language: "Choose your language",
@@ -43,6 +43,7 @@ const i18n = createI18n({
       day: "Day",
       month: "Month",
       year: "Year",
+      vip: "VIP guests",
       reportTitle:
         "Thank you for taking the time to finish our personality test. Here's your final report.",
       finishTest: "Please finish your test",
@@ -110,7 +111,7 @@ const i18n = createI18n({
     fr: {
       welcome_page: {
         welcome_to: "Bienvenue sur",
-        this_is_made_exclusively_to:"Ceci est fait exclusivement pour",
+        this_is_made_exclusively_to:"Ceci est un accés exclusif",
         read_the_terms_of_use:"Lisez les conditions d'utilisation"
       },
       choose_language: "Choisissez votre langue",
@@ -128,6 +129,7 @@ const i18n = createI18n({
       finishTest: "Veuillez d'abord finir votre test",
       emailSent: "E-mail envoyé",
       emailConfirmed: "E-mail verifié",
+      vip: "Accès VIP",
       resetPassword: "Réinitialisation du mot de passe",
       noAccount: "Vous n'avez pas de compte?",
       compatibilityReport: "Rapport de compatibilité",

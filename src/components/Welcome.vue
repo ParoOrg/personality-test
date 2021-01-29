@@ -27,9 +27,9 @@
             {{ $t("welcome_page.this_is_made_exclusively_to") }}
           </p>
           <p
-            class="text-3xl font-bold uppercase text-gradient bg-gradient-to-r from-pink-600 to-white"
+            class="text-3xl font-bold text-gradient bg-gradient-to-r from-pink-600 to-white"
           >
-            Manel Amara
+            {{ $t("vip") }}
           </p>
 
           <button
@@ -81,8 +81,8 @@ export default {
       dataLoad: false,
       languageSelected: false,
       imagesToPreload: [
-        "https://manel.lovester.net/background_web.png",
-        "https://manel.lovester.net/background_mobile.png",
+        "https://lovester.net/background_web.png",
+        "https://lovester.net/background_mobile.png",
       ],
     };
   },
@@ -110,7 +110,7 @@ export default {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              email: "manel@lovester.net",
+              email: "vip1@lovester.net",
               password: "As4rf5eg8a54qs2",
             }),
           }).then((x) => x.json())
@@ -124,7 +124,7 @@ export default {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              email: "manel1@lovester.net",
+              email: "vip2@lovester.net",
               password: "As4rf5eg8a54qs2",
             }),
           }).then((x) => x.json())
@@ -138,7 +138,105 @@ export default {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              email: "manel2@lovester.net",
+              email: "vip3@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "XdcjU") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "vip4@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "Acqqa") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "vip5@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "OkDnc") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "vip6@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "PLmfs") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "vip7@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "CaClq") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "vip8@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "Fhdkf") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "vip9@lovester.net",
+              password: "As4rf5eg8a54qs2",
+            }),
+          }).then((x) => x.json())
+        ).token;
+        localStorage.setItem("token", token);
+        this.$router.push({ name: "home" });
+      }
+      if (this.$route.query.code && this.$route.query.code == "LUyDf") {
+        const token = (
+          await fetch(this.apiUrl + "auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "vip10@lovester.net",
               password: "As4rf5eg8a54qs2",
             }),
           }).then((x) => x.json())

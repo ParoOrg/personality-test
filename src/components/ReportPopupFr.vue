@@ -1,14 +1,12 @@
 <template>
-  <transition name="fade">
-    <div v-if="showCondition" class="fixed inset-0 z-50">
+  <transition name="fade" class="w-full mt-20">
+    <div v-if="showCondition" class="fixed inset-0 z-50 flex px-4 md:px-64 lg:px-96 h-4/6 sm:h-3/6">
       <div class="fixed inset-0 transition-opacity">
         <div class="absolute inset-0 bg-white opacity-75"></div>
       </div>
       <div
         class="relative h-4/5 w-5/6 pb- custom-position rounded-3xl bg-gradient text-sans text-white"
-        :class="{
-          'flex flex-col': isLoading,
-        }"
+        
       >
         <div
           class="absolute -top-2 -right-2 rounded-full bg-close w-7 h-7"
@@ -33,26 +31,23 @@
         >
           <slot name="popup-icon"></slot>
         </div>
-        <div v-if="isLoading" class="spinner h-auto w-1/2">
+        <!-- <div v-if="isLoading" class="spinner h-auto w-1/2">
           <span class="text-xl block">{{ $t("reportLoading") }}</span>
           <div class="bounce1"></div>
           <div class="bounce2"></div>
           <div class="bounce3"></div>
-        </div>
-        <div class="flex flex-col h-main" v-else>
+        </div> -->
+        <div class="flex flex-col h-main" >
           <div class="text-xl font-medium">
             <slot name="popup-title"></slot>
           </div>
           <div
-            class="text-gray-300 flex-grow overflow-y-auto font-thin text-sm py-4 px-2"
+            class="text-gray-300 flex-grow overflow-y-auto font-thin text-sm py-4 px-2 "
           >
             <div
-              class="text-justify overflow-y-auto max-h-full p-2"
+              class=" text-center overflow-y-auto max-h-full p-2 text-base md:text-xl px-2  md:px-8 lg:px-16 xl:px-24"
             >
-              {{report}}
-              <br>
-              <br>
-              {{sexuality}}
+             Vous venez de terminer votre test  Vous recevrez sous peu votre rapport par mail. Passez une bonne journée
 
             </div>
           </div>
@@ -71,22 +66,14 @@
 
 <script>
 export default {
-  name: "report-popup",
+  name: "report-popup-fr",
   props: {
-    report: {
-      type: String,
-    },
-    sexuality : {
-      type: String
-    },
+   
     showCondition: {
       type: Boolean,
       required: true,
     },
-    isLoading: {
-      type: Boolean,
-      defulat: false,
-    },
+   
   },
   emits: ["close-popup"],
   methods: {

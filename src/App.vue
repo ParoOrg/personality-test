@@ -1,5 +1,5 @@
 <template>
-  <div :class="$i18n.locale == 'ar' ? 'rtl' : ''">
+  <div :class="$i18n.locale == 'ar' ? 'rtl' : ''" >
     <router-view v-if="loadedData" />
   </div>
 </template>

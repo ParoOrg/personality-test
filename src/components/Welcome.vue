@@ -81,8 +81,9 @@ export default {
       dataLoad: false,
       languageSelected: false,
       imagesToPreload: [
-        "https://lovester.net/background_web.png",
+       "https://lovester.net/background_web.png",
         "https://lovester.net/background_mobile.png",
+   
       ],
     };
   },
@@ -118,6 +119,7 @@ export default {
         localStorage.setItem("token", token);
         this.$router.push({ name: "home" });
       }
+      
       if (this.$route.query.code && this.$route.query.code == "LZfKr") {
         const token = (
           await fetch(this.apiUrl + "auth/login", {

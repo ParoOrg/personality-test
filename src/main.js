@@ -87,7 +87,7 @@ const i18n = createI18n({
       personalityTaken: "Personality test already taken",
       close: "Close",
       yourResults: "Your test result",
-      personalityPopupTitle: "Enjoy your personality test",
+      personalityPopupTitle: "Lovester DNA report",
       incompleteError: "You need to finish answering all the questions first!",
       submit: "Submit",
       incomplete: "Please fill out this field.",
@@ -169,7 +169,7 @@ const i18n = createI18n({
       personalityTaken: "Test de personnalité déjà passé",
       close: "Fermer",
       yourResults: "Votre résultat de test",
-      personalityPopupTitle: "Profitez de votre test de personnalité",
+      personalityPopupTitle: "Rapport ADN Lovester",
       incompleteError:
         "Vous devez d'abord finir de répondre à toutes les questions!",
       submit: "Soumettre",
@@ -283,7 +283,7 @@ const app = createApp(App)
     data() {
       return {
         get apiUrl() {
-          return "https://lovester.net/backend/public/api/";
+          return "https://lovester.net/public/index.php/api/";
           // return "http://localhost:8000/api/";
         },
       };

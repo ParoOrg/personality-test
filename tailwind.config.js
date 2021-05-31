@@ -17,6 +17,11 @@ module.exports = {
         DEFAULT: "#981851",
         light: "#EF4E9A",
       },
+ 
+      spacing: {
+          "100":"30rem"
+        },
+   
       ...defaultTheme.colors
     },
     screens: {

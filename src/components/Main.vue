@@ -34,12 +34,7 @@
             if (width < 640) increment();
           }
         "
-      >
-      </question>
-      <loveQuestion>
-
-      </loveQuestion>
-      
+      ></question>
       <div class="w-full ltr flex items-center pt-0 justify-between p-5">
         <button
           type="submit"
@@ -124,7 +119,6 @@
 import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question1";
-import loveQuestion from "./LoveQuestion"
 import LangGear from "./LangGear";
 import ReportPopup from "./ReportPopup";
 import ReportPopupFr from "./ReportPopupFr";
@@ -138,6 +132,8 @@ export default {
       gender: -1,
       result: "",
       dataLoad: true,
+      dataLoveLanguage:[],
+      toggleLoveQuetion:false,
       lang : "",
       width: window.innerWidth,
       testQuestions: questions
@@ -200,7 +196,6 @@ export default {
   },
   components: {
     Question,
-    loveQuestion,
     ReportPopup,
     ReportPopupFr,
     LangGear,
@@ -235,11 +230,9 @@ export default {
           "Content-Type": "application/json",
         },
       });
-      console.log("answers ", this.answers);
 
       localStorage.setItem("answers", this.answers);
     },
-
     send() {
       this.calculateOcean();
       this.sendReport();
@@ -267,7 +260,7 @@ export default {
       this.n = this.calculatePart("n");
     },
     async sendReport() {
-      // this.load = true;
+      
       const data = await (
         await fetch("https://lovester.net/public/index.php/api/personality", {
           method: "POST",
@@ -291,6 +284,7 @@ export default {
       this.sexuality = this.sexualityReport[data1.type]
      
       
+
 
       await fetch(this.apiUrl + "auth/update", {
         method: "POST",
@@ -327,8 +321,16 @@ export default {
       window.scrollTo(0, 0);
       // this.result = data.report;
 
-
-      this.load = false;
+      // fetch lovelanguage data
+       const dataLoveLanguage = await (
+        await fetch("http://35.246.199.57:3100/personality/lovelangquestion", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          
+        })
+      ).json();
+      this.dataLoveLanguage=dataLoveLanguage
+      
     },
     decrement() {
       if (this.result) return;
@@ -376,9 +378,9 @@ export default {
         this.step = 1;
       }
     },
-
   },
   async mounted() {
+    
     window.dispatchEvent(new Event("resize"));
     this.localStorage = localStorage;
     this.lang = localStorage.getItem("lang") 
@@ -401,8 +403,7 @@ export default {
     }
     if (localStorage.getItem("questions")) {
       this.testQuestions = JSON.parse(localStorage.getItem("questions"));
-    } 
-    else
+    } else
       localStorage.setItem("questions", JSON.stringify(this.testQuestions));
     this.n = localStorage.getItem("n") || this.n;
     this.index = +localStorage.getItem("index") || this.index;

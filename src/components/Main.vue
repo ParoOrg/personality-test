@@ -34,7 +34,12 @@
             if (width < 640) increment();
           }
         "
-      ></question>
+      >
+      </question>
+      <loveQuestion>
+
+      </loveQuestion>
+      
       <div class="w-full ltr flex items-center pt-0 justify-between p-5">
         <button
           type="submit"
@@ -119,6 +124,7 @@
 import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question1";
+import loveQuestion from "./LoveQuestion"
 import LangGear from "./LangGear";
 import ReportPopup from "./ReportPopup";
 import ReportPopupFr from "./ReportPopupFr";
@@ -194,6 +200,7 @@ export default {
   },
   components: {
     Question,
+    loveQuestion,
     ReportPopup,
     ReportPopupFr,
     LangGear,
@@ -228,9 +235,11 @@ export default {
           "Content-Type": "application/json",
         },
       });
+      console.log("answers ", this.answers);
 
       localStorage.setItem("answers", this.answers);
     },
+
     send() {
       this.calculateOcean();
       this.sendReport();
@@ -258,7 +267,7 @@ export default {
       this.n = this.calculatePart("n");
     },
     async sendReport() {
-      this.load = true;
+      // this.load = true;
       const data = await (
         await fetch("https://lovester.net/public/index.php/api/personality", {
           method: "POST",
@@ -282,7 +291,6 @@ export default {
       this.sexuality = this.sexualityReport[data1.type]
      
       
-
 
       await fetch(this.apiUrl + "auth/update", {
         method: "POST",
@@ -318,6 +326,8 @@ export default {
       }).catch(() => {});
       window.scrollTo(0, 0);
       // this.result = data.report;
+
+
       this.load = false;
     },
     decrement() {
@@ -366,6 +376,7 @@ export default {
         this.step = 1;
       }
     },
+
   },
   async mounted() {
     window.dispatchEvent(new Event("resize"));
@@ -390,7 +401,8 @@ export default {
     }
     if (localStorage.getItem("questions")) {
       this.testQuestions = JSON.parse(localStorage.getItem("questions"));
-    } else
+    } 
+    else
       localStorage.setItem("questions", JSON.stringify(this.testQuestions));
     this.n = localStorage.getItem("n") || this.n;
     this.index = +localStorage.getItem("index") || this.index;

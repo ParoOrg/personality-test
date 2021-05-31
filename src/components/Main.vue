@@ -331,6 +331,7 @@ export default {
       ).json();
       this.dataLoveLanguage=dataLoveLanguage
       
+      
     },
     decrement() {
       if (this.result) return;

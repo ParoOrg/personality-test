@@ -72,9 +72,9 @@ export default {
     },
     emits: ["passData"],
     methods: {
-           emitData (selectionNumber) {
-this.selection=selectionNumber
-      this.$emit('passData',[this.questionsLove._id,selectionNumber] )
+            emitData (selectionNumber) {
+            this.selection=selectionNumber
+            this.$emit('passData',[this.questionsLove._id,selectionNumber] )
     }
      },
 }

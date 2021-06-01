@@ -23,6 +23,7 @@
       ref="main"
     >
       <lang-gear class="absolute custom-position"></lang-gear>
+<<<<<<< HEAD
       <div v-if="!showLoveLang">
 
         <question
@@ -41,6 +42,22 @@
         >
         </question>
         <div class="w-full ltr flex items-center pt-0 justify-between p-5">
+=======
+      <question
+        v-for="(val, i) in testQuestions.slice(index, index + step)"
+        :index="i + index"
+        :question="testQuestions[i + index].text[$i18n.locale]"
+        :answer="answers[i + index]"
+        :key="i"
+        :callback="
+          (val, index) => {
+            answer(index, val);
+            if (width < 640) increment();
+          }
+        "
+      ></question>
+      <div class="w-full ltr flex items-center pt-0 justify-between p-5">
+>>>>>>> 1138eb10ecfefb579dfb4ba07487d4189d2f9b77
         <button
           type="submit"
           @click="decrement"
@@ -157,7 +174,6 @@
 import "@/assets/tailwind.css";
 import questions from "@/assets/questions.json";
 import Question from "./Question1";
-import loveQuestion from "./LoveQuestion"
 import LangGear from "./LangGear";
 import ReportPopup from "./ReportPopup";
 import ReportPopupFr from "./ReportPopupFr";
@@ -171,6 +187,8 @@ export default {
       gender: -1,
       result: "",
       dataLoad: true,
+      dataLoveLanguage:[],
+      toggleLoveQuetion:false,
       lang : "",
       width: window.innerWidth,
       testQuestions: questions
@@ -237,7 +255,6 @@ export default {
   },
   components: {
     Question,
-    loveQuestion,
     ReportPopup,
     ReportPopupFr,
     LangGear,
@@ -278,10 +295,10 @@ export default {
           "Content-Type": "application/json",
         },
       });
-      console.log("answers ", this.answers);
 
       localStorage.setItem("answers", this.answers);
     },
+<<<<<<< HEAD
 
     async getLoveLang(){
       // fetch questions love language 
@@ -298,6 +315,8 @@ export default {
       // console.log("love language data", this.LoveLanguage);
     },
 
+=======
+>>>>>>> 1138eb10ecfefb579dfb4ba07487d4189d2f9b77
     send() {
       this.calculateOcean();
       this.sendReport();
@@ -325,7 +344,11 @@ export default {
       this.n = this.calculatePart("n");
     },
     async sendReport() {
+<<<<<<< HEAD
       this.load = true;
+=======
+      
+>>>>>>> 1138eb10ecfefb579dfb4ba07487d4189d2f9b77
       const data = await (
         await fetch("https://lovester.net/public/index.php/api/personality", {
           method: "POST",
@@ -345,6 +368,7 @@ export default {
        
      
       
+
 
       await fetch(this.apiUrl + "auth/update", {
         method: "POST",
@@ -403,7 +427,21 @@ export default {
       this.load = false
       
 
+<<<<<<< HEAD
 
+=======
+      // fetch lovelanguage data
+       const dataLoveLanguage = await (
+        await fetch("http://35.246.199.57:3100/personality/lovelangquestion", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          
+        })
+      ).json();
+      this.dataLoveLanguage=dataLoveLanguage
+      
+      
+>>>>>>> 1138eb10ecfefb579dfb4ba07487d4189d2f9b77
     },
     decrement() {
       if (this.result) return;
@@ -451,9 +489,9 @@ export default {
         this.step = 1;
       }
     },
-
   },
   async mounted() {
+    
     window.dispatchEvent(new Event("resize"));
     this.localStorage = localStorage;
     this.lang = localStorage.getItem("lang") 
@@ -476,8 +514,7 @@ export default {
     }
     if (localStorage.getItem("questions")) {
       this.testQuestions = JSON.parse(localStorage.getItem("questions"));
-    } 
-    else
+    } else
       localStorage.setItem("questions", JSON.stringify(this.testQuestions));
     this.n = localStorage.getItem("n") || this.n;
     this.index = +localStorage.getItem("index") || this.index;

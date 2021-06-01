@@ -52,6 +52,9 @@
               {{report}}
               <br>
               <br>
+              {{loveReport}}
+              <br>
+              <br>
               {{sexuality}}
 
             </div>
@@ -83,10 +86,14 @@ export default {
       type: Boolean,
       required: true,
     },
+    loveReport : {
+      type: String
+    },
     isLoading: {
       type: Boolean,
       defulat: false,
     },
+
   },
   emits: ["close-popup"],
   methods: {

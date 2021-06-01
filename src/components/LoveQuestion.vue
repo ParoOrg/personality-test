@@ -11,7 +11,7 @@
         
         <button
             @click="emitData(0)"
-            class="group bg-white rounded-lg shadow-2xl  w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none mx-4"
+            class="group bg-white rounded-lg shadow-2xl  w-36 h-40 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none mx-4"
             :class="
                 selection == 0
                 ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -26,11 +26,12 @@
                     
                 </p>
                 </div>
+              
         </button>
 
         <button
             @click="emitData(1)"
-            class="group bg-white rounded-lg shadow-2xl border-black w-24 h-24 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
+            class="group bg-white rounded-lg shadow-2xl border-black w-36 h-40 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
             :class="
                 selection == 1
                 ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -46,9 +47,10 @@
                 </p>
                 </div>
             </button>
-            <h1></h1>
+            
             
         </div>
+        <h1>{{selection}}</h1>
     </div>
 </template>
 
@@ -60,16 +62,35 @@ export default {
             type: Object,
         
             },
-            n: {
+        n: {
                 type: Number,
                 default: 1,
             },
+        questionsId : {
+          type: Array
+        },
+       
+        selections: {
+          type: Array
+        }
+
+    },
+    mounted() {
+      const questionSelected = this.questionsId.filter(x => x === this.questionsLove._id)
+      console.log("questions selcted",questionSelected );
+      if (questionSelected ) {
+        const index = this.questionsId.indexOf(this.questionsLove._id);
+        this.selection = this.selections[index]
+           
+      }
+
     },
     data()  {
         return {
             selection: 3
         }      
     },
+
     emits: ["passData"],
     methods: {
             emitData (selectionNumber) {

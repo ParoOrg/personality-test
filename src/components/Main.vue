@@ -3,17 +3,30 @@
     class="flex flex-col items-center h-full w-full overflow-auto justify-center"
     v-if="!dataLoad"
   >
-    <div class="mt-2 relative w-full h-20 flex items-center sm:hidden">
+    <div v-if="!showLoveLang" class="mt-2 relative w-full h-20 flex items-center sm:hidden">
       <p class="inline w-full text-center">
         {{ index + 1 + " " + $t("of") + " 40" }}
       </p>
       <img class="w-14 inline mr-4 absolute left-2" src="../assets/logo.png" />
     </div>
 
-    <div class="meter h-1 sm:hidden">
+    <div v-if="showLoveLang"  class="mt-2 relative w-full h-20 flex items-center sm:hidden">
+      <p class="inline w-full text-center">
+        {{ indexL + 1 + " " + $t("of") + " 15" }}
+      </p>
+      <img class="w-14 inline mr-4 absolute left-2" src="../assets/logo.png" />
+    </div>
+
+    <div v-if="!showLoveLang" class="meter h-1 sm:hidden">
       <span
         class="h-1"
         :style="'width: calc((100% / 40) * ' + index + ')'"
+      ></span>
+    </div>
+    <div v-if="showLoveLang" class="meter h-1 sm:hidden">
+      <span
+        class="h-1"
+        :style="'width: calc((100% /14) * ' + indexL + ')'"
       ></span>
     </div>
     <div
@@ -68,36 +81,68 @@
           Would you rather ?
         </div>
         <div class="flex flex-wrap justify-around">
-          
-          <loveQuestion
+      
+
+            <loveQuestion
+            v-on:passData="saveStateFromLoveQuestion"
+            v-for ="(question, i) in LoveLanguage.slice(indexL, indexL + stepL)"
+            :key="question._id"
+            :n="indexL+i+1"
+            :questionsLove="question"
+            :questionsId="questionsLove"
+            :selections="answersLove"
+            >
+            </loveQuestion>
+    
+          <!-- <loveQuestion
           v-on:passData="saveStateFromLoveQuestion"
           v-for ="(question, i) in LoveLanguage"
           :key="i"
           :n="i+1"
           :questionsLove="question"
           >
-          </loveQuestion>
+          </loveQuestion> -->
    
         </div>
+          <div class="w-full ltr flex items-center pt-0 justify-between p-5 mt-10">
+              <button
+                type="submit"
+                @click="decrementL"
+                class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:border-white hover:from-primary-light hover:to-primary hover:text-white border-primary border-2  text-primary transition ease-in-out duration-300 outline-none"
+              >
+                {{ $t("back") }}
+              </button>
 
-        <button
+              <button
+                type="submit"
+                @click="
+                  () => (indexL == LoveLanguage.length - stepL ? send(): incrementL())
+                "
+                class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-primary-light to-primary border-white text-white hover:border-primary border-2 hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300 outline-none"
+              >
+                {{ indexL == LoveLanguage.length - stepL ? $t("submit") : $t("next") }}
+              </button>
+          </div>
+
+        <!-- <button
           type="submit"
           @click="send"
           class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:border-white hover:from-primary-light hover:to-primary hover:text-white border-primary border-2  text-primary transition ease-in-out duration-300 outline-none"
         >
           {{ $t("submit") }}
-        </button>
+        </button> -->
 
       </div>
       
-      <div v-if="!verified" class="text-red-600">
+      <div v-if="!verified || verifiedLove" class="text-red-600">
         {{ $t("incompleteError") }}
       </div>
     </div>
     <report-popup
       v-if="lang === 'en'"
-      :report="result "
+      :report="result"
       :sexuality="sexuality"
+      :loveReport="loveLanguageReport"
       :show-condition="load || result.length > 0"
       :is-loading="load"
       @close-popup="
@@ -109,6 +154,7 @@
         }
       "
     >
+
       <template #popup-icon>
         <img
           class="object-scale-down h-full w-full transform scale-75"
@@ -190,11 +236,17 @@ export default {
       index: 0,
       transporter: null,
       step: 5,
+      indexL:0,
+      stepL:3,
       user: null,
+
       showLoveLang : false,
+      verifiedLove : false,
+      loveLanguageReport :"",
       LoveLanguage : [],
       questionsLove: [] ,
       answersLove : [],
+
       sexuality :"",
       sexualityReport :{
     Mastermind:
@@ -242,8 +294,16 @@ export default {
   },
   methods: {
     saveStateFromLoveQuestion (value) {
-      this.questionsLove.push(value[0])
-      this.answersLove.push(value[1])
+      const index = this.questionsLove.indexOf(value[0]) 
+      if (index === -1 ){
+          this.questionsLove.push(value[0]);
+          this.answersLove.push(value[1]);
+      }
+      else {
+        this.answersLove[index] = value[1];
+      }
+     
+      
       console.log("questionsLove",this.questionsLove)
       console.log("answersLove",this.answersLove)
     },
@@ -323,6 +383,10 @@ export default {
       this.n = this.calculatePart("n");
     },
     async sendReport() {
+    console.log("this.questionsLove.lenght===15",this.questionsLove.length)
+    console.log("this.answersLove.lenght===15",this.answersLove.length)
+    if(this.questionsLove.length ===15 && this.answersLove.length===15 ){
+      
       this.load = true;
       const data = await (
         await fetch("https://lovester.net/public/index.php/api/personality", {
@@ -381,11 +445,11 @@ export default {
       // http://localhost:3000/personality/lovelang
       // const token2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IldhcmRhNzI0NkBnbWFpbC5jb20iLCJudW1iZXIiOiIyODU5ODcyMyIsImlhdCI6MTYyMjU0MDM2MywiZXhwIjoxNjI3NzI0MzYzfQ.lnlTL96bkAFh1YdRDlUbsnbZXyVHHRoKWIq2iMKhwwo"
      
-      const loveData = 
-       
-      await fetch("http://35.246.199.57:3100/personality/lovelang", {
-        method: "POST",
-        body: JSON.stringify({
+      const loveData =
+       await (
+        await fetch("http://35.246.199.57:3100/personality/lovelang", {
+          method: "POST",
+           body: JSON.stringify({
           questions :this.questionsLove,
           answers : this.answersLove
         }),
@@ -393,14 +457,18 @@ export default {
           Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IldhcmRhNzI0NkBnbWFpbC5jb20iLCJudW1iZXIiOiIyODU5ODcyMyIsImlhdCI6MTYyMjU0MDM2MywiZXhwIjoxNjI3NzI0MzYzfQ.lnlTL96bkAFh1YdRDlUbsnbZXyVHHRoKWIq2iMKhwwo",
           "Content-Type": "application/json",
         },
-      }.json());
-      console.log("love data", loveData.body);
-      var data1 =data 
-      this.result = data.report +"gggggggggggg"+loveData.loveLanguage ;
+        })
+      ).json();
+      console.log("love data", loveData);
+      var data1 =data
+      this.result = data.report  ;
       this.sexuality = this.sexualityReport[data1.type]
+      this.loveLanguageReport = loveData.loveLanguage
       this.load = false
-      
-
+      }
+      else {
+        this.verifiedLove = true
+      }
 
     },
     decrement() {
@@ -409,6 +477,13 @@ export default {
       this.index = Math.max(this.index - this.step, 0);
       localStorage.setItem("index", this.index);
       localStorage.setItem("submitted", this.submitted);
+    },
+    decrementL() {
+      // if (this.result) return;
+      // if (this.indexL == 0) this.submitted = false;
+      this.indexL = Math.max(this.indexL - this.stepL, 0);
+      // localStorage.setItem("index", this.index);
+      // localStorage.setItem("submitted", this.submitted);
     },
     isMobile() {
       if (
@@ -442,11 +517,35 @@ export default {
       localStorage.setItem("index", this.index);
       localStorage.setItem("verified", this.verified);
     },
+    incrementL() {
+      // if (this.result) return;
+      this.verified = false;
+      // if (
+      //   !this.answers
+      //     .slice(this.indexL, this.indexL + this.stepL)
+      //     .reduce((s, x) => s && x, true)
+      // ) 
+      // {
+      //   this.verified = false;
+      //   // localStorage.setItem("verified", this.verified);
+      //   return;
+      // }
+      window.scrollTo(0, 0);
+      this.verified = true;
+      this.indexL = Math.min(
+        this.indexL + this.stepL,
+        this.LoveLanguage.length - this.stepL
+      );
+      // localStorage.setItem("index", this.indexL);
+      // localStorage.setItem("verified", this.verified);
+    },
     windowResized(e) {
       if (e.target.screen.width >= 768) {
         this.step = 5;
+        this.stepL = 3
       } else {
         this.step = 1;
+        this.stepL = 1
       }
     },
 

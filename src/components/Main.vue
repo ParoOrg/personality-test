@@ -17,30 +17,30 @@
       ></span>
     </div>
     <div
+      
       :class="result || load ? 'blur' : ''"
       class="container rounded-lg p-5 sm:mt-20"
       ref="main"
     >
       <lang-gear class="absolute custom-position"></lang-gear>
-      <question
-        v-for="(val, i) in testQuestions.slice(index, index + step)"
-        :index="i + index"
-        :question="testQuestions[i + index].text[$i18n.locale]"
-        :answer="answers[i + index]"
-        :key="i"
-        :callback="
-          (val, index) => {
-            answer(index, val);
-            if (width < 640) increment();
-          }
-        "
-      >
-      </question>
-      <loveQuestion>
+      <div v-if="!showLoveLang">
 
-      </loveQuestion>
-      
-      <div class="w-full ltr flex items-center pt-0 justify-between p-5">
+        <question
+          
+          v-for="(val, i) in testQuestions.slice(index, index + step)"
+          :index="i + index"
+          :question="testQuestions[i + index].text[$i18n.locale]"
+          :answer="answers[i + index]"
+          :key="i"
+          :callback="
+            (val, index) => {
+              answer(index, val);
+              if (width < 640) increment();
+            }
+          "
+        >
+        </question>
+        <div class="w-full ltr flex items-center pt-0 justify-between p-5">
         <button
           type="submit"
           @click="decrement"
@@ -52,13 +52,46 @@
         <button
           type="submit"
           @click="
-            () => (index == testQuestions.length - step ? send() : increment())
+            () => (index == testQuestions.length - step ? getLoveLang(): increment())
           "
           class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-primary-light to-primary border-white text-white hover:border-primary border-2 hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300 outline-none"
         >
           {{ index == testQuestions.length - step ? $t("submit") : $t("next") }}
         </button>
       </div>
+      </div>
+      <!-- love language -->
+      <div v-if="showLoveLang">
+        <div
+          class="mb-1 text-primary h-16 font-museoSansRounded-100 text-lg text-center"
+        >
+          Would you rather ?
+        </div>
+        <div class="flex flex-wrap justify-around">
+          
+          <loveQuestion
+          v-on:passData="saveStateFromLoveQuestion"
+          v-for ="(question, i) in LoveLanguage"
+          :key="i"
+          :n="i+1"
+          :questionsLove="question"
+          >
+          </loveQuestion>
+   
+        </div>
+
+        <button
+          type="submit"
+          @click="send"
+          class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:border-white hover:from-primary-light hover:to-primary hover:text-white border-primary border-2  text-primary transition ease-in-out duration-300 outline-none"
+        >
+          {{ $t("submit") }}
+        </button>
+
+      </div>
+      
+      
+
       <div v-if="!verified" class="text-red-600">
         {{ $t("incompleteError") }}
       </div>
@@ -160,6 +193,10 @@ export default {
       transporter: null,
       step: 5,
       user: null,
+      showLoveLang : false,
+      LoveLanguage : [],
+      questionsLove: [] ,
+      answersLove : [],
       sexuality :"",
       sexualityReport :{
     Mastermind:
@@ -206,6 +243,12 @@ export default {
     LangGear,
   },
   methods: {
+    saveStateFromLoveQuestion (value) {
+      this.questionsLove.push(value[0])
+      this.answersLove.push(value[1])
+      console.log("questionsLove",this.questionsLove)
+      console.log("answersLove",this.answersLove)
+    },
     compatibility() {
       if (this.user.n) {
         window.location.href = "./#/compatibility";
@@ -240,6 +283,21 @@ export default {
       localStorage.setItem("answers", this.answers);
     },
 
+    async getLoveLang(){
+      // fetch questions love language 
+      const dataLoveLang = await (
+        await fetch("http://35.246.199.57:3100/personality/lovelangquestion", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+      ).json();
+
+      
+      this.LoveLanguage= dataLoveLang
+      this.showLoveLang  = true
+      // console.log("love language data", this.LoveLanguage);
+    },
+
     send() {
       this.calculateOcean();
       this.sendReport();
@@ -267,7 +325,7 @@ export default {
       this.n = this.calculatePart("n");
     },
     async sendReport() {
-      // this.load = true;
+      this.load = true;
       const data = await (
         await fetch("https://lovester.net/public/index.php/api/personality", {
           method: "POST",
@@ -284,11 +342,7 @@ export default {
           }),
         })
       ).json();
-       var data1 =data
-   
-      this.result = data.report;
-  
-      this.sexuality = this.sexualityReport[data1.type]
+       
      
       
 
@@ -326,9 +380,30 @@ export default {
       }).catch(() => {});
       window.scrollTo(0, 0);
       // this.result = data.report;
+      // http://localhost:3000/personality/lovelang
+      // const token2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IldhcmRhNzI0NkBnbWFpbC5jb20iLCJudW1iZXIiOiIyODU5ODcyMyIsImlhdCI6MTYyMjU0MDM2MywiZXhwIjoxNjI3NzI0MzYzfQ.lnlTL96bkAFh1YdRDlUbsnbZXyVHHRoKWIq2iMKhwwo"
+     
+      const loveData = 
+      
+      await fetch("http://35.246.199.57:3100/personality/lovelang", {
+        method: "POST",
+        body: JSON.stringify({
+          questions :this.questionsLove,
+          answers : this.answersLove
+        }),
+        headers: {
+          Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IldhcmRhNzI0NkBnbWFpbC5jb20iLCJudW1iZXIiOiIyODU5ODcyMyIsImlhdCI6MTYyMjU0MDM2MywiZXhwIjoxNjI3NzI0MzYzfQ.lnlTL96bkAFh1YdRDlUbsnbZXyVHHRoKWIq2iMKhwwo",
+          "Content-Type": "application/json",
+        },
+      }.json());
+      console.log("love data", loveData.body);
+      var data1 =data 
+      this.result = data.report +"gggggggggggg"+loveData.loveLanguage ;
+      this.sexuality = this.sexualityReport[data1.type]
+      this.load = false
+      
 
 
-      this.load = false;
     },
     decrement() {
       if (this.result) return;

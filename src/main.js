@@ -106,7 +106,8 @@ const i18n = createI18n({
       mDisagree: "Disagree",
       sDisagree: "Somewhat Disagree",
       question_number: "Question Number {n}",
-      of: "of"
+      of: "of",
+      wait : "Few more questions ..."
     },
     fr: {
       welcome_page: {
@@ -189,7 +190,8 @@ const i18n = createI18n({
       mDisagree: "Pas d'accord",
       sDisagree: "Un peu pas d'accord",
       question_number: "Question Numéro {n}",
-      of: "de"
+      of: "de",
+      wait : "Presque fini ..."
     },
     ar: {
       welcome_page: {

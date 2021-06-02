@@ -57,7 +57,7 @@
         <button
           type="submit"
           @click="decrement"
-          class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:border-white hover:from-primary-light hover:to-primary hover:text-white border-primary border-2  text-primary transition ease-in-out duration-300 outline-none"
+          class="text-sm  2xs:text-base xs:text-xl  md:text-2xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:border-white hover:from-primary-light hover:to-primary hover:text-white border-primary border-2  text-primary transition ease-in-out duration-300 outline-none"
         >
           {{ $t("back") }}
         </button>
@@ -67,7 +67,7 @@
           @click="
             () => (index == testQuestions.length - step ? getLoveLang(): increment())
           "
-          class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-primary-light to-primary border-white text-white hover:border-primary border-2 hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300 outline-none"
+          class="text-sm  2xs:text-base xs:text-xl  md:text-2xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-primary-light to-primary border-white text-white hover:border-primary border-2 hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300 outline-none"
         >
           {{ index == testQuestions.length - step ? $t("submit") : $t("next") }}
         </button>
@@ -76,7 +76,13 @@
       <!-- love language -->
       <div v-if="showLoveLang">
         <div
-          class="mb-1 text-primary h-16 font-museoSansRounded-100 text-lg text-center"
+          class="mb-1  text-primary font-semibold h-16 font-museoSansRounded-400 text-lg sm:text-xl text-center"
+        >
+          {{ $t("wait") }}
+
+        </div>
+        <div
+          class="mb-1 text-primary font-semibold h-16 sm:h-10 font-museoSansRounded-100 text-lg text-center"
         >
           Would you rather ?
         </div>
@@ -88,9 +94,11 @@
             v-for ="(question, i) in LoveLanguage.slice(indexL, indexL + stepL)"
             :key="question._id"
             :n="indexL+i+1"
+            :i="i+1"
             :questionsLove="question"
             :questionsId="questionsLove"
             :selections="answersLove"
+            @click="handleMobile"
             >
             </loveQuestion>
     
@@ -108,7 +116,7 @@
               <button
                 type="submit"
                 @click="decrementL"
-                class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:border-white hover:from-primary-light hover:to-primary hover:text-white border-primary border-2  text-primary transition ease-in-out duration-300 outline-none"
+                class="text-sm  2xs:text-base xs:text-xl  md:text-2xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-transparent to-transparent hover:border-white hover:from-primary-light hover:to-primary hover:text-white border-primary border-2  text-primary transition ease-in-out duration-300 outline-none"
               >
                 {{ $t("back") }}
               </button>
@@ -116,9 +124,9 @@
               <button
                 type="submit"
                 @click="
-                  () => (indexL == LoveLanguage.length - stepL ? send(): incrementL())
+                  (e) => (indexL == LoveLanguage.length - stepL ? send(): incrementL())
                 "
-                class="text-sm  2xs:text-base xs:text-xl  md:text-3xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-primary-light to-primary border-white text-white hover:border-primary border-2 hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300 outline-none"
+                class="text-sm  2xs:text-base xs:text-xl  md:text-2xl rounded-full px-5 2xs:px-10 xs:px-14 py-1 sm:py-2 bg-gradient-to-r from-primary-light to-primary border-white text-white hover:border-primary border-2 hover:text-primary hover:from-transparent hover:to-transparent transition ease-in-out duration-300 outline-none"
               >
                 {{ indexL == LoveLanguage.length - stepL ? $t("submit") : $t("next") }}
               </button>
@@ -246,6 +254,7 @@ export default {
       LoveLanguage : [],
       questionsLove: [] ,
       answersLove : [],
+      i:0,
 
       sexuality :"",
       sexualityReport :{
@@ -293,7 +302,8 @@ export default {
     LangGear,
   },
   methods: {
-    saveStateFromLoveQuestion (value) {
+    saveStateFromLoveQuestion (value,i) {
+      this.i = i
       const index = this.questionsLove.indexOf(value[0]) 
       if (index === -1 ){
           this.questionsLove.push(value[0]);
@@ -355,10 +365,17 @@ export default {
       this.showLoveLang  = true
       // console.log("love language data", this.LoveLanguage);
     },
+   
 
     send() {
       this.calculateOcean();
       this.sendReport();
+    },
+     handleMobile(){
+      console.log("is mobile", this.indexL);
+      if ( this.isMobile() ) {
+        this.indexL == this.LoveLanguage.length - this.stepL ? this.send(): this.incrementL()
+      }
     },
     calculatePart(letter) {
       let count = 0;
@@ -519,26 +536,32 @@ export default {
     },
     incrementL() {
       // if (this.result) return;
-      this.verified = false;
-      // if (
-      //   !this.answers
-      //     .slice(this.indexL, this.indexL + this.stepL)
-      //     .reduce((s, x) => s && x, true)
-      // ) 
-      // {
-      //   this.verified = false;
-      //   // localStorage.setItem("verified", this.verified);
-      //   return;
+      console.log("indexxxx", this.i );
+      // const next =( this.questionsLove.length  % this.stepL  === 0 ) || ( this.i % this.stepL  === 0)
+      
+        this.verified = false;
+        // if (
+        //   !this.answers
+        //     .slice(this.indexL, this.indexL + this.stepL)
+        //     .reduce((s, x) => s && x, true)
+        // ) 
+        // {
+        //   this.verified = false;
+        //   // localStorage.setItem("verified", this.verified);
+        //   return;
+        // }
+        window.scrollTo(0, 0);
+        this.verified = true;
+        this.indexL = Math.min(
+          this.indexL + this.stepL,
+          this.LoveLanguage.length - this.stepL
+        );
+        // localStorage.setItem("index", this.indexL);
+        // localStorage.setItem("verified", this.verified);
       // }
-      window.scrollTo(0, 0);
-      this.verified = true;
-      this.indexL = Math.min(
-        this.indexL + this.stepL,
-        this.LoveLanguage.length - this.stepL
-      );
-      // localStorage.setItem("index", this.indexL);
-      // localStorage.setItem("verified", this.verified);
     },
+      
+    
     windowResized(e) {
       if (e.target.screen.width >= 768) {
         this.step = 5;

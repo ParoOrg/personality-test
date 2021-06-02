@@ -11,7 +11,7 @@
         
         <button
             @click="emitData(0)"
-            class="group bg-white rounded-lg shadow-2xl  w-36 h-40 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none mx-4"
+            class="group bg-white rounded-lg shadow-2xl font-semibold  w-36 h-44 2xs:w-36 2xs:h-52 sm:w-44 sm:h-56 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none mx-4"
             :class="
                 selection == 0
                 ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -19,7 +19,7 @@
             "
             >
                 <div class="h-1/2 flex px-2 sm:pb-5 md:pb-0 lg:pb-5">
-                <p class="parg  flex-1 self-center text-xs sm:text-base md:text-xs lg:text-sm p-2 h-auto m-2 ">
+                <p class="parg  flex-1 self-center text-sm sm:text-base md:text-xs lg:text-sm p-2 h-auto m-2 ">
                     <!-- {{ $t("mAgree") }} -->
                     {{questionsLove.options[0].text[$i18n.locale]}}
                     <!-- {{questionLove.options.text}} -->
@@ -31,7 +31,7 @@
 
         <button
             @click="emitData(1)"
-            class="group bg-white rounded-lg shadow-2xl border-black w-36 h-40 2xs:w-28 2xs:h-28 sm:w-44 sm:h-44 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
+            class="group bg-white rounded-lg shadow-2xl border-black w-36 h-44 2xs:w-36 2xs:h-52 sm:w-44 sm:h-56 md:w-28 md:h-28 lg:w-40 lg:h-40 bg-gradient-to-r  outline-none"
             :class="
                 selection == 1
                 ? 'bg-gradient-to-r from-primary-dark to-primary-light text-white'
@@ -40,7 +40,7 @@
             >
                 
                 <div class="h-1/2 flex px-2 sm:pb-5 md:pb-0 lg:pb-5">
-                <p class=" parg flex-1 self-center text-xs sm:text-base md:text-xs lg:text-sm p-2 h-auto">
+                <p class=" parg flex-1 self-center font-semibold text-sm sm:text-base md:text-xs lg:text-sm p-2 h-auto">
                     {{questionsLove.options[1].text[$i18n.locale]}}
                     <!-- {{ $t("mAgree") }} -->
                     <!-- {{questionLove.options.text}} -->
@@ -50,7 +50,7 @@
             
             
         </div>
-        <h1>{{selection}}</h1>
+       
     </div>
 </template>
 
@@ -72,6 +72,9 @@ export default {
        
         selections: {
           type: Array
+        },
+        i : {
+          type : Number
         }
 
     },
@@ -95,7 +98,7 @@ export default {
     methods: {
             emitData (selectionNumber) {
             this.selection=selectionNumber
-            this.$emit('passData',[this.questionsLove._id,selectionNumber] )
+            this.$emit('passData',[this.questionsLove._id,selectionNumber], this.i )
     }
      },
 }
